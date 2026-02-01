@@ -1,52 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banff - Tours North</title>
-    <meta name="description" content="Explore Banff National Park with Tours North. Discover hiking trails, wildlife, and stunning landscapes in Canada's Rocky Mountains.">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#064e3b',
-                        accent: '#b91c1c',
-                        base: '#0f172a',
-                        snow: '#ffffff'
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-snow text-base">
-    <!-- Navigation -->
-    <nav class="bg-primary text-snow shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="../index.html" class="text-xl font-bold">Tours North</a>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
-                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 class="text-3xl font-bold text-primary mb-6">Banff National Park</h1>
         <p class="text-lg mb-4">Banff National Park is a stunning wilderness area in the Canadian Rockies, known for its turquoise lakes, majestic mountains, and abundant wildlife. It's a paradise for outdoor enthusiasts and nature lovers.</p>
         <h2 class="text-2xl font-semibold text-primary mb-4">Highlights</h2>
@@ -59,11 +11,93 @@
         </ul>
         <a href="../tours/banff-gondola-tickets.html" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book a Tour</a>
     </main>
-
-    <footer class="bg-primary text-snow py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2023 Tours North. All rights reserved.</p>
+=======
+    <!-- Hero Section -->
+    <section class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold mb-4">Banff National Park</h1>
+                <p class="text-xl">Discover the Heart of the Canadian Rockies</p>
+            </div>
         </div>
-    </footer>
-</body>
-</html>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Top 5 Things to Do in Banff</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">1. Visit Lake Louise</h3>
+                    <p class="text-base">Marvel at the emerald waters and stunning mountain backdrop of this iconic lake.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">2. Hike Johnston Canyon</h3>
+                    <p class="text-base">Explore waterfalls and dramatic canyon views on this popular hiking trail.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">3. Take the Banff Gondola</h3>
+                    <p class="text-base">Ride to the top of Sulphur Mountain for panoramic views of the Rockies.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">4. Spot Wildlife</h3>
+                    <p class="text-base">Look for elk, bighorn sheep, and bears in their natural habitat.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">5. Relax in Hot Springs</h3>
+                    <p class="text-base">Soak in the natural thermal waters at Cave and Basin National Historic Site.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Best Time to Visit Banff</h2>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent mb-2">Summer (June - August)</h3>
+                        <p class="text-base mb-4">Warm weather, long days, and all facilities open. Perfect for hiking and outdoor activities.</p>
+                        <ul class="list-disc list-inside text-base">
+                            <li>Temperatures: 15-25°C (59-77°F)</li>
+                            <li>Wildlife viewing at its peak</li>
+                            <li>All trails and roads accessible</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent mb-2">Winter (December - March)</h3>
+                        <p class="text-base mb-4">Snow-covered landscapes, skiing, and fewer crowds. Magical winter wonderland.</p>
+                        <ul class="list-disc list-inside text-base">
+                            <li>Temperatures: -10 to 0°C (14-32°F)</li>
+                            <li>Cross-country skiing and snowshoeing</li>
+                            <li>Northern Lights viewing opportunities</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-3xl font-bold text-primary mb-6">Popular Tours in Banff</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Banff Gondola Ride</h3>
+                    <p class="text-base mb-4">Experience breathtaking views from Sulphur Mountain.</p>
+                    <span class="text-accent font-semibold">From $45</span>
+                    <a href="../tours/banff-gondola-ride.html" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Lake Louise Day Trip</h3>
+                    <p class="text-base mb-4">Visit the iconic emerald lake and surrounding trails.</p>
+                    <span class="text-accent font-semibold">From $65</span>
+                    <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Johnston Canyon Hike</h3>
+                    <p class="text-base mb-4">Guided hike through waterfalls and canyons.</p>
+                    <span class="text-accent font-semibold">From $55</span>
+                    <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </main>
