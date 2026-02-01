@@ -1,7 +1,10 @@
-# TODO: Add 3 Pages for 20-Page Milestone
+# TODO: Generate Universal Product Page Template for tours/product-template.html
 
-- [ ] Create destinations/quebec-city.html: Heritage pillar with Old Quebec and Ice Hotel focus, warm historical design with Maple Red accents
-- [ ] Create destinations/yukon-arctic.html: Adventure pillar with Northern Lights and dog sledding focus, Dark Mode theme with Electric Blue accents
-- [ ] Create tours/northern-lights-yukon.html: High-conversion tour page with Viewing Probability widget, sticky booking sidebar ($199 CAD), What to Wear checklist
-- [ ] Ensure Yukon pillar links to Aurora tour
-- [ ] Use standard Tours North Navigation and Footer on all pages
+- [x] Update title and meta description to include Toronto
+- [x] Add breadcrumbs navigation
+- [x] Update hero gallery section
+- [x] Add main content sections: Quick Highlights, The Experience, Full Itinerary, Important Information, What's Included, Trust Bar
+- [x] Update booking engine to "Check Availability"
+- [x] Add Recommended for You section with Toronto tours
+- [x] Ensure mobile booking bar and modal are consistent
+- [x] Test template for functionality and responsiveness

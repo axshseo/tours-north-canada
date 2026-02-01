@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toronto - Tours North</title>
-    <meta name="description" content="Discover Toronto with Tours North. Explore Canada's largest city, from the CN Tower to vibrant neighborhoods and world-class museums.">
+    <title>Ultimate Toronto Insider Portal - Tours North</title>
+    <meta name="description" content="Unlock Toronto's insider secrets with Tours North. Explore icons, foodie gems, hidden spots, and travel hacks for the ultimate Canadian adventure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -13,29 +17,138 @@
                     colors: {
                         primary: '#064e3b',
                         accent: '#b91c1c',
-                        base: '#0f172a',
-                        snow: '#ffffff'
+                        snow: '#f9fafb'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'syne': ['Syne', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Syne', sans-serif;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .marquee {
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
 </head>
-<body class="bg-snow text-base">
-    <!-- Navigation -->
-    <nav class="bg-primary text-snow shadow-lg">
+<body class="text-gray-900" x-data="{
+    selectedCategory: 'All',
+    showModal: false,
+    selectedTour: null,
+    morningActivities: [],
+    afternoonActivities: [],
+    eveningActivities: [],
+    availableActivities: [
+        { id: 1, title: 'CN Tower Visit', time: 'morning' },
+        { id: 2, title: 'Food Tour', time: 'afternoon' },
+        { id: 3, title: 'Night Show', time: 'evening' }
+    ],
+    tours: [
+        { id: 1, title: 'CN Tower Experience', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 25, description: 'Skip the line and enjoy panoramic views of Toronto.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 2, title: 'Toronto Food Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 45, description: 'Explore local flavors and hidden culinary gems.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 3, title: 'Kensington Market Secrets', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: false, price: 35, description: 'Discover the vibrant heart of Toronto culture.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 4, title: 'Transit Hacks', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 20, description: 'Master Toronto\'s public transit system.', link: '../tours/product-template.html' },
+        { id: 5, title: 'Royal Ontario Museum Tour', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 30, description: 'Dive into world-class art and natural history.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 6, title: 'Distillery District Food Walk', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 50, description: 'Taste craft beers and artisanal treats.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 7, title: 'Graffiti Alley Exploration', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 15, description: 'Uncover Toronto\'s street art scene.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 8, title: 'Airport Transfer Tips', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: true, price: 10, description: 'Seamless travel from Pearson Airport.', link: '../tours/product-template.html' },
+        { id: 9, title: 'Casa Loma Castle Visit', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 28, description: 'Explore Gothic architecture and gardens.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 10, title: 'St. Lawrence Market Delights', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 40, description: 'Fresh produce and peameal bacon sandwiches.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 11, title: 'Leslieville Neighborhood Walk', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.3, verified: false, price: 25, description: 'Hip streets and vintage shops.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 12, title: 'Uber vs. TTC Guide', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.2, verified: true, price: 5, description: 'Choose the best transport option.', link: '../tours/product-template.html' },
+        { id: 13, title: 'Toronto Islands Ferry Ride', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 15, description: 'Escape to car-free islands.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 14, title: 'Koreatown Food Crawl', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 55, description: 'Authentic Korean BBQ and street food.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 15, title: 'The Junction Vintage Hunt', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: false, price: 20, description: 'Antique shops and craft breweries.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 16, title: 'Presto Card Optimization', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: true, price: 8, description: 'Save on transit fares.', link: '../tours/product-template.html' },
+        { id: 17, title: 'Art Gallery of Ontario', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 22, description: 'World-renowned art collections.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 18, title: 'Little Italy Pasta Making', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 60, description: 'Hands-on Italian cooking class.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 19, title: 'Trinity Bellwoods Park Picnic', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 30, description: 'Urban oasis with cherry blossoms.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 20, title: 'Baggage Storage Hacks', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.3, verified: true, price: 12, description: 'Secure storage near attractions.', link: '../tours/product-template.html' },
+        { id: 21, title: 'High Park Nature Walk', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 18, description: 'Toronto\'s largest public park.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 22, title: 'Chinatown Dumpling Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 35, description: 'Fresh dumplings and dim sum.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 23, title: 'The Beaches Boardwalk', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: false, price: 10, description: 'Seaside stroll and beach volleyball.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 24, title: 'Ride-Sharing Etiquette', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: true, price: 6, description: 'Tips for safe and efficient rides.', link: '../tours/product-template.html' },
+        { id: 25, title: 'Toronto Zoo Adventure', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 40, description: 'See animals from around the world.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 26, title: 'Portuguese Bakery Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 25, description: 'Pastéis de nata and custard tarts.', link: '../tours/whistler-ski-lesson.html' },
+        { id: 27, title: 'Evergreen Brick Works', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 15, description: 'Industrial heritage and nature trails.', link: '../tours/yukon-aurora-expedition.html' },
+        { id: 28, title: 'Currency Exchange Tips', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.2, verified: true, price: 4, description: 'Best rates for CAD to USD.', link: '../tours/product-template.html' },
+        { id: 29, title: 'Ripley\'s Aquarium Visit', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 35, description: 'Underwater tunnels and marine life.', link: '../tours/niagara-falls-boat-tour.html' },
+        { id: 30, title: 'Indian Spice Market', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 20, description: 'Aromatic spices and street snacks.', link: '../tours/whistler-ski-lesson.html' }
+    ]
+}">
+    <!-- Breadcrumbs -->
+    <nav class="bg-gray-100 py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ol class="flex items-center space-x-2 text-sm">
+                <li><a href="../index.html" class="text-primary hover:underline">Home</a></li>
+                <li class="text-gray-500">></li>
+                <li class="text-gray-700 font-semibold">Toronto</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Mega-Menu Navigation -->
+    <nav class="bg-primary text-white shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <a href="../index.html" class="text-xl font-bold">Tours North</a>
+                        <h1 class="text-xl font-bold font-syne">Tours North</h1>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                    <a href="montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
+                                    <a href="whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
+                                    <a href="halifax.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Halifax</a>
+                                    <a href="jasper.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jasper</a>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../tours/niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="../tours/banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="../tours/whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="../tours/northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                    <a href="../tours/montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
+                                    <a href="../tours/whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
+                                    <a href="../tours/peggys-cove-day-trip.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Peggy's Cove Day Trip</a>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
                             <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
                             <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
@@ -45,25 +158,164 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 class="text-3xl font-bold text-primary mb-6">Toronto</h1>
-        <p class="text-lg mb-4">Toronto, Canada's largest city, offers a vibrant mix of urban energy, cultural diversity, and natural beauty. From iconic landmarks to diverse neighborhoods, there's something for every traveler.</p>
-        <h2 class="text-2xl font-semibold text-primary mb-4">Highlights</h2>
-        <ul class="list-disc list-inside text-lg mb-6">
-            <li>CN Tower - Iconic observation tower with stunning city views</li>
-            <li>Toronto Islands - Relaxed escape with beaches and bike paths</li>
-            <li>Royal Ontario Museum - World-class art and natural history collections</li>
-            <li>Distillery District - Historic area with shops, galleries, and dining</li>
-            <li>Diverse food scene from global cuisines to local specialties</li>
-        </ul>
-        <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Explore Tours</a>
-    </main>
-
-    <footer class="bg-primary text-snow py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2023 Tours North. All rights reserved.</p>
+    <!-- Cinematic Hero Carousel -->
+    <section class="relative h-screen overflow-hidden" x-data="{ currentSlide: 0, slides: [
+        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+    ] }">
+        <div class="absolute inset-0">
+            <template x-for="(slide, index) in slides" :key="index">
+                <img :src="slide" :alt="'Toronto Slide ' + (index + 1)" class="w-full h-full object-cover transition-opacity duration-1000" :class="index === currentSlide ? 'opacity-100' : 'opacity-0'" style="position: absolute;">
+            </template>
         </div>
-    </footer>
-</body>
-</html>
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 text-center font-syne">Ultimate Toronto Insider Portal</h1>
+            <div class="w-full max-w-md mb-4">
+                <input type="text" placeholder="Search Inventory..." class="w-full px-4 py-3 rounded-lg text-black font-inter shadow-lg">
+            </div>
+            <div class="bg-white bg-opacity-20 backdrop-blur-md rounded-lg px-4 py-2 text-white font-inter shadow-lg">
+                Current Weather in Toronto: 22°C | 15 Tours Available Today
+            </div>
+        </div>
+        <!-- Carousel Controls -->
+        <button @click="currentSlide = (currentSlide - 1 + slides.length) % slides.length" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 transition">&larr;</button>
+        <button @click="currentSlide = (currentSlide + 1) % slides.length" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 transition">&rarr;</button>
+        <!-- Auto-slide -->
+        <script>
+            setInterval(() => {
+                Alpine.store('hero', { currentSlide: (Alpine.store('hero')?.currentSlide || 0 + 1) % 3 });
+            }, 5000);
+        </script>
+    </section>
+
+    <!-- Sticky Filter Bar -->
+    <div class="sticky top-0 bg-white shadow-md z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex space-x-4 overflow-x-auto">
+                <button @click="selectedCategory = 'All'" :class="selectedCategory === 'All' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">All</button>
+                <button @click="selectedCategory = 'Icons'" :class="selectedCategory === 'Icons' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Icons</button>
+                <button @click="selectedCategory = 'Foodie'" :class="selectedCategory === 'Foodie' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Foodie</button>
+                <button @click="selectedCategory = 'Hidden Gems'" :class="selectedCategory === 'Hidden Gems' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Hidden Gems</button>
+                <button @click="selectedCategory = 'Travel Hacks'" :class="selectedCategory === 'Travel Hacks' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Travel Hacks</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Showcase -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="text-4xl font-bold text-primary mb-8 text-center font-syne">Explore Toronto</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <template x-for="tour in tours.filter(t => selectedCategory === 'All' || t.category === selectedCategory)" :key="tour.id">
+                <div class="glassmorphism rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition duration-300">
+                    <div class="relative">
+                        <img :src="tour.image" :alt="tour.title" class="w-full h-48 object-cover">
+                        <div x-show="tour.verified" class="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">Verified</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-semibold mb-2 font-syne" x-text="tour.title"></h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                <span x-for="star in 5" :class="star <= Math.floor(tour.rating) ? 'text-yellow-400' : 'text-gray-300'">★</span>
+                            </div>
+                            <span class="ml-2 text-sm text-gray-600" x-text="tour.rating"></span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4" x-text="tour.description"></p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-primary" x-text="'$' + tour.price + ' CAD'"></span>
+                            <div class="space-x-2">
+                                <button @click="selectedTour = tour; showModal = true" class="bg-gray-500 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm">Quick View</button>
+                                <a :href="tour.link" class="bg-accent hover:bg-red-700 text-white px-3 py-1 rounded text-sm inline-block">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- Quick View Modal -->
+    <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="showModal = false">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4" @click.stop>
+            <h3 class="text-2xl font-bold mb-4 font-syne" x-text="selectedTour?.title"></h3>
+            <img :src="selectedTour?.image" :alt="selectedTour?.title" class="w-full h-48 object-cover rounded mb-4">
+            <p class="text-gray-600 mb-4" x-text="selectedTour?.description"></p>
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-bold text-primary" x-text="'$' + selectedTour?.price + ' CAD'"></span>
+                <button class="bg-accent hover:bg-red-700 text-white px-4 py-2 rounded">Book Now</button>
+            </div>
+            <button @click="showModal = false" class="mt-4 text-gray-500 hover:text-gray-700">Close</button>
+        </div>
+    </div>
+
+    <!-- Local Intelligence & Hacks -->
+    <section class="bg-gray-100 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-primary mb-8 text-center font-syne">Local Intelligence & Hacks</h2>
+            <div class="overflow-x-auto">
+                <div class="flex space-x-6 pb-4">
+                    <a href="../guides/toronto-transit-hacks.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Toronto Transit Hacks</h3>
+                        <p class="text-gray-600">Master the TTC system with insider tips for seamless travel.</p>
+                    </a>
+                    <a href="../guides/budget-toronto-guide.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Budget Toronto Guide</h3>
+                        <p class="text-gray-600">Save money while exploring the best of Toronto.</p>
+                    </a>
+                    <a href="../blog/best-hidden-patios.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Best Hidden Patios</h3>
+                        <p class="text-gray-600">Discover secret outdoor spots for dining and drinks.</p>
+                    </a>
+                    <a href="../guides/winter-survival-tips.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Winter Survival Tips</h3>
+                        <p class="text-gray-600">Stay warm and enjoy Toronto's winter wonders.</p>
+                    </a>
+                    <a href="../guides/canada-travel-visa-guide.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Canada Travel Visa Guide</h3>
+                        <p class="text-gray-600">Everything you need to know about visiting Canada.</p>
+                    </a>
+                    <a href="../guides/best-time-to-visit-canada.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
+                        <h3 class="text-xl font-semibold mb-2 font-syne">Best Time to Visit Canada</h3>
+                        <p class="text-gray-600">Plan your trip for the perfect Canadian experience.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Tours North? -->
+    <section class="bg-primary text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold mb-8 text-center font-syne">Why Tours North?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 font-syne">Traveler Security</h3>
+                    <p class="text-gray-200">Your safety is our top priority with 24/7 support and verified partners.</p>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 font-syne">24/7 Adventure Support</h3>
+                    <p class="text-gray-200">Round-the-clock assistance for all your travel needs and emergencies.</p>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center mb-4">
+                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 font-syne">Local Expertise</h3>
+                    <p class="text-gray-200">Insider knowledge from locals who know Canada like the back of their hand.</p>
+                </div>
+            </div>
+        </div>
+    </section>
