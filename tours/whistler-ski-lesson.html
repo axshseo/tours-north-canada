@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whistler Ski Lesson - Private Ski Instruction - Tours North</title>
+    <meta name="description" content="Book private ski lessons in Whistler with expert instructors. Choose your skill level and rent equipment for an unforgettable skiing experience in the Canadian Rockies.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-snow text-base">
+    <!-- Mega-Menu Navigation -->
+    <nav class="bg-primary text-snow shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold">Tours North</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../destinations/banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="../destinations/toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="../destinations/vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="../destinations/quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                    <a href="../destinations/montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
+                                    <a href="../destinations/whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                    <a href="montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
+                                    <a href="whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
+                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-primary text-snow py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold mb-4">Whistler Ski Lessons</h1>
+            <p class="text-xl mb-8">Private instruction for all skill levels</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <h2 class="text-3xl font-bold text-primary mb-8">Expert Ski Instruction in Whistler</h2>
+                <p class="text-base mb-6">Whether you're a beginner hitting the slopes for the first time or an expert looking to refine your technique, our private ski lessons offer personalized instruction in the stunning Whistler Blackcomb mountains.</p>
+
+                <!-- Skill Level Selector -->
+                <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+                    <h3 class="text-2xl font-semibold text-primary mb-4">Choose Your Skill Level</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-accent transition duration-300">
+                            <h4 class="text-lg font-semibold mb-2">Beginner</h4>
+                            <p class="text-sm">First time on skis? Learn the basics in a safe, supportive environment.</p>
+                        </div>
+                        <div class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-accent transition duration-300">
+                            <h4 class="text-lg font-semibold mb-2">Intermediate</h4>
+                            <p class="text-sm">Build confidence and improve your technique on blue and some black runs.</p>
+                        </div>
+                        <div class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-accent transition duration-300">
+                            <h4 class="text-lg font-semibold mb-2">Advanced</h4>
+                            <p class="text-sm">Refine your skills and tackle challenging terrain with expert guidance.</p>
+                        </div>
+                        <div class="border-2 border-gray-200 rounded-lg p-4 cursor-pointer hover:border-accent transition duration-300">
+                            <h4 class="text-lg font-semibold mb-2">Expert</h4>
+                            <p class="text-sm">Push your limits and explore off-piste with professional instruction.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment Rentals Checklist -->
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold text-primary mb-4">Equipment Rental Options</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="text-base">Ski Package (Skis, Boots, Poles) - $45/day</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="text-base">Snowboard Package (Board, Boots, Bindings) - $45/day</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="text-base">Helmet - $15/day</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="text-base">Goggles - $10/day</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-3">
+                            <span class="text-base">Gloves - $8/day</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-8 bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-4">Book Your Lesson</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Select Date</label>
+                        <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Lesson Duration</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                            <option>2 Hours - $150</option>
+                            <option>4 Hours - $280</option>
+                            <option>Full Day - $450</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Skill Level</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Expert</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold">Total:</span>
+                            <span class="text-lg font-bold text-accent">$150 CAD</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded">Book Lesson</button>
+                    <p class="text-xs text-gray-500 mt-2">Free cancellation up to 48 hours before</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-snow py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
