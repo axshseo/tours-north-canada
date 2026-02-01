@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ripley's Aquarium - Toronto Attractions - Tours North</title>
+    <meta name="description" content="Experience Ripley's Aquarium in Toronto with Tours North. Dive into underwater tunnels and marine life exhibits. Book your premium Toronto adventure today.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Ripley's Aquarium",
+        "description": "Dive into underwater tunnels and marine life exhibits.",
+        "brand": "Tours North",
+        "offers": {
+            "@type": "Offer",
+            "price": "40",
+            "priceCurrency": "CAD",
+            "availability": "https://schema.org/InStock"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "1250"
+        },
+        "seller": {
+            "@type": "Organization",
+            "name": "Tours North"
+        }
+    }
+    </script>
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+<body class="bg-snow text-base" x-data="{ selectedDate: '', showMobileBooking: false }">
+    <!-- Sticky Glassmorphism Nav -->
+    <nav class="sticky top-0 z-50 glassmorphism">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-primary">Tours North</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <div class="relative" x-data="{ destinationsOpen: false }">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../destinations/banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="../destinations/toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="../destinations/vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="../destinations/quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                    <a href="../destinations/montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
+                                    <a href="../destinations/whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
+                                    <a href="../destinations/halifax.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Halifax</a>
+                                    <a href="../destinations/jasper.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jasper</a>
+                                </div>
+                            </div>
+                            <div class="relative" x-data="{ toursOpen: false }">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                    <a href="montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
+                                    <a href="whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
+                                    <a href="peggys-cove-day-trip.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Peggy's Cove Day Trip</a>
+                                </div>
+                            </div>
+                            <div class="relative group" x-data="{ guidesOpen: false }">
+                                <button @click="guidesOpen = !guidesOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div x-show="guidesOpen" @click.away="guidesOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
+                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                <li><a href="../index.html" class="hover:text-primary">Home</a></li>
+                <li><span class="mx-2">></span></li>
+                <li><a href="../destinations/toronto.html" class="hover:text-primary">Toronto</a></li>
+                <li><span class="mx-2">></span></li>
+                <li class="text-gray-900 font-medium">Ripley's Aquarium</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Hero Gallery -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="lg:col-span-2">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg">
+            </div>
+            <div class="space-y-4">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 1" class="w-full h-44 object-cover rounded-lg">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 2" class="w-full h-44 object-cover rounded-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Content -->
+            <div class="lg:col-span-2">
+                <h1 class="text-4xl font-bold text-primary mb-4">Ripley's Aquarium</h1>
+                <div class="flex items-center mb-6">
+                    <span class="text-yellow-400 text-2xl">★★★★★</span>
+                    <span class="ml-2 text-lg text-gray-600">4.7 (1,250 reviews)</span>
+                </div>
+
+                <!-- Quick Highlights -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Quick Highlights</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex items-center">
+                            <span class="text-accent mr-2">✓</span>
+                            <span>Guided tour with expert local</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent mr-2">✓</span>
+                            <span>Small group experience</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent mr-2">✓</span>
+                            <span>Free cancellation up to 24 hours</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent mr-2">✓</span>
+                            <span>Best price guarantee</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- The Experience -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">The Experience</h2>
+                    <p class="text-base mb-4">Dive into underwater tunnels and marine life exhibits.</p>
+                    <p class="text-base">This comprehensive tour takes you through the heart of Toronto, offering unique insights and unforgettable moments. Led by passionate local guides, you'll discover hidden gems and iconic landmarks that define this vibrant destination.</p>
+                </section>
+
+                <!-- Full Itinerary -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Full Itinerary</h2>
+                    <div class="space-y-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">1</div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Meeting Point</h3>
+                                <p class="text-gray-600">Meet your expert guide at Ripley's Aquarium in downtown Toronto.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">2</div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Guided Exploration</h3>
+                                <p class="text-gray-600">Embark on a 2-hour journey through underwater tunnels and marine life exhibits.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">3</div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Photo Opportunities</h3>
+                                <p class="text-gray-600">Capture unforgettable moments with sharks, penguins, and colorful fish.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Important Information -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Important Information</h2>
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-semibold text-primary mb-2">Meeting Point</h3>
+                                <p class="text-gray-600">Ripley's Aquarium, 288 Bremner Blvd, Toronto, ON M5V 3L9</p>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-primary mb-2">What to Bring</h3>
+                                <ul class="text-gray-600 space-y-1">
+                                    <li>• Comfortable walking shoes</li>
+                                    <li>• Weather-appropriate clothing</li>
+                                    <li>• Camera or smartphone</li>
+                                    <li>• Water bottle</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's Included -->
+                <section class="mb-8">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">What's Included</h2>
+                    <div class="space-y-2">
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span class="text-base">Expert local guide</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span class="text-base">Transportation</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span class="text-base">Entrance fees</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span class="text-base">Small group (max 12 people)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" checked disabled class="mr-3">
+                            <span class="text-base">Photo opportunities</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Trust Bar -->
+                <section class="bg-gray-100 p-6 rounded-lg">
+                    <h2 class="text-2xl font-semibold text-primary mb-4">Trusted by Travelers</h2>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="text-yellow-400 text-2xl mr-2">★★★★★</span>
+                            <span class="text-lg font-semibold">4.8 out of 5</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="flex items-center">
+                                <span class="text-accent mr-2">🛡️</span>
+                                <span>Safe Booking</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-accent mr-2">✓</span>
+                                <span>Verified Reviews</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-accent mr-2">🔒</span>
+                                <span>Secure Payment</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Booking Engine -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 bg-white shadow-lg rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
+                    <div class="mb-4">
+                        <div class="text-3xl font-bold text-accent mb-2">$40 CAD</div>
+                        <div class="text-sm text-gray-600">per person</div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Date Picker</label>
+                        <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                    </div>
+                    <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded">Check Availability</button>
+                    <p class="text-xs text-gray-500 mt-2">Free cancellation up to 24 hours before</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Booking Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="text-lg font-bold text-accent">$40 CAD</div>
+                <div class="text-sm text-gray-600">per person</div>
+            </div>
+            <button @click="showMobileBooking = true" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Mobile Booking Modal -->
+    <div x-show="showMobileBooking" class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden" @click="showMobileBooking = false">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-lg p-6" @click.stop>
+            <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
+            <div class="mb-4">
+                <div class="text-3xl font-bold text-accent mb-2">$40 CAD</div>
+                <div class="text-sm text-gray-600">per person</div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Select Date</label>
+                <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Number of Travelers</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5+</option>
+                </select>
+            </div>
+            <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded mb-4">Book Now</button>
+            <button @click="showMobileBooking = false" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Recommended for You -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h3 class="text-2xl font-bold text-primary mb-6">Recommended for You</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <a href="toronto-cn-tower-edgewalk.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="CN Tower EdgeWalk" class="w-full h-32 object-cover rounded-lg mb-4">
+                <h4 class="text-lg font-semibold text-primary mb-2">CN Tower EdgeWalk</h4>
+                <p class="text-gray-600 mb-2">Walk around the outside of the CN Tower at dizzying heights.</p>
+                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$45 CAD</span>
+            </a>
+            <a href="toronto-rom-museum.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="ROM Museum" class="w-full h-32 object-cover rounded-lg mb-4">
+                <h4 class="text-lg font-semibold text-primary mb-2">ROM Museum</h4>
+                <p class="text-gray-600 mb-2">Explore world-class art and natural history collections.</p>
+                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$25 CAD</span>
+            </a>
+            <a href="toronto-casa-loma-castle.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Casa Loma Castle" class="w-full h-32 object-cover rounded-lg mb-4">
+                <h4 class="text-lg font-semibold text-primary mb-2">Casa Loma Castle</h4>
+                <p class="text-gray-600 mb-2">Tour Gothic architecture and beautiful gardens.</p>
+                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$30 CAD</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-snow py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
