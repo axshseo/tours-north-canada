@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banff - Tours North</title>
+    <meta name="description" content="Explore Banff National Park with Tours North. Discover hiking trails, wildlife, and stunning landscapes in Canada's Rocky Mountains.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-snow text-base">
+    <!-- Navigation -->
+    <nav class="bg-primary text-snow shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="../index.html" class="text-xl font-bold">Tours North</a>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
+                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-3xl font-bold text-primary mb-6">Banff National Park</h1>
+        <p class="text-lg mb-4">Banff National Park is a stunning wilderness area in the Canadian Rockies, known for its turquoise lakes, majestic mountains, and abundant wildlife. It's a paradise for outdoor enthusiasts and nature lovers.</p>
+        <h2 class="text-2xl font-semibold text-primary mb-4">Highlights</h2>
+        <ul class="list-disc list-inside text-lg mb-6">
+            <li>Lake Louise - Famous for its emerald waters and surrounding peaks</li>
+            <li>Moraine Lake - A picturesque lake with stunning mountain views</li>
+            <li>Hiking trails for all skill levels</li>
+            <li>Wildlife viewing opportunities</li>
+            <li>Hot springs and thermal baths</li>
+        </ul>
+        <a href="../tours/banff-gondola-tickets.html" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book a Tour</a>
+    </main>
+
+    <footer class="bg-primary text-snow py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
