@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toronto - Tours North</title>
-    <meta name="description" content="Discover Toronto with Tours North. Explore Canada's largest city, from the CN Tower to vibrant neighborhoods and world-class museums.">
+    <title>Best Things to Do in Toronto | Tours North</title>
+    <meta name="description" content="Discover the best attractions in Toronto with Tours North. Visit the CN Tower, explore the Distillery District, and take a day trip to Niagara Falls for unforgettable Canadian experiences.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -22,8 +23,8 @@
     </script>
 </head>
 <body class="bg-snow text-base">
-    <!-- Navigation -->
-    <nav class="bg-primary text-snow shadow-lg">
+    <!-- Mega-Menu Navigation -->
+    <nav class="bg-primary text-snow shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
@@ -33,9 +34,32 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../tours/niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="../tours/banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="../tours/whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="../tours/northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
                             <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
                             <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
@@ -45,19 +69,116 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold mb-4">Toronto</h1>
+                <p class="text-xl">Canada's Vibrant Urban Heart</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 class="text-3xl font-bold text-primary mb-6">Toronto</h1>
-        <p class="text-lg mb-4">Toronto, Canada's largest city, offers a vibrant mix of urban energy, cultural diversity, and natural beauty. From iconic landmarks to diverse neighborhoods, there's something for every traveler.</p>
-        <h2 class="text-2xl font-semibold text-primary mb-4">Highlights</h2>
-        <ul class="list-disc list-inside text-lg mb-6">
-            <li>CN Tower - Iconic observation tower with stunning city views</li>
-            <li>Toronto Islands - Relaxed escape with beaches and bike paths</li>
-            <li>Royal Ontario Museum - World-class art and natural history collections</li>
-            <li>Distillery District - Historic area with shops, galleries, and dining</li>
-            <li>Diverse food scene from global cuisines to local specialties</li>
-        </ul>
-        <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Explore Tours</a>
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Top 5 Things to Do in Toronto</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">1. Visit the CN Tower</h3>
+                    <p class="text-base">Ascend to the top of Canada's iconic landmark for panoramic city views.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">2. Explore Distillery District</h3>
+                    <p class="text-base">Wander through historic cobblestone streets filled with galleries, shops, and restaurants.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">3. Stroll High Park</h3>
+                    <p class="text-base">Relax in Toronto's largest public park with gardens, trails, and a zoo.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">4. Visit the Royal Ontario Museum</h3>
+                    <p class="text-base">Discover world-class exhibits of art, culture, and natural history.</p>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">5. Experience Toronto Islands</h3>
+                    <p class="text-base">Take a ferry to these car-free islands for beaches, bike paths, and city skyline views.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Day Trip to Niagara Falls</h2>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent mb-2">Why Visit Niagara?</h3>
+                        <p class="text-base mb-4">Just a short drive from Toronto, Niagara Falls offers one of the world's most spectacular natural wonders. Experience the power of the falls up close with our boat tour.</p>
+                        <ul class="list-disc list-inside text-base mb-4">
+                            <li>1.5-hour drive from Toronto</li>
+                            <li>Boat tour gets you right to the base of the falls</li>
+                            <li>Stunning views and mist-filled adventure</li>
+                            <li>Perfect for a day trip or weekend getaway</li>
+                        </ul>
+                        <a href="../tours/niagara-falls-boat-tour.html" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book Niagara Boat Tour</a>
+                    </div>
+                    <div>
+                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Niagara Falls" class="w-full h-64 object-cover rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-6">Best Time to Visit Toronto</h2>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent mb-2">Summer (June - August)</h3>
+                        <p class="text-base mb-4">Warm weather, festivals, and outdoor activities abound in Canada's largest city.</p>
+                        <ul class="list-disc list-inside text-base">
+                            <li>Temperatures: 20-30°C (68-86°F)</li>
+                            <li>Toronto International Film Festival</li>
+                            <li>Outdoor patios and beach activities</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-accent mb-2">Winter (December - February)</h3>
+                        <p class="text-base mb-4">Experience Toronto's winter charm with holiday markets and indoor attractions.</p>
+                        <ul class="list-disc list-inside text-base">
+                            <li>Temperatures: -5 to 5°C (23-41°F)</li>
+                            <li>Christmas markets and winter festivals</li>
+                            <li>Indoor museums and shopping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-3xl font-bold text-primary mb-6">Popular Tours in Toronto</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">CN Tower Experience</h3>
+                    <p class="text-base mb-4">360-degree views from Canada's tallest structure.</p>
+                    <span class="text-accent font-semibold">From $45</span>
+                    <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Distillery District Walking Tour</h3>
+                    <p class="text-base mb-4">Explore historic architecture and local culture.</p>
+                    <span class="text-accent font-semibold">From $35</span>
+                    <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-primary mb-2">Toronto Islands Ferry & Bike</h3>
+                    <p class="text-base mb-4">Bike around car-free islands with city views.</p>
+                    <span class="text-accent font-semibold">From $55</span>
+                    <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="bg-primary text-snow py-8">

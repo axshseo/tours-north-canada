@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vancouver - Tours North</title>
-    <meta name="description" content="Explore Vancouver with Tours North. Discover Stanley Park, Granville Island, and Capilano Suspension Bridge in Canada's coastal gem.">
+    <title>Best Things to Do in Vancouver | Tours North</title>
+    <meta name="description" content="Explore Vancouver's stunning natural beauty and urban culture with Tours North. Visit Stanley Park, Granville Island, and nearby adventures in Whistler for the ultimate West Coast experience.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -22,8 +23,8 @@
     </script>
 </head>
 <body class="bg-snow text-base">
-    <!-- Navigation -->
-    <nav class="bg-primary text-snow shadow-lg">
+    <!-- Mega-Menu Navigation -->
+    <nav class="bg-primary text-snow shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
@@ -33,9 +34,32 @@
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
-                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../tours/niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="../tours/banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="../tours/whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="../tours/northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
                             <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
                             <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
@@ -45,20 +69,167 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
+    <section class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold mb-4">Vancouver</h1>
+                <p class="text-xl">Where Mountains Meet the Sea</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 class="text-3xl font-bold text-primary mb-6">Vancouver</h1>
-        <p class="text-lg mb-4">Vancouver, nestled between mountains and ocean, offers a perfect blend of urban sophistication and natural beauty. It's a gateway to outdoor adventures and cultural experiences.</p>
-        <h2 class="text-2xl font-semibold text-primary mb-4">Highlights</h2>
-        <ul class="list-disc list-inside text-lg mb-6">
-            <li>Stanley Park - Seawall paths and lush forests in the heart of the city</li>
-            <li>Granville Island - Vibrant public market with arts, crafts, and dining</li>
-            <li>Capilano Suspension Bridge - Thrilling bridge over a deep canyon</li>
-            <li>Grouse Mountain - Skiing, hiking, and panoramic views</li>
-            <li>Diverse neighborhoods from Gastown to Kitsilano</li>
-        </ul>
-        <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Explore Tours</a>
-    </main>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Top 5 Things to Do in Vancouver</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">1. Explore Stanley Park</h3>
+                            <p class="text-base">Walk or bike through North America's largest urban park with seawall paths and totem poles.</p>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">2. Visit Granville Island</h3>
+                            <p class="text-base">Discover artisan markets, theaters, and waterfront dining in this creative hub.</p>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">3. Hike Grouse Mountain</h3>
+                            <p class="text-base">Take the Skyride gondola for panoramic views and grizzly bear habitat tours.</p>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">4. Capilano Suspension Bridge</h3>
+                            <p class="text-base">Cross the thrilling 450-foot suspension bridge over a deep canyon.</p>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">5. Gastown Historic District</h3>
+                            <p class="text-base">Explore cobblestone streets, steam clock, and Victorian architecture.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Stanley Park & Granville Island</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-accent mb-2">Stanley Park</h3>
+                            <p class="text-base mb-4">Vancouver's crown jewel spans 1,000 acres of lush forests, beaches, and seawall paths. Rent a bike or kayak to explore this urban oasis.</p>
+                            <ul class="list-disc list-inside text-base mb-4">
+                                <li>27 km of seawall for walking/jogging</li>
+                                <li>Stanley Park Train for family-friendly rides</li>
+                                <li>Totem poles and First Nations art</li>
+                                <li>Beaches for swimming and picnics</li>
+                            </ul>
+                            <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Plan Your Visit</a>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-accent mb-2">Granville Island</h3>
+                            <p class="text-base mb-4">A vibrant public market and arts district with fresh local produce, artisanal crafts, theaters, and waterfront dining.</p>
+                            <ul class="list-disc list-inside text-base mb-4">
+                                <li>Public market with local vendors</li>
+                                <li>Emily Carr University galleries</li>
+                                <li>Theater performances and workshops</li>
+                                <li>Waterfront dining and craft beer</li>
+                            </ul>
+                            <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Explore Granville</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="text-3xl font-bold text-primary mb-6">Best Time to Visit Vancouver</h2>
+                    <div class="bg-white shadow-md rounded-lg p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-accent mb-2">Summer (June - August)</h3>
+                                <p class="text-base mb-4">Mild weather perfect for outdoor activities and festivals in Vancouver.</p>
+                                <ul class="list-disc list-inside text-base">
+                                    <li>Temperatures: 18-25°C (64-77°F)</li>
+                                    <li>Stanley Park seawall and beaches</li>
+                                    <li>Outdoor concerts and markets</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-accent mb-2">Winter (December - February)</h3>
+                                <p class="text-base mb-4">Mild coastal climate with opportunities for skiing nearby and indoor attractions.</p>
+                                <ul class="list-disc list-inside text-base">
+                                    <li>Temperatures: 5-10°C (41-50°F)</li>
+                                    <li>Whistler ski trips just 2 hours away</li>
+                                    <li>Holiday markets and indoor museums</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-3xl font-bold text-primary mb-6">Popular Tours in Vancouver</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">Stanley Park Bike Tour</h3>
+                            <p class="text-base mb-4">Guided bike tour around the seawall with local insights.</p>
+                            <span class="text-accent font-semibold">From $45</span>
+                            <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">Granville Island Food Tour</h3>
+                            <p class="text-base mb-4">Taste local flavors at the public market and waterfront.</p>
+                            <span class="text-accent font-semibold">From $65</span>
+                            <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-6">
+                            <h3 class="text-xl font-semibold text-primary mb-2">Capilano Suspension Bridge</h3>
+                            <p class="text-base mb-4">Thrilling bridge crossing and treetop walks.</p>
+                            <span class="text-accent font-semibold">From $55</span>
+                            <a href="#" class="block mt-4 bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-4">
+                    <h3 class="text-xl font-bold text-primary mb-4">Nearby Adventures</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white shadow-md rounded-lg p-4">
+                            <h4 class="text-lg font-semibold text-accent mb-2">Whistler Ski Resort</h4>
+                            <p class="text-sm mb-2">World-class skiing and snowboarding just 2 hours from Vancouver.</p>
+                            <ul class="list-disc list-inside text-sm mb-4">
+                                <li>4,100 acres of skiable terrain</li>
+                                <li>Olympic-caliber slopes</li>
+                                <li>Village dining and après-ski</li>
+                            </ul>
+                            <a href="../tours/whistler-ski-packages.html" class="bg-accent hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">View Ski Packages</a>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-4">
+                            <h4 class="text-lg font-semibold text-accent mb-2">Grouse Mountain</h4>
+                            <p class="text-sm mb-2">Year-round activities including skiing, wildlife encounters, and views.</p>
+                            <ul class="list-disc list-inside text-sm mb-4">
+                                <li>Skyride gondola experience</li>
+                                <li>Grizzly bear habitat</li>
+                                <li>Hiking and snowshoeing</li>
+                            </ul>
+                            <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">Learn More</a>
+                        </div>
+                        <div class="bg-white shadow-md rounded-lg p-4">
+                            <h4 class="text-lg font-semibold text-accent mb-2">Tofino Surfing</h4>
+                            <p class="text-sm mb-2">Pacific Rim National Park and world-famous surfing beaches.</p>
+                            <ul class="list-disc list-inside text-sm mb-4">
+                                <li>Surf lessons for all levels</li>
+                                <li>Storm watching in winter</li>
+                                <li>Whale watching tours</li>
+                            </ul>
+                            <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">Explore Tofino</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="bg-primary text-snow py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

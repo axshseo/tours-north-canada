@@ -1,7 +1,5 @@
-# TODO: Create Niagara Falls Boat Tour Page
+# TODO: Build Destination Pillars
 
-- [x] Create tours/niagara-falls-boat-tour.html with Tours North theme
-- [x] Add sticky Book Now sidebar with $49 CAD price, date-picker, Free Cancellation badge
-- [x] Include 'Selling out fast - 5 spots left today!' badge near price
-- [x] Add Standard vs VIP Evening Cruise comparison table with checkmarks
-- [x] Include Product Schema JSON-LD for SEO
+- [ ] Create destinations/toronto.html with CN Tower, Distillery District, Day Trip to Niagara section
+- [ ] Create destinations/vancouver.html with Stanley Park, Granville Island, Nearby Adventures sidebar
+- [ ] Ensure both use Tours North theme, Mega-Menu, Footer, and high-impact SEO titles
