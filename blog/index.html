@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tours North Journal - Travel Stories & Insights</title>
+    <title>Tours North Journal - Stories from the True North</title>
     <meta name="description" content="Discover authentic Canadian travel stories, local insights, and adventure tips from Tours North. Your guide to exploring Canada's wilderness and cities.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -18,17 +14,17 @@
                     colors: {
                         primary: '#064e3b',
                         accent: '#b91c1c',
-                        snow: '#ffffff'
+                        snow: '#f8fafc',
+                        electric: '#3b82f6'
                     },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                        'syne': ['Syne', 'sans-serif']
+                        'syne': ['Syne', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -37,183 +33,244 @@
         h1, h2, h3, h4 {
             font-family: 'Syne', sans-serif;
         }
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .bento-hero {
-            aspect-ratio: 16 / 9;
+        .night-mode {
+            background-color: #0a0a0a;
+            color: #ffffff;
         }
-        .masonry-grid {
-            column-count: 1;
+        .night-mode .glass {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        @media (min-width: 768px) {
-            .masonry-grid {
-                column-count: 2;
-            }
+        .lift-3d {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
-        @media (min-width: 1024px) {
-            .masonry-grid {
-                column-count: 3;
-            }
-        }
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1rem;
+        .lift-3d:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="text-gray-900" x-data="{
+<body class="bg-snow text-base" x-data="{
     selectedCategory: 'All',
+    countdown: 86400,
     articles: [
-        { id: 1, title: 'Yukon: My 3 Nights Under the Aurora', category: 'Wilderness Tips', readTime: '8 min read', image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', featured: true, verified: true },
-        { id: 2, title: 'Hidden Gems of Banff National Park', category: 'Wilderness Tips', readTime: '6 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
-        { id: 3, title: 'Budget-Friendly Toronto Food Tour', category: 'Local Food', readTime: '5 min read', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: false },
-        { id: 4, title: 'Winter Survival Guide for Whistler', category: 'Travel Hacks', readTime: '7 min read', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
-        { id: 5, title: 'Exploring Vancouver\'s Food Scene', category: 'Local Food', readTime: '6 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: false },
-        { id: 6, title: 'Budget Tips for Canadian Road Trips', category: 'Budget Guides', readTime: '4 min read', image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
-        { id: 7, title: 'Wild Camping in Jasper', category: 'Wilderness Tips', readTime: '9 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
-        { id: 8, title: 'Montreal Poutine Perfection', category: 'Local Food', readTime: '3 min read', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: false },
-        { id: 9, title: 'Packing Light for Canadian Winters', category: 'Travel Hacks', readTime: '5 min read', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true }
+        { id: 1, title: 'Yukon Aurora Expedition', category: 'Wilderness', readTime: '12 min read', image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', featured: true, verified: true },
+        { id: 2, title: 'Hidden Gems of Banff', category: 'Wilderness', readTime: '8 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
+        { id: 3, title: 'Toronto Food Tour Secrets', category: 'Food & Wine', readTime: '6 min read', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: false },
+        { id: 4, title: 'Winter Survival Guide', category: 'Travel Hacks', readTime: '10 min read', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
+        { id: 5, title: 'Vancouver Photography Guide', category: 'Photography', readTime: '9 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
+        { id: 6, title: 'Canadian Wildlife Encounters', category: 'Wildlife', readTime: '7 min read', image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
+        { id: 7, title: 'Budget Road Trip Tips', category: 'Travel Hacks', readTime: '5 min read', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: false },
+        { id: 8, title: 'Montreal Culinary Adventures', category: 'Food & Wine', readTime: '8 min read', image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true },
+        { id: 9, title: 'Northern Lights Photography', category: 'Photography', readTime: '11 min read', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', featured: false, verified: true }
     ],
-    tours: [
-        { id: 1, title: 'Yukon Aurora Expedition', image: 'https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', price: 2500, link: '../tours/yukon-aurora-expedition.html' },
-        { id: 2, title: 'Whistler Ski Lesson', image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', price: 150, link: '../tours/whistler-ski-lesson.html' },
-        { id: 3, title: 'Niagara Falls Boat Tour', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', price: 80, link: '../tours/niagara-falls-boat-tour.html' }
+    hacks: [
+        { title: 'Best Time to Visit Banff', content: 'June-August for milder weather and fewer crowds.' },
+        { title: 'Yukon Packing Essentials', content: 'Layer up - temperatures drop quickly at night.' },
+        { title: 'Montreal Poutine Guide', content: 'Authentic Quebec experience with local cheese curds.' },
+        { title: 'Whistler Ski Preparation', content: 'Book lessons in advance during peak season.' },
+        { title: 'Toronto Transit Hacks', content: 'Master the TTC system for seamless city exploration.' }
     ]
-}" x-init="AOS.init()">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+}" x-init="setInterval(() => { countdown-- }, 1000)">
+    <!-- Premium Global Header -->
+    <nav class="sticky top-0 z-50 glass border-b border-white/20" x-data="{ destinationsOpen: false, toursOpen: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold text-primary font-syne">Tours North</h1>
+                        <h1 class="text-xl font-bold text-primary">Tours North</h1>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="../index.html" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <a href="../destinations/toronto.html" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
-                            <a href="../tours/niagara-falls-boat-tour.html" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Tours</a>
-                            <a href="index.html" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Journal</a>
-                            <a href="../about-us.html" class="hover:text-primary px-3 py-2 rounded-md text-sm font-medium">About</a>
+                            <a href="../index.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">Home</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl transition duration-300 grid grid-cols-3 gap-4 p-6">
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Cities</h4>
+                                        <a href="../destinations/banff.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff</a>
+                                        <a href="../destinations/toronto.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Toronto</a>
+                                        <a href="../destinations/vancouver.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Vancouver</a>
+                                        <a href="../destinations/quebec-city.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Quebec City</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Regions</h4>
+                                        <a href="../destinations/whistler.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler</a>
+                                        <a href="../destinations/jasper.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Jasper</a>
+                                        <a href="../destinations/yukon-arctic.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon Arctic</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Highlights</h4>
+                                        <a href="../destinations/montreal.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Montreal</a>
+                                        <a href="../destinations/halifax.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Halifax</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl transition duration-300 grid grid-cols-3 gap-4 p-6">
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Adventure</h4>
+                                        <a href="../tours/niagara-falls-boat-tour.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Niagara Falls Boat Tour</a>
+                                        <a href="../tours/whistler-ski-lesson.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler Ski Lesson</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Nature</h4>
+                                        <a href="../tours/banff-gondola-tickets.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff Gondola Tickets</a>
+                                        <a href="../tours/yukon-aurora-expedition.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon Aurora Expedition</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-primary mb-2">Cultural</h4>
+                                        <a href="../tours/whistler-ski-packages.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler Ski Packages</a>
+                                        <a href="../tours/northern-lights-yukon.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Northern Lights Yukon</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Journal</a>
+                            <a href="../about-us.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">Contact</a>
+                            <button @click="nightMode = !nightMode" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-primary transition-all">Night Mode</button>
                         </div>
                     </div>
+                </div>
+                <div class="flex items-center">
+                    <button class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl transition-all">Explore All Adventures</button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Featured Story (Bento Hero) -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" data-aos="fade-up">
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden bento-hero relative">
-            <img :src="articles.find(a => a.featured).image" :alt="articles.find(a => a.featured).title" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-            <div class="absolute bottom-0 left-0 right-0 p-8 text-white">
-                <div class="flex items-center mb-4">
-                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Verified Experience</span>
-                    <span class="text-sm opacity-80">{{ articles.find(a => a.featured).readTime }}</span>
+    <!-- Main 3-Column Layout -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Sidebar (20% - Sticky) -->
+            <aside class="lg:col-span-2 lg:sticky lg:top-24 h-fit">
+                <div class="bg-white rounded-3xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold text-primary mb-4">Browse by Topic</h3>
+                    <nav class="space-y-2">
+                        <button @click="selectedCategory = 'All'" :class="selectedCategory === 'All' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-primary/10'" class="w-full text-left px-3 py-2 rounded-lg transition-all">Latest Stories</button>
+                        <button @click="selectedCategory = 'Travel Hacks'" :class="selectedCategory === 'Travel Hacks' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-primary/10'" class="w-full text-left px-3 py-2 rounded-lg transition-all">Travel Hacks</button>
+                        <button @click="selectedCategory = 'Food & Wine'" :class="selectedCategory === 'Food & Wine' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-primary/10'" class="w-full text-left px-3 py-2 rounded-lg transition-all">Food & Wine</button>
+                        <button @click="selectedCategory = 'Photography'" :class="selectedCategory === 'Photography' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-primary/10'" class="w-full text-left px-3 py-2 rounded-lg transition-all">Photography</button>
+                        <button @click="selectedCategory = 'Wildlife'" :class="selectedCategory === 'Wildlife' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-primary/10'" class="w-full text-left px-3 py-2 rounded-lg transition-all">Wildlife</button>
+                    </nav>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 font-syne">{{ articles.find(a => a.featured).title }}</h1>
-                <p class="text-lg opacity-90 mb-6 max-w-2xl">An unforgettable journey through Canada's northern wilderness, chasing the aurora borealis under starlit skies.</p>
-                <button class="bg-primary hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition duration-300 flex items-center">
-                    Read the Story
-                    <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </section>
+            </aside>
 
-    <!-- Topic Clusters (Filter Chips) -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-aos="fade-up" data-aos-delay="200">
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <button @click="selectedCategory = 'All'" :class="selectedCategory === 'All' ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-300'" class="px-6 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition duration-300">All Stories</button>
-            <button @click="selectedCategory = 'Travel Hacks'" :class="selectedCategory === 'Travel Hacks' ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-300'" class="px-6 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition duration-300">Travel Hacks</button>
-            <button @click="selectedCategory = 'Local Food'" :class="selectedCategory === 'Local Food' ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-300'" class="px-6 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition duration-300">Local Food</button>
-            <button @click="selectedCategory = 'Budget Guides'" :class="selectedCategory === 'Budget Guides' ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-300'" class="px-6 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition duration-300">Budget Guides</button>
-            <button @click="selectedCategory = 'Wilderness Tips'" :class="selectedCategory === 'Wilderness Tips' ? 'bg-primary text-white' : 'bg-white text-gray-700 border border-gray-300'" class="px-6 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition duration-300">Wilderness Tips</button>
-        </div>
-    </section>
+            <!-- Center Column (55% - Scrollable) -->
+            <section class="lg:col-span-7">
+                <h2 class="text-3xl font-bold text-primary mb-8">The Journal: Stories from the True North</h2>
 
-    <!-- Main Content Grid -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <!-- Journal Feed -->
-            <div class="lg:col-span-3">
-                <h2 class="text-3xl font-bold text-primary mb-8 font-syne" data-aos="fade-up">The Journal</h2>
-                <div class="masonry-grid" data-aos="fade-up" data-aos-delay="400">
-                    <template x-for="article in articles.filter(a => selectedCategory === 'All' || a.category === selectedCategory)" :key="article.id">
-                        <div class="masonry-item bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300" x-show="!article.featured">
+                <!-- Featured Story -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg mb-8 lift-3d">
+                    <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Yukon Aurora Expedition" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold mr-3">Verified</span>
+                            <span class="text-sm text-gray-600">12 min read</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4">Yukon Aurora Expedition</h3>
+                        <p class="text-gray-600 mb-6">Experience the magic of the northern lights in Canada's pristine wilderness. A journey through ice, aurora, and unforgettable northern adventures.</p>
+                        <button class="bg-accent hover:bg-red-700 text-white font-bold py-3 px-6 rounded-3xl transition-all">Read Story</button>
+                    </div>
+                </div>
+
+                <!-- Article Feed -->
+                <div class="space-y-8">
+                    <template x-for="(article, index) in articles.filter(a => !a.featured && (selectedCategory === 'All' || a.category === selectedCategory))" :key="article.id">
+                        <!-- In-Feed Banner every 3 articles -->
+                        <div x-show="(index + 1) % 3 === 0" class="bg-gradient-to-r from-primary to-accent text-white rounded-3xl p-8 text-center shadow-lg">
+                            <h4 class="text-2xl font-bold mb-2">Winter Sale: 20% off Banff Tours</h4>
+                            <p class="mb-4">Limited time offer ends in:</p>
+                            <div class="text-3xl font-bold">
+                                <span x-text="Math.floor(countdown / 3600)"></span>:<span x-text="String(Math.floor((countdown % 3600) / 60)).padStart(2, '0')"></span>:<span x-text="String(countdown % 60).padStart(2, '0')"></span>
+                            </div>
+                            <button class="mt-4 bg-white text-primary font-bold py-2 px-6 rounded-3xl hover:bg-gray-100 transition-all">Claim Deal</button>
+                        </div>
+
+                        <!-- Article Card -->
+                        <div class="bg-white rounded-3xl overflow-hidden shadow-lg lift-3d">
                             <img :src="article.image" :alt="article.title" class="w-full h-48 object-cover">
                             <div class="p-6">
                                 <div class="flex items-center justify-between mb-3">
                                     <span class="bg-primary text-white px-3 py-1 rounded-full text-xs font-bold" x-text="article.category"></span>
-                                    <span class="text-sm text-gray-500" x-text="article.readTime"></span>
+                                    <span class="text-sm text-gray-600" x-text="article.readTime"></span>
                                 </div>
-                                <h3 class="text-xl font-semibold text-primary mb-3 font-syne" x-text="article.title"></h3>
-                                <button class="text-primary hover:text-green-700 font-medium flex items-center transition duration-300">
-                                    Read Now
-                                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                    </svg>
-                                </button>
+                                <h4 class="text-xl font-bold text-primary mb-3" x-text="article.title"></h4>
+                                <a href="#" class="text-accent hover:underline font-medium">Read More →</a>
                             </div>
                         </div>
                     </template>
                 </div>
-            </div>
+            </section>
 
-            <!-- Sidebar -->
-            <div class="lg:col-span-1">
-                <!-- AI-Summary Box -->
-                <div class="glassmorphism rounded-lg p-6 mb-8 sticky top-24" data-aos="fade-up" data-aos-delay="600">
-                    <h3 class="text-xl font-semibold text-primary mb-4 font-syne">Trending Now</h3>
+            <!-- Right Sidebar (25% - Sticky) -->
+            <aside class="lg:col-span-3 lg:sticky lg:top-24 h-fit">
+                <!-- Related Hacks Widget -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg mb-8">
+                    <h3 class="text-lg font-bold text-primary mb-4">Related Hacks</h3>
                     <div class="space-y-4">
-                        <div class="border-l-4 border-primary pl-4">
-                            <h4 class="font-semibold text-primary mb-2">AI-Generated Quick Tips</h4>
-                            <ul class="text-sm text-gray-600 space-y-2">
-                                <li>• Best time to visit Banff: June-August for milder weather</li>
-                                <li>• Pack layers for Yukon - temperatures can drop quickly</li>
-                                <li>• Try poutine in Montreal for an authentic Quebec experience</li>
-                                <li>• Book Whistler ski lessons in advance during peak season</li>
-                            </ul>
+                        <template x-for="hack in hacks" :key="hack.title">
+                            <div class="border-l-4 border-accent pl-4">
+                                <h4 class="font-semibold text-primary mb-1" x-text="hack.title"></h4>
+                                <p class="text-sm text-gray-600" x-text="hack.content"></p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Premium Newsletter Card -->
+                <div class="bg-primary text-white rounded-3xl p-6 shadow-lg mb-8">
+                    <h3 class="text-lg font-bold mb-4">The Insider Journal</h3>
+                    <p class="text-sm mb-4">Get the latest stories and travel tips delivered to your inbox.</p>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/10 text-white placeholder-white/70">
+                        <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded-3xl transition-all">Subscribe</button>
+                    </div>
+                </div>
+
+                <!-- Hot Deal Widget -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg lift-3d">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Niagara Falls Boat Tour" class="w-full h-32 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-primary mb-2">Niagara Falls Boat Tour</h4>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                            </div>
+                            <span class="ml-2 text-sm text-gray-600">4.9</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-accent">$80 CAD</span>
+                            <button class="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded-3xl font-medium">Book Now</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </aside>
         </div>
-    </div>
+    </main>
 
-    <!-- Recommended Adventures -->
-    <section class="bg-white py-16" data-aos="fade-up">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-primary mb-8 text-center font-syne">Recommended Adventures</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <template x-for="tour in tours" :key="tour.id">
-                    <a :href="tour.link" class="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                        <img :src="tour.image" :alt="tour.title" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold text-primary mb-2 font-syne" x-text="tour.title"></h3>
-                            <p class="text-gray-600 mb-4">Experience Canada's wilderness with expert guides and unforgettable adventures.</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold text-accent" x-text="'$' + tour.price + ' CAD'"></span>
-                                <button class="bg-primary hover:bg-green-700 text-white px-4 py-2 rounded font-medium">Book Now</button>
-                            </div>
-                        </div>
-                    </a>
-                </template>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="bg-primary text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p>&copy; 2023 Tours North. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Apply night mode
+        $watch('nightMode', value => {
+            if (value) {
+                document.body.classList.add('night-mode');
+            } else {
+                document.body.classList.remove('night-mode');
+            }
+        });
+    </script>
 </body>
 </html>
