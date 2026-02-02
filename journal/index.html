@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Journal: Stories from the True North - Tours North</title>
+    <meta name="description" content="Discover authentic Canadian stories, travel hacks, and insider knowledge from The Journal by Tours North.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        snow: '#f8fafc',
+                        electric: '#3b82f6'
+                    },
+                    fontFamily: {
+                        'syne': ['Syne', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Syne', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .night-mode {
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+        .night-mode .glass {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .lift-3d {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .lift-3d:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-snow text-base" x-data="{ nightMode: false }">
+    <!-- Glassmorphic Sticky Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20" x-data="{ destinationsOpen: false, toursOpen: false, guidesOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold text-snow">Tours North</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="../index.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Home</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl transition duration-300 grid grid-cols-3 gap-4 p-6">
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Cities</h4>
+                                        <a href="../destinations/banff.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff</a>
+                                        <a href="../destinations/toronto.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Toronto</a>
+                                        <a href="../destinations/vancouver.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Vancouver</a>
+                                        <a href="../destinations/quebec-city.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Quebec City</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Regions</h4>
+                                        <a href="../destinations/whistler.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler</a>
+                                        <a href="../destinations/jasper.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Jasper</a>
+                                        <a href="../destinations/yukon-arctic.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon Arctic</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Highlights</h4>
+                                        <a href="../destinations/montreal.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Montreal</a>
+                                        <a href="../destinations/halifax.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Halifax</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl transition duration-300 grid grid-cols-3 gap-4 p-6">
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Adventure</h4>
+                                        <a href="../tours/niagara-falls-boat-tour.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Niagara Falls Boat Tour</a>
+                                        <a href="../tours/whistler-ski-lesson.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler Ski Lesson</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Nature</h4>
+                                        <a href="../tours/banff-gondola-tickets.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff Gondola Tickets</a>
+                                        <a href="../tours/yukon-aurora-expedition.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon Aurora Expedition</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Cultural</h4>
+                                        <a href="../tours/whistler-ski-packages.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler Ski Packages</a>
+                                        <a href="../tours/northern-lights-yukon.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Northern Lights Yukon</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="guidesOpen = !guidesOpen" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Guides</button>
+                                <div x-show="guidesOpen" @click.away="guidesOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl transition duration-300 grid grid-cols-3 gap-4 p-6">
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Planning</h4>
+                                        <a href="../guides/best-time-to-visit-canada.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Best Time to Visit Canada</a>
+                                        <a href="../guides/canada-travel-visa-guide.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Canada Travel Visa Guide</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Activities</h4>
+                                        <a href="../guides/top-10-winter-activities.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Top 10 Winter Activities</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-charcoal mb-2">Tips</h4>
+                                        <a href="../guides/canada-travel-visa-guide.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Visa Information</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Journal</a>
+                            <a href="../about-us.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Contact</a>
+                            <button @click="nightMode = !nightMode" class="hover:bg-accent/20 px-3 py-2 rounded-md text-sm font-medium text-snow transition-all">Night Mode</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Sidebar -->
+            <aside class="lg:col-span-3">
+                <div class="bg-white rounded-3xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold text-primary mb-4 font-syne">Browse by Topic</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Latest Stories</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Adventure</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Local Hacks</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Photography</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Food & Wine</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Must-See</a>
+                        <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-primary/10 rounded-lg transition-all">Travel Tips</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Center Column - The Feed -->
+            <section class="lg:col-span-6">
+                <h2 class="text-3xl font-bold text-primary mb-8 font-syne">The Journal: Stories from the True North</h2>
+
+                <!-- Featured Story -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg mb-8 lift-3d">
+                    <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Northern Lights" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold mr-3">SM</div>
+                            <div>
+                                <p class="text-sm font-medium text-primary">Sarah Mitchell</p>
+                                <p class="text-xs text-gray-500">Adventure Writer</p>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-primary mb-4 font-syne">Chasing the Northern Lights: A Yukon Adventure</h3>
+                        <p class="text-gray-600 mb-6">Experience the magic of the aurora borealis in Canada's pristine wilderness. A journey through ice, light, and unforgettable moments.</p>
+                        <button class="bg-accent hover:bg-red-700 text-white font-bold py-3 px-6 rounded-3xl transition-all">Read Story</button>
+                    </div>
+                </div>
+
+                <!-- Article List -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-lg lift-3d">
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Toronto Hidden Gems" class="w-24 h-24 object-cover rounded-2xl mr-6">
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-primary mb-2 font-syne">Toronto's Hidden Gems</h4>
+                                <p class="text-gray-600 text-sm mb-3">Discover the secret spots that locals love in Canada's largest city.</p>
+                                <a href="#" class="text-accent hover:underline font-medium">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-6 shadow-lg lift-3d">
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fall Colors Photography" class="w-24 h-24 object-cover rounded-2xl mr-6">
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-primary mb-2 font-syne">Fall Colors Photography Guide</h4>
+                                <p class="text-gray-600 text-sm mb-3">Capture the stunning autumn palette across Canada's landscapes.</p>
+                                <a href="#" class="text-accent hover:underline font-medium">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-6 shadow-lg lift-3d">
+                        <div class="flex">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Niagara Falls Experience" class="w-24 h-24 object-cover rounded-2xl mr-6">
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-primary mb-2 font-syne">The Ultimate Niagara Falls Experience</h4>
+                                <p class="text-gray-600 text-sm mb-3">From boat tours to behind-the-scenes access, make the most of this natural wonder.</p>
+                                <a href="#" class="text-accent hover:underline font-medium">Read More →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Sidebar -->
+            <aside class="lg:col-span-3">
+                <!-- Related Hacks Widget -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg mb-8">
+                    <h3 class="text-lg font-bold text-primary mb-4 font-syne">Related Hacks</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <a href="#" class="text-sm text-gray-700 hover:text-primary transition-all">Best Time to Visit</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <a href="#" class="text-sm text-gray-700 hover:text-primary transition-all">Budget Tips</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <a href="#" class="text-sm text-gray-700 hover:text-primary transition-all">Packing Essentials</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <a href="#" class="text-sm text-gray-700 hover:text-primary transition-all">Local Transportation</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 text-accent mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                            </svg>
+                            <a href="#" class="text-sm text-gray-700 hover:text-primary transition-all">Weather Preparation</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Widget -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold text-primary mb-4 font-syne">The Insider Journal</h3>
+                    <p class="text-sm text-gray-600 mb-4">Get the latest stories and travel tips delivered to your inbox.</p>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent">
+                        <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded-3xl transition-all">Subscribe</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="bg-primary text-snow py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Apply night mode
+        $watch('nightMode', value => {
+            if (value) {
+                document.body.classList.add('night-mode');
+            } else {
+                document.body.classList.remove('night-mode');
+            }
+        });
+    </script>
+</body>
+</html>

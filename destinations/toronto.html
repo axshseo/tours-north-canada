@@ -17,7 +17,8 @@
                     colors: {
                         primary: '#064e3b',
                         accent: '#b91c1c',
-                        snow: '#f9fafb'
+                        snow: '#f8fafc',
+                        electric: '#3b82f6'
                     },
                     fontFamily: {
                         'inter': ['Inter', 'sans-serif'],
@@ -36,9 +37,25 @@
             font-family: 'Syne', sans-serif;
         }
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .night-mode {
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+        .night-mode .glassmorphism {
+            background: rgba(26, 26, 26, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .lift-3d {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        .lift-3d:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         .marquee {
             animation: scroll 20s linear infinite;
