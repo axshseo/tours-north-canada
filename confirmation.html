@@ -81,7 +81,7 @@
             <div class="bg-gradient-to-r from-[#064e3b] to-[#0a5a47] rounded-2xl p-8 text-white">
                 <div class="text-center mb-6">
                     <h2 class="text-3xl font-bold mb-2 font-syne">Share the North</h2>
-                    <p class="text-xl opacity-90">Give a friend <span class="font-bold text-yellow-300">$20 off</span>, get <span class="font-bold text-yellow-300">$20 in credits</span></p>
+                    <p class="text-xl opacity-90">Invite a friend to the North. They get <span class="font-bold text-yellow-300">$25 off</span> their first tour, and you get <span class="font-bold text-yellow-300">$25 in credits</span>.</p>
                 </div>
 
                 <!-- Referral Link -->
@@ -179,15 +179,22 @@
 
         // WhatsApp share functionality
         function shareOnWhatsApp() {
-            const message = encodeURIComponent("Just booked an amazing tour with Tours North! Use my referral link to get $20 off: https://toursnorth.ca/referral/TN2026-ABC123");
+            const message = encodeURIComponent("Just booked an amazing tour with Tours North! Use my referral link to get $25 off: https://toursnorth.ca/referral/TN2026-ABC123");
             const whatsappUrl = `https://wa.me/?text=${message}`;
             window.open(whatsappUrl, '_blank');
+        }
+
+        // iMessage share functionality
+        function shareOniMessage() {
+            const message = "Just booked an amazing tour with Tours North! Use my referral link to get $25 off: https://toursnorth.ca/referral/TN2026-ABC123";
+            const imessageUrl = `sms:&body=${encodeURIComponent(message)}`;
+            window.open(imessageUrl, '_blank');
         }
 
         // Instagram Stories share functionality
         function shareOnInstagram() {
             // Copy share text to clipboard
-            const shareText = "Just booked an amazing tour with Tours North! Use my referral link to get $20 off: https://toursnorth.ca/referral/TN2026-ABC123";
+            const shareText = "Just booked an amazing tour with Tours North! Use my referral link to get $25 off: https://toursnorth.ca/referral/TN2026-ABC123";
             navigator.clipboard.writeText(shareText).then(() => {
                 // Open Instagram
                 window.open('instagram://story-camera', '_blank') ||
