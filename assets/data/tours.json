@@ -1,102 +1,38 @@
 [
   {
-    "id": "banff-gondola-001",
-    "name": "Banff Gondola Mountain Experience",
-    "city": "Banff",
-    "price": 64.95,
-    "rating": 4.8,
-    "affiliate_link": "https://www.banffgondola.com",
-    "inventory_count": 45,
-    "status": "available"
-  },
-  {
-    "id": "toronto-cn-tower-002",
-    "name": "Toronto CN Tower EdgeWalk",
+    "id": "toronto-cn-tower",
+    "name": "CN Tower EdgeWalk Experience",
     "city": "Toronto",
-    "price": 195.00,
+    "price": 45,
     "rating": 4.9,
-    "affiliate_link": "https://www.edgewalkcntower.ca",
-    "inventory_count": 28,
-    "status": "available"
+    "category": "Icons",
+    "url": "tours/toronto-cn-tower-edgewalk.html",
+    "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44",
+    "security_level": "Premium Certified",
+    "inventory": 4
   },
   {
-    "id": "yukon-aurora-003",
+    "id": "yukon-aurora",
     "name": "Yukon Aurora Expedition",
     "city": "Yukon",
-    "price": 299.00,
-    "rating": 4.7,
-    "affiliate_link": "https://www.yukon-aurora-tours.com",
-    "inventory_count": 15,
-    "status": "available"
+    "price": 299,
+    "rating": 4.8,
+    "category": "Adventure",
+    "url": "tours/yukon-aurora-expedition.html",
+    "image": "https://images.unsplash.com/photo-1531366930499-41f53c1753c1",
+    "security_level": "Arctic Safety Standard",
+    "inventory": 12
   },
   {
-    "id": "niagara-boat-004",
+    "id": "niagara-boat",
     "name": "Niagara Falls Boat Tour",
     "city": "Niagara",
-    "price": 89.00,
-    "rating": 4.6,
-    "affiliate_link": "https://www.niagaracruises.com",
-    "inventory_count": 62,
-    "status": "available"
-  },
-  {
-    "id": "whistler-ski-005",
-    "name": "Whistler Ski Lesson Package",
-    "city": "Whistler",
-    "price": 149.00,
-    "rating": 4.5,
-    "affiliate_link": "https://www.whistlerblackcomb.com",
-    "inventory_count": 33,
-    "status": "sold out"
-  },
-  {
-    "id": "jasper-wildlife-006",
-    "name": "Jasper National Park Wildlife Tour",
-    "city": "Jasper",
-    "price": 99.00,
-    "rating": 4.8,
-    "affiliate_link": "https://www.jasperwildlife.com",
-    "inventory_count": 41,
-    "status": "available"
-  },
-  {
-    "id": "vancouver-whale-007",
-    "name": "Vancouver Whale Watching Adventure",
-    "city": "Vancouver",
-    "price": 149.00,
+    "price": 35,
     "rating": 4.7,
-    "affiliate_link": "https://www.vancouverwhales.com",
-    "inventory_count": 24,
-    "status": "available"
-  },
-  {
-    "id": "toronto-art-008",
-    "name": "Toronto Art Gallery of Ontario Tour",
-    "city": "Toronto",
-    "price": 45.00,
-    "rating": 4.4,
-    "affiliate_link": "https://www.ago.ca",
-    "inventory_count": 78,
-    "status": "sold out"
-  },
-  {
-    "id": "banff-hot-springs-009",
-    "name": "Banff Upper Hot Springs Experience",
-    "city": "Banff",
-    "price": 39.95,
-    "rating": 4.3,
-    "affiliate_link": "https://www.hotsprings.ca",
-    "inventory_count": 89,
-    "status": "available"
-  },
-  {
-    "id": "yukon-dog-sled-010",
-    "name": "Yukon Dog Sledding Adventure",
-    "city": "Yukon",
-    "price": 225.00,
-    "rating": 4.9,
-    "affiliate_link": "https://www.yukondogsled.com",
-    "inventory_count": 12,
-    "status": "available"
+    "category": "Must-See",
+    "url": "tours/niagara-falls-boat-tour.html",
+    "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e",
+    "security_level": "Verified",
+    "inventory": 2
   }
 ]
