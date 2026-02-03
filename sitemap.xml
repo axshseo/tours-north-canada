@@ -8,15 +8,75 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Toronto Hub -->
+  <!-- Core Pages -->
+  <url>
+    <loc>https://toursnorth.com/about-us.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/contact.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/privacy-policy.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/partners.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Destinations (Priority: 0.9 - Hub Pages) -->
+  <url>
+    <loc>https://toursnorth.com/destinations/banff.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/destinations/halifax.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/destinations/jasper.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/destinations/montreal.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://toursnorth.com/destinations/toronto.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Yukon Hub -->
+  <url>
+    <loc>https://toursnorth.com/destinations/vancouver.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/destinations/whistler.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <url>
     <loc>https://toursnorth.com/destinations/yukon-arctic.html</loc>
     <lastmod>2024-10-01</lastmod>
@@ -24,33 +84,69 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Blog/Journal -->
+  <!-- Tours (Priority: 0.8 - Product Pages) -->
   <url>
-    <loc>https://toursnorth.com/blog/index.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/blog/article-template-complete.html</loc>
+    <loc>https://toursnorth.com/tours/niagara-falls-boat-tour.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toursnorth.com/blog/article-template.html</loc>
+    <loc>https://toursnorth.com/tours/toronto-art-gallery-ago.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://toursnorth.com/journal/index.html</loc>
+    <loc>https://toursnorth.com/tours/toronto-casa-loma-castle.html</loc>
     <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/toronto-cn-tower-edgewalk.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/toronto-hockey-hall-of-fame.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/toronto-ripleys-aquarium.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/toronto-rom-museum.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/toronto-sign-city-hall.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/whistler-ski-lesson.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://toursnorth.com/tours/yukon-aurora-expedition.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Guides -->
+  <!-- Guides (Priority: 0.7 - Content Pages) -->
   <url>
     <loc>https://toursnorth.com/guides/best-time-to-visit-canada.html</loc>
     <lastmod>2024-10-01</lastmod>
@@ -64,133 +160,39 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Tours -->
+  <!-- Blog/Journal Content -->
   <url>
-    <loc>https://toursnorth.com/tours/niagara-falls-boat-tour.html</loc>
+    <loc>https://toursnorth.com/blog/index.html</loc>
     <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://toursnorth.com/tours/product-template.html</loc>
+    <loc>https://toursnorth.com/journal/index.html</loc>
     <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-art-gallery-ago.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-casa-loma-castle.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-cn-tower-edgewalk.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-hockey-hall-of-fame.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-ripleys-aquarium.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-rom-museum.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/toronto-sign-city-hall.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/whistler-ski-lesson.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/yukon-aurora-expedition.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
 
-  <!-- Placeholder Tour Pages (to make 20 total) -->
+  <!-- Partner/Dashboard Pages -->
   <url>
-    <loc>https://toursnorth.com/tours/tour1.html</loc>
+    <loc>https://toursnorth.com/partners/dashboard.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- Checkout/Conversion Pages -->
+  <url>
+    <loc>https://toursnorth.com/checkout.html</loc>
+    <lastmod>2024-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://toursnorth.com/tours/tour2.html</loc>
+    <loc>https://toursnorth.com/confirmation.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour3.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour4.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour5.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour6.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour7.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour8.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour9.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/tours/tour10.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
 </urlset>

@@ -259,12 +259,25 @@ document.addEventListener('DOMContentLoaded', () => {
             ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
             : 'bg-[#b91c1c] hover:bg-red-700 text-white';
 
+        // Urgency badge for low inventory
+        const urgencyBadge = (tour.inventory < 5 && tour.inventory > 0)
+            ? `<span class="bg-[#b91c1c] text-white px-2 py-1 rounded-full text-xs font-bold ml-2">Only ${tour.inventory} spots left!</span>`
+            : '';
+
+        // Security shield icon
+        const securityIcon = tour.security_level
+            ? '<svg class="w-4 h-4 text-[#064e3b] ml-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
+            : '';
+
         const cardHtml = `
             <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300&h=200" alt="${tour.name}" class="w-full h-48 object-cover">
+                <img src="${tour.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300&h=200'}" alt="${tour.name}" class="w-full h-48 object-cover">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
-                        <h3 class="text-xl font-bold text-[#064e3b]">${tour.name}</h3>
+                        <div class="flex items-center">
+                            <h3 class="text-xl font-bold text-[#064e3b]">${tour.name}</h3>
+                            ${securityIcon}
+                        </div>
                         <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">Verified</span>
                     </div>
                     <div class="flex items-center mb-2">
@@ -272,11 +285,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="text-sm text-gray-600 ml-2">(${tour.rating})</span>
                     </div>
                     <div class="text-sm text-gray-600 mb-4">
-                        <span class="font-semibold">${tour.city}</span> • ${tour.inventory_count} spots available
+                        <span class="font-semibold">${tour.city}</span> • ${tour.inventory} spots available
+                        ${urgencyBadge}
                     </div>
                     <div class="flex items-center justify-between">
                         <p class="text-[#b91c1c] font-bold">From $${tour.price} CAD</p>
-                        <button onclick="${isSoldOut ? 'alert(\'Added to waitlist!\')' : `window.open('${tour.affiliate_link}', '_blank')`}"
+                        <button onclick="${isSoldOut ? 'alert(\'Added to waitlist!\')' : `window.open('${tour.url}', '_blank')`} "
                                 class="px-4 py-2 rounded-full font-bold transition-colors ${buttonClass}">
                             ${buttonText}
                         </button>
