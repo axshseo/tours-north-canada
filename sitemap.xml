@@ -2,86 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Home Page -->
   <url>
-    <loc>https://toursnorth.com/index.html</loc>
+    <loc>https://toursnorth.com/</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Main Pages -->
-  <url>
-    <loc>https://toursnorth.com/about-us.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/contact.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/privacy-policy.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/sitemap.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Destinations -->
+  <!-- Toronto Hub -->
   <url>
     <loc>https://toursnorth.com/destinations/toronto.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/vancouver.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/banff.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/montreal.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/halifax.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/jasper.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://toursnorth.com/destinations/whistler.html</loc>
-    <lastmod>2024-10-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
+  <!-- Yukon Hub -->
   <url>
     <loc>https://toursnorth.com/destinations/yukon-arctic.html</loc>
     <lastmod>2024-10-01</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 
   <!-- Blog/Journal -->
