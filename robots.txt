@@ -1,0 +1,62 @@
+# Robots.txt for Tours North - 2026 Travel Platform
+# Optimized for AI search bots and SEO while protecting sensitive areas
+
+User-agent: *
+Allow: /
+
+# Allow AI search bots to crawl Travel Hacks content
+User-agent: GPTBot
+Allow: /guides/
+Allow: /journal/
+Allow: /blog/
+Disallow: /partners/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /guides/
+Allow: /journal/
+Allow: /blog/
+Disallow: /partners/
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /guides/
+Allow: /journal/
+Allow: /blog/
+Disallow: /partners/
+Disallow: /admin/
+Disallow: /api/
+
+# Allow major search engines full access
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block sensitive areas from all bots
+User-agent: *
+Disallow: /partners/dashboard.html
+Disallow: /partners/dashboard/
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout.html
+Disallow: /confirmation.html
+Disallow: /assets/data/
+Disallow: /assets/js/conversion-popups.js
+Disallow: /assets/js/fomo.js
+
+# Allow access to sitemap
+Allow: /sitemap.xml
+Allow: /sitemap.html
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://toursnorth.ca/sitemap.xml
