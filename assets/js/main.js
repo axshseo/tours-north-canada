@@ -195,152 +195,149 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 
-// AI Support Concierge UI Component
+// Dynamic Component Loader for Tours North
 (function() {
     'use strict';
 
-    // Create the chat bubble
-    function createChatBubble() {
-        const chatBubble = document.createElement('div');
-        chatBubble.className = 'ai-concierge-bubble fixed bottom-6 right-6 z-50';
-        chatBubble.innerHTML = `
-            <button onclick="openAIConcierge()" class="bg-[#064e3b] hover:bg-[#053a2e] text-white p-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 group">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                </svg>
-                <div class="absolute -top-1 -right-1 w-3 h-3 bg-[#b91c1c] rounded-full animate-pulse"></div>
-            </button>
-        `;
-        document.body.appendChild(chatBubble);
+    // Configuration
+    const TOURS_JSON_URL = 'assets/data/tours.json';
+    const MAX_BESTSELLERS = 4;
+
+    // Fetch tours data from JSON file
+    async function fetchToursData() {
+        try {
+            const response = await fetch(TOURS_JSON_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const tours = await response.json();
+            return tours;
+        } catch (error) {
+            console.error('Error fetching tours data:', error);
+            return null;
+        }
     }
 
-    // Open AI Concierge chat window
-    window.openAIConcierge = function() {
-        // Remove existing chat window
-        const existingChat = document.querySelector('.ai-concierge-chat');
-        if (existingChat) {
-            existingChat.remove();
+    // Sort tours by rating (highest first) and return top N
+    function getTopRatedTours(tours, count = MAX_BESTSELLERS) {
+        return tours
+            .sort((a, b) => b.rating - a.rating)
+            .slice(0, count);
+    }
+
+    // Generate star rating HTML
+    function generateStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+        let starsHtml = '';
+
+        // Full stars
+        for (let i = 0; i < fullStars; i++) {
+            starsHtml += '<svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+        }
+
+        // Half star
+        if (hasHalfStar) {
+            starsHtml += '<svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" clip-path="polygon(0 0, 50% 0, 50% 100%, 0% 100%)"/></svg>';
+        }
+
+        // Empty stars
+        for (let i = 0; i < emptyStars; i++) {
+            starsHtml += '<svg class="w-4 h-4 text-gray-300 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+        }
+
+        return starsHtml;
+    }
+
+    // Generate tour card HTML
+    function generateTourCard(tour) {
+        const isSoldOut = tour.status === 'sold out';
+        const buttonText = isSoldOut ? 'Join Waitlist' : 'Book Now';
+        const buttonClass = isSoldOut
+            ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+            : 'bg-[#b91c1c] hover:bg-red-700 text-white';
+
+        const cardHtml = `
+            <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300&h=200" alt="${tour.name}" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-bold text-[#064e3b]">${tour.name}</h3>
+                        <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">Verified</span>
+                    </div>
+                    <div class="flex items-center mb-2">
+                        ${generateStarRating(tour.rating)}
+                        <span class="text-sm text-gray-600 ml-2">(${tour.rating})</span>
+                    </div>
+                    <div class="text-sm text-gray-600 mb-4">
+                        <span class="font-semibold">${tour.city}</span> • ${tour.inventory_count} spots available
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <p class="text-[#b91c1c] font-bold">From $${tour.price} CAD</p>
+                        <button onclick="${isSoldOut ? 'alert(\'Added to waitlist!\')' : `window.open('${tour.affiliate_link}', '_blank')`}"
+                                class="px-4 py-2 rounded-full font-bold transition-colors ${buttonClass}">
+                            ${buttonText}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        return cardHtml;
+    }
+
+    // Populate the bestsellers section
+    function populateBestsellersSection(tours) {
+        const container = document.querySelector('.bestsellers-container');
+        if (!container) {
+            console.error('Bestsellers container not found');
             return;
         }
 
-        const chatWindow = document.createElement('div');
-        chatWindow.className = 'ai-concierge-chat fixed bottom-24 right-6 z-50 bg-white rounded-2xl shadow-2xl border border-gray-200 w-80 h-96 transition-all duration-300';
-        chatWindow.innerHTML = `
-            <div class="flex flex-col h-full">
-                <!-- Header -->
-                <div class="bg-[#064e3b] text-white p-4 rounded-t-2xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423L16.5 15.75l.394 1.183a2.25 2.25 0 001.423 1.423L19.5 18.75l-1.183.394a2.25 2.25 0 00-1.423 1.423z"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="font-semibold font-syne">Tours North AI Concierge</h3>
-                            <p class="text-xs opacity-75">Ask me anything about Canada travel</p>
-                        </div>
-                    </div>
-                    <button onclick="closeAIConcierge()" class="text-white/70 hover:text-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        const topTours = getTopRatedTours(tours);
+        const cardsHtml = topTours.map(tour => generateTourCard(tour)).join('');
+
+        container.innerHTML = cardsHtml;
+    }
+
+    // Show error message
+    function showErrorMessage() {
+        const container = document.querySelector('.bestsellers-container');
+        if (container) {
+            container.innerHTML = `
+                <div class="flex items-center justify-center w-full py-12">
+                    <div class="text-center">
+                        <svg class="w-12 h-12 text-red-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
                         </svg>
-                    </button>
-                </div>
-
-                <!-- Messages -->
-                <div class="flex-1 p-4 overflow-y-auto bg-gray-50">
-                    <div class="space-y-4">
-                        <!-- AI Welcome Message -->
-                        <div class="flex items-start space-x-3">
-                            <div class="w-8 h-8 bg-[#064e3b] rounded-full flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"></path>
-                                </svg>
-                            </div>
-                            <div class="bg-white rounded-lg p-3 shadow-sm max-w-xs">
-                                <p class="text-sm text-gray-800">Hi! I'm your AI travel concierge. How can I help you plan your Canadian adventure?</p>
-                            </div>
-                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Unable to Load Tours</h3>
+                        <p class="text-gray-600">Please refresh the page to try again.</p>
                     </div>
-                </div>
-
-                <!-- Suggested Questions -->
-                <div class="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
-                    <p class="text-xs text-gray-600 mb-3">Quick questions:</p>
-                    <div class="grid grid-cols-1 gap-2">
-                        <button onclick="askQuestion('visa')" class="text-left p-2 text-xs bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                            Do I need a visa?
-                        </button>
-                        <button onclick="askQuestion('lights')" class="text-left p-2 text-xs bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                            Best time for Northern Lights?
-                        </button>
-                        <button onclick="askQuestion('currency')" class="text-left p-2 text-xs bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                            Currency exchange tips?
-                        </button>
-                        <button onclick="askQuestion('packing')" class="text-left p-2 text-xs bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
-                            What to pack for winter?
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(chatWindow);
-    };
-
-    // Close AI Concierge chat window
-    window.closeAIConcierge = function() {
-        const chatWindow = document.querySelector('.ai-concierge-chat');
-        if (chatWindow) {
-            chatWindow.remove();
-        }
-    };
-
-    // Handle suggested questions
-    window.askQuestion = function(questionType) {
-        const responses = {
-            visa: "For most visitors, you can travel to Canada visa-free for up to 6 months. Check our visa guide for your specific situation: https://toursnorth.ca/guides/canada-travel-visa-guide.html",
-            lights: "The best time for Northern Lights is September to April, with peak viewing from October to March. Our Yukon Aurora Expedition runs year-round!",
-            currency: "Canada uses CAD. Most places accept cards, but carry some cash for small purchases. Exchange rates are usually good at major airports.",
-            packing: "For winter tours: thermal layers, waterproof boots, insulated jacket, gloves, hat, and sunglasses. We provide some gear, but bring your own basics."
-        };
-
-        const messagesContainer = document.querySelector('.ai-concierge-chat .space-y-4');
-
-        // Add user message
-        const userMessage = document.createElement('div');
-        userMessage.className = 'flex items-end justify-end space-x-3';
-        userMessage.innerHTML = `
-            <div class="bg-[#064e3b] text-white rounded-lg p-3 shadow-sm max-w-xs">
-                <p class="text-sm">${questionType === 'visa' ? 'Do I need a visa?' :
-                                   questionType === 'lights' ? 'Best time for Northern Lights?' :
-                                   questionType === 'currency' ? 'Currency exchange tips?' :
-                                   'What to pack for winter?'}</p>
-            </div>
-        `;
-        messagesContainer.appendChild(userMessage);
-
-        // Add AI response after delay
-        setTimeout(() => {
-            const aiMessage = document.createElement('div');
-            aiMessage.className = 'flex items-start space-x-3';
-            aiMessage.innerHTML = `
-                <div class="w-8 h-8 bg-[#064e3b] rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"></path>
-                    </svg>
-                </div>
-                <div class="bg-white rounded-lg p-3 shadow-sm max-w-xs">
-                    <p class="text-sm text-gray-800">${responses[questionType]}</p>
                 </div>
             `;
-            messagesContainer.appendChild(aiMessage);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 1000);
-    };
+        }
+    }
+
+    // Initialize dynamic component loader
+    async function initDynamicLoader() {
+        try {
+            const toursData = await fetchToursData();
+            if (toursData && Array.isArray(toursData)) {
+                populateBestsellersSection(toursData);
+            } else {
+                showErrorMessage();
+            }
+        } catch (error) {
+            console.error('Failed to initialize dynamic loader:', error);
+            showErrorMessage();
+        }
+    }
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        createChatBubble();
+        initDynamicLoader();
     });
 
 })();

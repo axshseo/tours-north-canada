@@ -6,7 +6,8 @@
     "price": 64.95,
     "rating": 4.8,
     "affiliate_link": "https://www.banffgondola.com",
-    "inventory_count": 45
+    "inventory_count": 45,
+    "status": "available"
   },
   {
     "id": "toronto-cn-tower-002",
@@ -15,7 +16,8 @@
     "price": 195.00,
     "rating": 4.9,
     "affiliate_link": "https://www.edgewalkcntower.ca",
-    "inventory_count": 28
+    "inventory_count": 28,
+    "status": "available"
   },
   {
     "id": "yukon-aurora-003",
@@ -24,7 +26,8 @@
     "price": 299.00,
     "rating": 4.7,
     "affiliate_link": "https://www.yukon-aurora-tours.com",
-    "inventory_count": 15
+    "inventory_count": 15,
+    "status": "available"
   },
   {
     "id": "niagara-boat-004",
@@ -33,7 +36,8 @@
     "price": 89.00,
     "rating": 4.6,
     "affiliate_link": "https://www.niagaracruises.com",
-    "inventory_count": 62
+    "inventory_count": 62,
+    "status": "available"
   },
   {
     "id": "whistler-ski-005",
@@ -42,7 +46,8 @@
     "price": 149.00,
     "rating": 4.5,
     "affiliate_link": "https://www.whistlerblackcomb.com",
-    "inventory_count": 33
+    "inventory_count": 33,
+    "status": "sold out"
   },
   {
     "id": "jasper-wildlife-006",
@@ -51,7 +56,8 @@
     "price": 99.00,
     "rating": 4.8,
     "affiliate_link": "https://www.jasperwildlife.com",
-    "inventory_count": 41
+    "inventory_count": 41,
+    "status": "available"
   },
   {
     "id": "vancouver-whale-007",
@@ -60,7 +66,8 @@
     "price": 149.00,
     "rating": 4.7,
     "affiliate_link": "https://www.vancouverwhales.com",
-    "inventory_count": 24
+    "inventory_count": 24,
+    "status": "available"
   },
   {
     "id": "toronto-art-008",
@@ -69,7 +76,8 @@
     "price": 45.00,
     "rating": 4.4,
     "affiliate_link": "https://www.ago.ca",
-    "inventory_count": 78
+    "inventory_count": 78,
+    "status": "sold out"
   },
   {
     "id": "banff-hot-springs-009",
@@ -78,7 +86,8 @@
     "price": 39.95,
     "rating": 4.3,
     "affiliate_link": "https://www.hotsprings.ca",
-    "inventory_count": 89
+    "inventory_count": 89,
+    "status": "available"
   },
   {
     "id": "yukon-dog-sled-010",
@@ -87,6 +96,7 @@
     "price": 225.00,
     "rating": 4.9,
     "affiliate_link": "https://www.yukondogsled.com",
-    "inventory_count": 12
+    "inventory_count": 12,
+    "status": "available"
   }
 ]
