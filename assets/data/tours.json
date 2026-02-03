@@ -1,0 +1,92 @@
+[
+  {
+    "id": "banff-gondola-001",
+    "name": "Banff Gondola Mountain Experience",
+    "city": "Banff",
+    "price": 64.95,
+    "rating": 4.8,
+    "affiliate_link": "https://www.banffgondola.com",
+    "inventory_count": 45
+  },
+  {
+    "id": "toronto-cn-tower-002",
+    "name": "Toronto CN Tower EdgeWalk",
+    "city": "Toronto",
+    "price": 195.00,
+    "rating": 4.9,
+    "affiliate_link": "https://www.edgewalkcntower.ca",
+    "inventory_count": 28
+  },
+  {
+    "id": "yukon-aurora-003",
+    "name": "Yukon Aurora Expedition",
+    "city": "Yukon",
+    "price": 299.00,
+    "rating": 4.7,
+    "affiliate_link": "https://www.yukon-aurora-tours.com",
+    "inventory_count": 15
+  },
+  {
+    "id": "niagara-boat-004",
+    "name": "Niagara Falls Boat Tour",
+    "city": "Niagara",
+    "price": 89.00,
+    "rating": 4.6,
+    "affiliate_link": "https://www.niagaracruises.com",
+    "inventory_count": 62
+  },
+  {
+    "id": "whistler-ski-005",
+    "name": "Whistler Ski Lesson Package",
+    "city": "Whistler",
+    "price": 149.00,
+    "rating": 4.5,
+    "affiliate_link": "https://www.whistlerblackcomb.com",
+    "inventory_count": 33
+  },
+  {
+    "id": "jasper-wildlife-006",
+    "name": "Jasper National Park Wildlife Tour",
+    "city": "Jasper",
+    "price": 99.00,
+    "rating": 4.8,
+    "affiliate_link": "https://www.jasperwildlife.com",
+    "inventory_count": 41
+  },
+  {
+    "id": "vancouver-whale-007",
+    "name": "Vancouver Whale Watching Adventure",
+    "city": "Vancouver",
+    "price": 149.00,
+    "rating": 4.7,
+    "affiliate_link": "https://www.vancouverwhales.com",
+    "inventory_count": 24
+  },
+  {
+    "id": "toronto-art-008",
+    "name": "Toronto Art Gallery of Ontario Tour",
+    "city": "Toronto",
+    "price": 45.00,
+    "rating": 4.4,
+    "affiliate_link": "https://www.ago.ca",
+    "inventory_count": 78
+  },
+  {
+    "id": "banff-hot-springs-009",
+    "name": "Banff Upper Hot Springs Experience",
+    "city": "Banff",
+    "price": 39.95,
+    "rating": 4.3,
+    "affiliate_link": "https://www.hotsprings.ca",
+    "inventory_count": 89
+  },
+  {
+    "id": "yukon-dog-sled-010",
+    "name": "Yukon Dog Sledding Adventure",
+    "city": "Yukon",
+    "price": 225.00,
+    "rating": 4.9,
+    "affiliate_link": "https://www.yukondogsled.com",
+    "inventory_count": 12
+  }
+]

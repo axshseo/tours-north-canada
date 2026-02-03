@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - Tours North</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+
+        /* Booking Confirmed Animation */
+        @keyframes checkmark {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .checkmark-animation {
+            animation: checkmark 0.8s ease-out;
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-snow">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl w-full space-y-8">
+
+            <!-- Booking Confirmed Animation -->
+            <div class="text-center">
+                <div class="checkmark-animation mb-6">
+                    <div class="pulse-animation inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full">
+                        <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="text-4xl font-bold text-[#064e3b] mb-2 font-syne">Booking Confirmed!</h1>
+                <p class="text-xl text-gray-600">Thank you for choosing Tours North. Your adventure awaits!</p>
+            </div>
+
+            <!-- Booking Details -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-semibold text-[#064e3b] mb-6 font-syne">Booking Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Tour Information</h3>
+                        <p class="text-gray-600"><strong>Tour:</strong> Niagara Falls Boat Tour</p>
+                        <p class="text-gray-600"><strong>Date:</strong> December 15, 2026</p>
+                        <p class="text-gray-600"><strong>Time:</strong> 2:00 PM</p>
+                        <p class="text-gray-600"><strong>Guests:</strong> 2 Adults</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Contact Information</h3>
+                        <p class="text-gray-600"><strong>Name:</strong> John Doe</p>
+                        <p class="text-gray-600"><strong>Email:</strong> john.doe@email.com</p>
+                        <p class="text-gray-600"><strong>Phone:</strong> +1 (416) 555-0123</p>
+                        <p class="text-gray-600"><strong>Booking ID:</strong> TN2026-ABC123</p>
+                    </div>
+                </div>
+                <div class="border-t pt-6 mt-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-semibold text-gray-900">Total Paid:</span>
+                        <span class="text-2xl font-bold text-[#b91c1c]">$149.00 CAD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share the North Referral Block -->
+            <div class="bg-gradient-to-r from-[#064e3b] to-[#0a5a47] rounded-2xl p-8 text-white">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold mb-2 font-syne">Share the North</h2>
+                    <p class="text-xl opacity-90">Give a friend <span class="font-bold text-yellow-300">$20 off</span>, get <span class="font-bold text-yellow-300">$20 in credits</span></p>
+                </div>
+
+                <!-- Referral Link -->
+                <div class="bg-white/10 rounded-lg p-4 mb-6">
+                    <p class="text-sm opacity-75 mb-2">Your referral link:</p>
+                    <div class="flex items-center space-x-3">
+                        <input type="text" value="https://toursnorth.ca/referral/TN2026-ABC123" readonly class="flex-1 bg-white/20 border border-white/30 rounded-lg px-4 py-2 text-white placeholder-white/50" id="referral-link">
+                        <button onclick="copyReferralLink()" class="bg-[#b91c1c] hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors font-semibold">
+                            Copy Link
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Social Share Buttons -->
+                <div class="text-center">
+                    <p class="text-sm opacity-75 mb-4">Share on social media:</p>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="shareOnWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white p-3 rounded-full transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                            </svg>
+                        </button>
+                        <button onclick="shareOnInstagram()" class="bg-pink-600 hover:bg-pink-700 text-white p-3 rounded-full transition-colors">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.017 0C8.396 0 7.996.014 6.79.067 5.584.12 4.775.302 4.082.566c-.726.283-1.34.658-1.95 1.267C1.523 2.442 1.148 3.056.865 3.782c-.264.693-.446 1.502-.5 2.708C.314 7.996.3 8.396.3 12.017s.014 4.021.067 5.227c.054 1.206.236 2.015.5 2.708.283.726.658 1.34 1.267 1.95.61.61 1.224.984 1.95 1.267.693.264 1.502.446 2.708.5C7.996 23.686 8.396 23.7 12.017 23.7s4.021-.014 5.227-.067c1.206-.054 2.015-.236 2.708-.5.726-.283 1.34-.658 1.95-1.267.61-.61.984-1.224 1.267-1.95.264-.693.446-1.502.5-2.708.053-1.206.067-1.606.067-5.227s-.014-4.021-.067-5.227c-.054-1.206-.236-2.015-.5-2.708-.283-.726-.658-1.34-1.267-1.95-.61-.61-1.224-.984-1.95-1.267-.693-.264-1.502-.446-2.708-.5C16.038.314 15.638.3 12.017.3zM12.017 2.1c3.537 0 3.957.013 5.356.066 1.303.048 2.003.22 2.468.366.613.192 1.05.42 1.51.88.46.46.688.897.88 1.51.146.465.318 1.165.366 2.468.053 1.399.066 1.819.066 5.356s-.013 3.957-.066 5.356c-.048 1.303-.22 2.003-.366 2.468-.192.613-.42 1.05-.88 1.51-.46.46-.897.688-1.51.88-.465.146-1.165.318-2.468.366-1.399.053-1.819.066-5.356.066s-3.957-.013-5.356-.066c-1.303-.048-2.003-.22-2.468-.366-.613-.192-1.05-.42-1.51-.88-.46-.46-.688-.897-.88-1.51-.146-.465-.318-1.165-.366-2.468C2.08 8.974 2.067 8.554 2.067 5.017s.013-3.957.066-5.356c.048-1.303.22-2.003.366-2.468.192-.613.42-1.05.88-1.51.46-.46.897-.688 1.51-.88.465-.146 1.165-.318 2.468-.366C8.06 2.113 8.48 2.1 12.017 2.1zM12.017 6.6a5.417 5.417 0 100 10.834 5.417 5.417 0 000-10.834zm0 8.934a3.517 3.517 0 110-7.034 3.517 3.517 0 010 7.034zm5.884-8.734a1.264 1.264 0 11-2.528 0 1.264 1.264 0 012.528 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What's Next -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h2 class="text-2xl font-semibold text-[#064e3b] mb-6 font-syne">What's Next?</h2>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-[#064e3b] rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">1</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Check Your Email</h3>
+                            <p class="text-gray-600">You'll receive a confirmation email with all booking details and what to bring.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-[#064e3b] rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">2</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Prepare for Your Adventure</h3>
+                            <p class="text-gray-600">Review the tour details and make sure you have appropriate clothing and gear.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-[#064e3b] rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">3</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Arrive Early</h3>
+                            <p class="text-gray-600">Arrive at the meeting point 15 minutes early to ensure a smooth start to your tour.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explore More Tours -->
+            <div class="text-center">
+                <a href="index.html" class="inline-block bg-[#b91c1c] hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 transform hover:scale-105">
+                    Explore More Tours
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Copy referral link functionality
+        function copyReferralLink() {
+            const linkInput = document.getElementById('referral-link');
+            linkInput.select();
+            document.execCommand('copy');
+
+            // Visual feedback
+            const button = event.target;
+            const originalText = button.innerText;
+            button.innerText = 'Copied!';
+            button.classList.add('bg-green-600', 'hover:bg-green-700');
+            button.classList.remove('bg-[#b91c1c]', 'hover:bg-red-700');
+
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.classList.remove('bg-green-600', 'hover:bg-green-700');
+                button.classList.add('bg-[#b91c1c]', 'hover:bg-red-700');
+            }, 2000);
+        }
+
+        // WhatsApp share functionality
+        function shareOnWhatsApp() {
+            const message = encodeURIComponent("Just booked an amazing tour with Tours North! Use my referral link to get $20 off: https://toursnorth.ca/referral/TN2026-ABC123");
+            const whatsappUrl = `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Instagram Stories share functionality
+        function shareOnInstagram() {
+            // Copy share text to clipboard
+            const shareText = "Just booked an amazing tour with Tours North! Use my referral link to get $20 off: https://toursnorth.ca/referral/TN2026-ABC123";
+            navigator.clipboard.writeText(shareText).then(() => {
+                // Open Instagram
+                window.open('instagram://story-camera', '_blank') ||
+                window.open('https://www.instagram.com/create/story/', '_blank');
+
+                // Show feedback
+                alert('Share text copied! Open Instagram Stories to paste and share.');
+            });
+        }
+    </script>
+</body>
+</html>

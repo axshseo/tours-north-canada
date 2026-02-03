@@ -1,48 +1,34 @@
-// Tours North Fuzzy Search Engine
-// Provides real-time search suggestions for Toronto attractions
+// Tours North Data-Driven Search Engine
+// Fetches tour data from tours.json and provides real-time search suggestions
 
 (function() {
     'use strict';
 
-    // Array of 30 Toronto attractions with search data
-    const torontoAttractions = [
-        { name: 'Art Gallery of Ontario (AGO)', price: '$45', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-art-gallery-ago.html' },
-        { name: 'Hockey Hall of Fame', price: '$35', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-hockey-hall-of-fame.html' },
-        { name: 'Casa Loma Castle', price: '$30', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-casa-loma-castle.html' },
-        { name: 'CN Tower EdgeWalk', price: '$195', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-cn-tower-edgewalk.html' },
-        { name: 'Ripley\'s Aquarium', price: '$40', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-ripleys-aquarium.html' },
-        { name: 'Royal Ontario Museum (ROM)', price: '$25', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-rom-museum.html' },
-        { name: 'City Hall Sign', price: '$15', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: 'tours/toronto-sign-city-hall.html' },
-        { name: 'Toronto Islands Ferry', price: '$8', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Distillery District Walking Tour', price: '$20', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'High Park Nature Walk', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Kensington Market Food Tour', price: '$50', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'St. Lawrence Market', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Graffiti Alley Street Art', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Toronto Islands Bike Rental', price: '$12', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Leslieville Neighborhood Tour', price: '$25', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Trinity Bellwoods Park', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Queen Street West Shopping', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'The Beaches Boardwalk', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Evergreen Brick Works', price: '$15', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Bluffers Park & Quarry', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Toronto Islands Centreville', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'The Junction Neighborhood', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Roncesvalles Village', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Cabbagetown Historic District', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'The Danforth (Greektown)', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Yorkville Fashion District', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Financial District Architecture', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Harbourfront Centre', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Don Valley Trails', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' },
-        { name: 'Tommy Thompson Park', price: '$0', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300&h=200', url: '#' }
-    ];
-
+    let toursData = [];
     let searchTimeout;
     let currentModal = null;
 
+    // Load tours data from JSON file
+    async function loadToursData() {
+        try {
+            const response = await fetch('assets/data/tours.json');
+            if (!response.ok) {
+                throw new Error('Failed to load tours data');
+            }
+            toursData = await response.json();
+            console.log('Loaded', toursData.length, 'tours from data file');
+        } catch (error) {
+            console.error('Error loading tours data:', error);
+            // Fallback to empty array if data fails to load
+            toursData = [];
+        }
+    }
+
     // Initialize search functionality
-    function initSearch() {
+    async function initSearch() {
+        // Load data first
+        await loadToursData();
+
         const searchInput = document.querySelector('input[placeholder*="Destination"], input[placeholder*="Search"]');
         if (!searchInput) return;
 
@@ -68,18 +54,24 @@
         });
     }
 
-    // Perform fuzzy search
+    // Perform fuzzy search across all tours
     function performSearch(query) {
-        const results = torontoAttractions.filter(attraction => {
-            const name = attraction.name.toLowerCase();
+        if (!toursData.length) {
+            hideSearchModal();
+            return;
+        }
+
+        const results = toursData.filter(tour => {
+            const name = tour.name.toLowerCase();
+            const city = tour.city.toLowerCase();
             const searchQuery = query.toLowerCase();
 
             // Exact match gets highest priority
-            if (name.includes(searchQuery)) return true;
+            if (name.includes(searchQuery) || city.includes(searchQuery)) return true;
 
-            // Fuzzy match - check if all words in query are in the name
+            // Fuzzy match - check if all words in query are in the name or city
             const queryWords = searchQuery.split(' ');
-            return queryWords.every(word => name.includes(word));
+            return queryWords.every(word => name.includes(word) || city.includes(word));
         }).slice(0, 6); // Limit to 6 results
 
         if (results.length > 0) {
@@ -116,15 +108,27 @@
         `;
 
         results.forEach(result => {
+            const isTrending = result.inventory_count < 5;
+            const trendingBadge = isTrending ? '<span class="ml-2 px-2 py-1 bg-[#b91c1c] text-white text-xs font-bold rounded-full">Trending</span>' : '';
+
             modalContent += `
-                <a href="${result.url}" class="flex items-center p-4 hover:bg-gray-50 border-b border-gray-50 transition-colors group">
-                    <img src="${result.image}" alt="${result.name}" class="w-16 h-12 object-cover rounded-lg mr-4">
+                <a href="${result.affiliate_link}" target="_blank" class="flex items-center p-4 hover:bg-gray-50 border-b border-gray-50 transition-colors group">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=80&h=60" alt="${result.name}" class="w-16 h-12 object-cover rounded-lg mr-4">
                     <div class="flex-1">
-                        <h4 class="font-semibold text-[#064e3b] group-hover:text-[#b91c1c] transition-colors">${result.name}</h4>
-                        <p class="text-sm text-gray-600">From ${result.price} CAD</p>
+                        <div class="flex items-center">
+                            <h4 class="font-semibold text-[#064e3b] group-hover:text-[#b91c1c] transition-colors">${result.name}</h4>
+                            ${trendingBadge}
+                        </div>
+                        <p class="text-sm text-gray-600">From $${result.price.toFixed(2)} CAD • ${result.city}</p>
+                        <div class="flex items-center mt-1">
+                            <div class="flex text-yellow-400">
+                                ${'★'.repeat(Math.floor(result.rating))}${'☆'.repeat(5 - Math.floor(result.rating))}
+                            </div>
+                            <span class="text-xs text-gray-500 ml-1">(${result.rating})</span>
+                        </div>
                     </div>
                     <svg class="w-5 h-5 text-gray-400 group-hover:text-[#b91c1c] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
                     </svg>
                 </a>
             `;
@@ -133,7 +137,7 @@
         modalContent += `
             </div>
             <div class="p-3 bg-gray-50 text-center">
-                <a href="#" class="text-sm text-[#b91c1c] hover:underline">View all Toronto tours</a>
+                <a href="#" class="text-sm text-[#b91c1c] hover:underline">View all tours</a>
             </div>
         `;
 
