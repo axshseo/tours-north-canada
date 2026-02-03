@@ -12,46 +12,26 @@ permissions:
   id-token: write
 
 jobs:
-  security-scan:
+  security-audit:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Run Trivy vulnerability scanner
+    - name: Run Trivy scanner
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
-        scan-ref: '.'
         format: 'sarif'
         output: 'trivy-results.sarif'
 
-    - name: Upload Trivy scan results
+    - name: Upload Security Report
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: 'trivy-results.sarif'
 
-  lighthouse-audit:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-    - name: Run Audit
-      run: |
-        mkdir -p .lighthouseci
-        echo "{}" > .lighthouseci/report.json
-    - name: Upload results
-      uses: actions/upload-artifact@v4
-      with:
-        name: lighthouse-results
-        path: .lighthouseci/
-
-  deploy:
-    needs: [security-scan, lighthouse-audit]
+  build-and-deploy:
+    needs: security-audit
     runs-on: ubuntu-latest
     environment:
       name: github-pages
