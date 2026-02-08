@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinations | Tours North - Canada's Ultimate Booking Portal</title>
+    <meta name="description" content="Explore all 13 provinces and territories of Canada with Tours North. From coastal BC to Arctic Nunavut, discover your perfect Canadian adventure.">
+    <link rel="canonical" href="https://toursnorth.ca/destinations/">
+    <!-- Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+        [x-cloak] { display: none !important; }
+
+        /* Ken Burns Animation */
+        .ken-burns {
+            animation: ken-burns 20s ease-out infinite alternate;
+        }
+
+        @keyframes ken-burns {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+            100% {
+                transform: scale(1.1) translate(-5%, -5%);
+            }
+        }
+
+        /* Hide scrollbar for carousel */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body x-data="{ langOpen: false, currencyOpen: false, selectedLang: 'EN', selectedCurrency: 'CAD', destinationsOpen: false, journalOpen: false }">
+
+    <!-- 1. UTILITY NAV (Dark Bar) -->
+    <nav class="bg-[#0f172a] text-white text-[11px] py-2 px-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex space-x-4">
+                <a href="../index.html" class="hover:text-[#a3e635]">Manage Booking</a>
+                <a href="#" class="hover:text-[#a3e635]">Safe-Travel Status</a>
+            </div>
+            <div class="flex space-x-4 items-center">
+                <div class="relative">
+                    <button @click="currencyOpen = !currencyOpen" class="hover:text-[#a3e635] flex items-center">
+                        Currency: <b x-text="selectedCurrency"></b>
+                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="currencyOpen" @click.away="currencyOpen = false" class="absolute right-0 mt-1 w-20 bg-white text-black rounded shadow-lg z-10">
+                        <a @click="selectedCurrency = 'CAD'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">CAD</a>
+                        <a @click="selectedCurrency = 'USD'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">USD</a>
+                        <a @click="selectedCurrency = 'GBP'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">GBP</a>
+                        <a @click="selectedCurrency = 'EUR'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">EUR</a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <button @click="langOpen = !langOpen" class="hover:text-[#a3e635] flex items-center">
+                        Language: <b x-text="selectedLang"></b>
+                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="langOpen" @click.away="langOpen = false" class="absolute right-0 mt-1 w-16 bg-white text-black rounded shadow-lg z-10">
+                        <a @click="selectedLang = 'EN'; langOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">EN</a>
+                        <a @click="selectedLang = 'FR'; langOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">FR</a>
+                        <a @click="selectedLang = 'ZH'; langOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">ZH</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. MAIN NAV (Glassmorphism) -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-8">
+                <a href="../index.html" class="text-2xl font-black text-[#064e3b] tracking-tighter uppercase">Tours North</a>
+                <nav class="hidden lg:flex space-x-6 text-sm font-semibold text-slate-600">
+                    <a href="../index.html" class="hover:text-[#b91c1c]">Home</a>
+                    <div class="relative">
+                        <button @click="destinationsOpen = !destinationsOpen" class="hover:text-[#b91c1c] flex items-center">
+                            Cities
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl z-10 grid grid-cols-2 gap-4 p-6">
+                            <div>
+                                <h4 class="font-semibold text-[#064e3b] mb-2">Cities</h4>
+                                <a href="toronto.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Toronto</a>
+                                <a href="vancouver.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Vancouver</a>
+                                <a href="banff.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff</a>
+                                <a href="montreal.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Montreal</a>
+                                <a href="halifax.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Halifax</a>
+                                <a href="jasper.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Jasper</a>
+                                <a href="whistler.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whistler</a>
+                                <a href="yukon-arctic.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon Arctic</a>
+                                <a href="quebec-city.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Quebec City</a>
+                                <a href="calgary.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Calgary</a>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-[#064e3b] mb-2">Provinces</h4>
+                                <a href="../provinces-territories/alberta.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Alberta</a>
+                                <a href="../provinces-territories/british-columbia.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">British Columbia</a>
+                                <a href="../provinces-territories/ontario.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Ontario</a>
+                                <a href="../provinces-territories/quebec.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Quebec</a>
+                                <a href="../provinces-territories/nova-scotia.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Nova Scotia</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" class="hover:text-[#b91c1c]">Tours</a>
+                    <a href="#" class="hover:text-[#b91c1c]">Guides</a>
+                    <div class="relative">
+                        <button @click="journalOpen = !journalOpen" class="hover:text-[#b91c1c] flex items-center">
+                            Journal
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="journalOpen" @click.away="journalOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-xl z-10 p-4">
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Hacks</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Photography</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Gear</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Adventure</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <a href="../contact.html" class="bg-[#b91c1c] text-white px-6 py-3 rounded-full font-bold text-sm hover:scale-105 transition-transform shadow-lg shadow-red-900/20">Early Bird Offers</a>
+        </div>
+    </header>
+
+    <!-- 3. CINEMATIC HERO -->
+    <section class="relative h-[70vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80" alt="Canada Map" class="absolute inset-0 w-full h-full object-cover opacity-60 ken-burns">
+        <div class="relative z-10 w-full max-w-4xl px-4 text-center">
+            <h1 class="text-5xl md:text-7xl text-white font-bold mb-6 leading-tight">Discover All of Canada's <span class="text-[#a3e635]">13 Regions</span></h1>
+            <p class="text-white/90 text-xl mb-8">From coastal wilderness to Arctic adventures, explore every corner of the True North</p>
+
+            <!-- FLOATING SEARCH BAR -->
+            <div class="bg-white p-4 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row items-center gap-4 border-4 border-white/20 max-w-2xl mx-auto">
+                <input type="text" placeholder="Search destinations, tours, or activities..." class="w-full md:flex-1 px-6 py-3 rounded-full text-slate-800 outline-none focus:ring-2 focus:ring-[#064e3b]">
+                <button class="w-full md:w-auto bg-[#b91c1c] text-white px-8 py-3 rounded-full font-bold hover:bg-[#064e3b] transition-colors">Search Canada</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. THE PROVINCIAL MAP (13-TILE BENTO GRID) -->
+    <section class="max-w-7xl mx-auto px-4 py-24">
+        <h2 class="text-4xl font-bold text-[#064e3b] text-center mb-12">Explore Canada's Provinces & Territories</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <a href="../provinces-territories/british-columbia.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-blue-500 to-green-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">British Columbia</h3>
+                    <p class="text-white/90 text-sm">The Ocean and the Mountains</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/alberta.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Alberta</h3>
+                    <p class="text-white/90 text-sm">Heart of the Rockies</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/saskatchewan.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-green-500 to-teal-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Saskatchewan</h3>
+                    <p class="text-white/90 text-sm">Prairie Spirit</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/manitoba.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Manitoba</h3>
+                    <p class="text-white/90 text-sm">Gateway to the North</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/ontario.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-red-500 to-pink-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Ontario</h3>
+                    <p class="text-white/90 text-sm">Diverse Landscapes</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/quebec.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Quebec</h3>
+                    <p class="text-white/90 text-sm">French Heritage & Beauty</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/new-brunswick.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-green-600 to-lime-600 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">New Brunswick</h3>
+                    <p class="text-white/90 text-sm">Maritime Charm</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/nova-scotia.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Nova Scotia</h3>
+                    <p class="text-white/90 text-sm">Ocean Playground</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/pei.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-yellow-600 to-orange-600 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Prince Edward Island</h3>
+                    <p class="text-white/90 text-sm">Red Sands & Anne's Land</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/newfoundland-labrador.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Newfoundland & Labrador</h3>
+                    <p class="text-white/90 text-sm">Rocky Shores & Icebergs</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/yukon.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-gray-500 to-slate-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Yukon</h3>
+                    <p class="text-white/90 text-sm">Northern Lights & Gold</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/nwt.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Northwest Territories</h3>
+                    <p class="text-white/90 text-sm">Arctic Wilderness</p>
+                </div>
+            </a>
+            <a href="../provinces-territories/nunavut.html" class="group relative h-64 rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-blue-700 to-indigo-700 flex items-end p-6 hover:shadow-2xl transition-shadow">
+                <div>
+                    <h3 class="text-white text-2xl font-bold mb-2">Nunavut</h3>
+                    <p class="text-white/90 text-sm">Inuit Homeland</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 5. THE CITY HUBS SHOWCASE (HORIZONTAL CAROUSEL) -->
+    <section class="bg-slate-50 py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-[#064e3b] text-center mb-12">Top 10 Canadian City Hubs</h2>
+            <div class="relative overflow-hidden">
+                <div class="flex space-x-6 overflow-x-auto scrollbar-hide pb-4">
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Toronto</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.9</span>
+                        </div>
+                        <a href="toronto.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Vancouver</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.8</span>
+                        </div>
+                        <a href="vancouver.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Banff</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.9</span>
+                        </div>
+                        <a href="banff.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Montreal</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.7</span>
+                        </div>
+                        <a href="montreal.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Halifax</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.6</span>
+                        </div>
+                        <a href="halifax.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Jasper</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.8</span>
+                        </div>
+                        <a href="jasper.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Whistler</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.7</span>
+                        </div>
+                        <a href="whistler.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Yukon Arctic</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.9</span>
+                        </div>
+                        <a href="yukon-arctic.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Quebec City</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.8</span>
+                        </div>
+                        <a href="quebec-city.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Calgary</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                            <span class="ml-2 text-gray-600">4.6</span>
+                        </div>
+                        <a href="calgary.html" class="bg-[#b91c1c] text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition-colors inline-block">View Tours</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#064e3b] text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Column 1: Brand Story -->
+                <div class="lg:col-span-1">
+                    <div class="text-2xl font-black text-white tracking-tighter uppercase mb-4">Tours North</div>
+                    <p class="text-white/80 mb-4 text-sm">Unlocking Canada's wild heart. Authentic adventures, local stories, unforgettable memories.</p>
+                    <div class="flex space-x-2">
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">TICO</div>
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">SafeTravels</div>
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">🇨🇦 Canadian Owned</div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Destinations -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Destinations</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="toronto.html" class="hover:text-[#a3e635] transition-colors">Toronto</a></li>
+                        <li><a href="vancouver.html" class="hover:text-[#a3e635] transition-colors">Vancouver</a></li>
+                        <li><a href="banff.html" class="hover:text-[#a3e635] transition-colors">Banff</a></li>
+                        <li><a href="yukon-arctic.html" class="hover:text-[#a3e635] transition-colors">Yukon</a></li>
+                        <li><a href="quebec-city.html" class="hover:text-[#a3e635] transition-colors">Quebec City</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Tour Types -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Tour Types</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Adventure</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Cultural</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Luxury</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Exclusively Canadian</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Resources -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="../sitemap.html" class="hover:text-[#a3e635] transition-colors">Sitemap</a></li>
+                        <li><a href="../journal/index.html" class="hover:text-[#a3e635] transition-colors">Travel Journal</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">PR Newsroom</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Booking Status</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: Newsletter -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Join the Inner Circle</h4>
+                    <p class="text-white/80 text-sm mb-4">Get exclusive deals and insider tips delivered to your inbox.</p>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-2 rounded text-black text-sm">
+                        <button class="w-full bg-[#b91c1c] text-white px-4 py-2 rounded font-bold hover:bg-red-700 transition-colors">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-white/60 text-sm">&copy; 2026 Tours North. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="../privacy-policy.html" class="text-white/60 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-white/60 hover:text-white text-sm transition-colors">Terms of Service</a>
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.

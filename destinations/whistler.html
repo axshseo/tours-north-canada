@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whistler - Elite Adventure Destination - Tours North</title>
-    <meta name="description" content="Experience elite adventures in Whistler with Tours North. From world-class skiing to mountain biking and the Peak 2 Peak Gondola, discover luxury in the mountains.">
+    <title>Whistler - Tours North</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -21,54 +19,22 @@
             }
         }
     </script>
-    <style>
-        body {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-        }
-    </style>
 </head>
 <body class="bg-snow text-base">
-    <!-- Mega-Menu Navigation -->
-    <nav class="bg-primary text-snow shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
+    <!-- Navigation -->
+    <nav class="bg-primary text-snow shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold">Tours North</h1>
+                        <a href="../index.html" class="text-xl font-bold">Tours North</a>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <div class="relative">
-                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
-                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
-                                    <a href="toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
-                                    <a href="vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
-                                    <a href="quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
-                                    <a href="montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
-                                    <a href="whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
-                                </div>
-                            </div>
-                            <div class="relative">
-                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
-                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../tours/niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
-                                    <a href="../tours/banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
-                                    <a href="../tours/whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
-                                    <a href="../tours/northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
-                                    <a href="../tours/montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
-                                    <a href="../tours/whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
-                                </div>
-                            </div>
-                            <div class="relative group">
-                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
-                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
-                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
-                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
-                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
-                                </div>
-                            </div>
+                            <a href="#" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
                             <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
                             <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                         </div>
@@ -78,44 +44,21 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
-        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-        <div class="relative z-10 flex items-center justify-center h-full">
-            <div class="text-center text-white">
-                <h1 class="text-6xl font-bold mb-4">Whistler: Elite Adventure</h1>
-                <p class="text-xl mb-8">Where luxury meets the slopes</p>
-                <a href="../tours/whistler-ski-lesson.html" class="bg-accent hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg">Book Ski Lessons</a>
-            </div>
-        </div>
-    </section>
-
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-3xl font-bold text-primary mb-8">World-Class Mountain Experiences</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white shadow-lg rounded-lg p-6 border-2 border-gray-200">
-                <h3 class="text-2xl font-semibold text-primary mb-4">Skiing & Snowboarding</h3>
-                <p class="text-base mb-4">Carve through pristine powder on some of the best runs in North America. From groomed trails to backcountry adventures.</p>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Whistler Skiing" class="w-full h-48 object-cover rounded-lg mb-4">
-                <a href="#" class="text-accent hover:underline font-semibold">Learn More</a>
-            </div>
-            <div class="bg-white shadow-lg rounded-lg p-6 border-2 border-gray-200">
-                <h3 class="text-2xl font-semibold text-primary mb-4">Mountain Biking</h3>
-                <p class="text-base mb-4">Pedal through breathtaking alpine trails with stunning views and challenging descents for all skill levels.</p>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Whistler Mountain Biking" class="w-full h-48 object-cover rounded-lg mb-4">
-                <a href="#" class="text-accent hover:underline font-semibold">Explore Trails</a>
-            </div>
-            <div class="bg-white shadow-lg rounded-lg p-6 border-2 border-gray-200">
-                <h3 class="text-2xl font-semibold text-primary mb-4">Peak 2 Peak Gondola</h3>
-                <p class="text-base mb-4">Ride the world's longest unsupported lift span, connecting Whistler and Blackcomb mountains for unparalleled views.</p>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Peak 2 Peak Gondola" class="w-full h-48 object-cover rounded-lg mb-4">
-                <a href="#" class="text-accent hover:underline font-semibold">Book Tickets</a>
-            </div>
-        </div>
+        <h1 class="text-3xl font-bold text-primary mb-6">Whistler</h1>
+        <p class="text-lg mb-4">Whistler is a world-renowned ski resort town in British Columbia, offering year-round outdoor activities.</p>
+        <h2 class="text-2xl font-semibold text-primary mb-4">Regional Tours and Activities</h2>
+        <ul class="list-disc list-inside text-lg mb-6">
+            <li>Skiing and Snowboarding</li>
+            <li>Mountain Biking</li>
+            <li>Hiking Trails</li>
+            <li>Zip Lining</li>
+            <li>Gondola Rides</li>
+        </ul>
+        <a href="#" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Explore Tours</a>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-primary text-snow py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p>&copy; 2023 Tours North. All rights reserved.</p>
