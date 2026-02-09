@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize dynamic component loader
     async function initDynamicLoader() {
         try {
+            await includeHTML();
             const toursData = await fetchToursData();
             if (toursData && Array.isArray(toursData)) {
                 populateBestsellersSection(toursData);
@@ -346,6 +347,30 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Failed to initialize dynamic loader:', error);
             showErrorMessage();
+        }
+    }
+
+    // W3 Include HTML Function (Adapted for modern usage)
+    async function includeHTML() {
+        const elements = document.querySelectorAll('[w3-include-html]');
+        for (let i = 0; i < elements.length; i++) {
+            const elmnt = elements[i];
+            const file = elmnt.getAttribute("w3-include-html");
+            if (file) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        const content = await response.text();
+                        elmnt.innerHTML = content;
+                    } else {
+                        elmnt.innerHTML = "Page not found.";
+                    }
+                } catch (e) {
+                    console.error("Error including HTML file:", file, e);
+                    elmnt.innerHTML = "Error loading content.";
+                }
+                elmnt.removeAttribute("w3-include-html");
+            }
         }
     }
 
