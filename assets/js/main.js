@@ -260,8 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
             : 'bg-[#b91c1c] hover:bg-red-700 text-white';
 
         // Urgency badge for low inventory
-        const urgencyBadge = (tour.inventory < 5 && tour.inventory > 0)
-            ? `<span class="bg-[#b91c1c] text-white px-2 py-1 rounded-full text-xs font-bold ml-2">Only ${tour.inventory} spots left!</span>`
+        const urgencyBadge = (tour.inventory_status === 'Low')
+            ? `<span class="bg-[#b91c1c] text-white px-2 py-1 rounded-full text-xs font-bold ml-2">Selling Fast</span>`
             : '';
 
         // Security shield icon
@@ -304,9 +304,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate the bestsellers section
     function populateBestsellersSection(tours) {
-        const container = document.querySelector('.bestsellers-container');
+        const container = document.querySelector('#popular-tours-container');
         if (!container) {
-            console.error('Bestsellers container not found');
+            console.error('Popular tours container not found');
             return;
         }
 
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show error message
     function showErrorMessage() {
-        const container = document.querySelector('.bestsellers-container');
+        const container = document.querySelector('#popular-tours-container');
         if (container) {
             container.innerHTML = `
                 <div class="flex items-center justify-center w-full py-12">
@@ -353,5 +353,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded', () => {
         initDynamicLoader();
     });
+
+    // Also initialize immediately if DOM is already ready
+    if (document.readyState === 'loading') {
+        // DOM not ready, wait for DOMContentLoaded
+    } else {
+        // DOM ready, initialize immediately
+        initDynamicLoader();
+    }
 
 })();

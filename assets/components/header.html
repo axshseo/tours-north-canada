@@ -1,0 +1,170 @@
+<!-- Utility Bar -->
+<nav class="bg-primary text-white text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div>Secure Booking | 24/7 Support</div>
+        <div class="flex space-x-4">
+            <div class="relative">
+                <button @click="langOpen = !langOpen" class="hover:text-secondary flex items-center">
+                    Language: <b x-text="selectedLang"></b>
+                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="langOpen" @click.away="langOpen = false" class="absolute right-0 mt-1 w-16 bg-white text-black rounded shadow-lg z-10">
+                    <a @click="selectedLang = 'EN'; langOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">EN</a>
+                    <a @click="selectedLang = 'FR'; langOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">FR</a>
+                </div>
+            </div>
+            <div class="relative">
+                <button @click="currencyOpen = !currencyOpen" class="hover:text-secondary flex items-center">
+                    Currency: <b x-text="selectedCurrency"></b>
+                    <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <div x-show="currencyOpen" @click.away="currencyOpen = false" class="absolute right-0 mt-1 w-20 bg-white text-black rounded shadow-lg z-10">
+                    <a @click="selectedCurrency = 'CAD'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">CAD</a>
+                    <a @click="selectedCurrency = 'USD'; currencyOpen = false" href="#" class="block px-3 py-1 hover:bg-gray-100">USD</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Navigation -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-8">
+            <a href="index.html" class="text-2xl font-bold text-primary font-heading uppercase">TOURS NORTH</a>
+            <nav class="hidden lg:flex space-x-6 text-sm font-semibold text-slate-600">
+                <div class="relative">
+                    <button @mouseenter="destinationsMegaOpen = true" @mouseleave="destinationsMegaOpen = false" class="hover:text-accent flex items-center">
+                        Destinations
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="destinationsMegaOpen" @mouseenter="destinationsMegaOpen = true" @mouseleave="destinationsMegaOpen = false" class="absolute left-0 mt-2 w-full bg-white rounded-md shadow-xl z-10 grid grid-cols-4 gap-6 p-6">
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">Western Canada</h4>
+                            <a href="destinations/banff.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Banff</a>
+                            <a href="destinations/jasper.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Jasper</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">Central</h4>
+                            <a href="destinations/toronto.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Toronto</a>
+                            <a href="destinations/montreal.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Montreal</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">East Coast</h4>
+                            <a href="destinations/halifax.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Halifax</a>
+                            <a href="destinations/prince-edward-county.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">PEI</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">The North</h4>
+                            <a href="destinations/yukon.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Yukon</a>
+                            <a href="destinations/nwt.html" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">NWT</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <button @mouseenter="toursMegaOpen = true" @mouseleave="toursMegaOpen = false" class="hover:text-accent flex items-center">
+                        Tours
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="toursMegaOpen" @mouseenter="toursMegaOpen = true" @mouseleave="toursMegaOpen = false" class="absolute left-0 mt-2 w-96 bg-white rounded-md shadow-xl z-10 grid grid-cols-4 gap-6 p-6">
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">Adventure</h4>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Hiking</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Kayaking</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">Wildlife</h4>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Bear Watching</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Whale Watching</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">City</h4>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Toronto Tours</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Vancouver Tours</a>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-primary mb-2">Food</h4>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Poutine Tours</a>
+                            <a href="#" class="block px-2 py-1 text-sm text-gray-700 hover:bg-gray-100 rounded">Maple Syrup</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="journal/index.html" class="hover:text-accent">Journal</a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="bg-accent text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-primary transition-colors">Find Adventure</button>
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="lg:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" class="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
+        <div class="fixed right-0 top-0 h-full w-80 bg-white shadow-xl p-6">
+            <button @click="mobileMenuOpen = false" class="absolute top-4 right-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="mt-8">
+                <div class="mb-4">
+                    <button @click="mobileDestinationsOpen = !mobileDestinationsOpen" class="flex items-center justify-between w-full text-left">
+                        <span>Destinations</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="mobileDestinationsOpen" class="mt-2 ml-4 space-y-2">
+                        <a href="destinations/banff.html" class="block">Banff</a>
+                        <a href="destinations/jasper.html" class="block">Jasper</a>
+                        <a href="destinations/toronto.html" class="block">Toronto</a>
+                        <a href="destinations/montreal.html" class="block">Montreal</a>
+                        <a href="destinations/halifax.html" class="block">Halifax</a>
+                        <a href="destinations/prince-edward-county.html" class="block">PEI</a>
+                        <a href="destinations/yukon.html" class="block">Yukon</a>
+                        <a href="destinations/nwt.html" class="block">NWT</a>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <button @click="mobileToursOpen = !mobileToursOpen" class="flex items-center justify-between w-full text-left">
+                        <span>Tours</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="mobileToursOpen" class="mt-2 ml-4 space-y-2">
+                        <a href="#" class="block">Adventure</a>
+                        <a href="#" class="block">Wildlife</a>
+                        <a href="#" class="block">City</a>
+                        <a href="#" class="block">Food</a>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <button @click="mobileJournalOpen = !mobileJournalOpen" class="flex items-center justify-between w-full text-left">
+                        <span>Journal</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div x-show="mobileJournalOpen" class="mt-2 ml-4 space-y-2">
+                        <a href="#" class="block">Hacks</a>
+                        <a href="#" class="block">Photography</a>
+                        <a href="#" class="block">Gear</a>
+                        <a href="#" class="block">Adventure</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
