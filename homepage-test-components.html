@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours North | Canada's Premier Booking Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --forest: #064e3b; --maple: #b91c1c; --lime: #a3e635; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; overflow-x: hidden; }
+        h1, h2, h3, .brand-font { font-family: 'Syne', sans-serif; }
+        .ken-burns { animation: kenburns 40s ease-out infinite alternate; }
+        @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.2); } }
+        [x-cloak] { display: none !important; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body x-data="{ activeCategory: 'all', langOpen: false, currency: 'CAD', lang: 'EN' }">
+
+    <!-- 1. DUAL NAV SYSTEM -->
+    <nav class="bg-[#0f172a] text-white text-[10px] py-2 px-6 uppercase tracking-widest font-bold z-[60] relative">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-[#a3e635]">Secure Booking</a>
+                <a href="partners/dashboard.html" class="hover:text-[#a3e635]">Merchant Login</a>
+            </div>
+            <div class="flex space-x-6 items-center">
+                <button @click="lang = lang === 'EN' ? 'FR' : 'EN'" x-text="'Lang: ' + lang"></button>
+                <button @click="currency = currency === 'CAD' ? 'USD' : 'CAD'" x-text="'Currency: ' + currency"></button>
+                <span class="text-[#a3e635] hidden md:block">● 24/7 Security Hotline</span>
+            </div>
+        </div>
+    </nav>
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-12">
+                <a href="index.html" class="text-2xl font-black text-[#064e3b] tracking-tighter">TOURS NORTH</a>
+                <nav class="hidden lg:flex space-x-8 text-[13px] font-bold text-slate-600 uppercase tracking-tight">
+                    <a href="destinations/index.html" class="hover:text-[#b91c1c]">Destinations</a>
+                    <a href="#" class="hover:text-[#b91c1c]">Tours</a>
+                    <a href="journal/index.html" class="hover:text-[#b91c1c]">Journal</a>
+                    <a href="about-us.html" class="hover:text-[#b91c1c]">About</a>
+                </nav>
+            </div>
+            <a href="checkout.html" class="bg-[#b91c1c] text-white px-6 py-3 rounded-full font-black text-[11px] uppercase tracking-widest hover:bg-[#064e3b] transition-all shadow-lg shadow-red-900/20">
+                Early Bird Offers
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. CLEAN HERO SECTION -->
+    <section class="relative h-[75vh] flex items-center justify-center overflow-hidden bg-slate-900">
+        <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover opacity-60 ken-burns">
+        
+        <div class="relative z-10 w-full max-w-5xl px-6 text-center">
+            <h1 class="text-5xl md:text-7xl text-white font-extrabold mb-8 leading-tight uppercase tracking-tighter">
+                Explore the <span class="text-[#a3e635]">True North</span>
+            </h1>
+            
+            <div class="bg-white p-2 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row items-center gap-2 border-4 border-white/10 max-w-4xl mx-auto">
+                <input type="text" placeholder="Where are you going?" class="w-full md:flex-1 px-8 py-4 rounded-full text-slate-800 focus:outline-none font-medium text-lg">
+                <div class="h-8 w-[1px] bg-slate-200 hidden md:block"></div>
+                <input type="text" placeholder="Dates" class="w-full md:w-48 px-8 py-4 rounded-full text-slate-800 focus:outline-none">
+                <button class="w-full md:w-auto bg-[#b91c1c] text-white px-10 py-4 rounded-full font-black uppercase tracking-widest hover:bg-[#064e3b] transition-all">Find Adventure</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SMART WIDGETS (PROPERLY SPACED) -->
+    <section class="max-w-7xl mx-auto px-6 -mt-12 relative z-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center space-x-4">
+                <span class="text-2xl">☀️</span>
+                <div><p class="text-[9px] uppercase font-black text-slate-400">Toronto</p><p class="text-base font-bold text-[#064e3b]">22°C</p></div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center space-x-4">
+                <span class="text-2xl">💵</span>
+                <div><p class="text-[9px] uppercase font-black text-slate-400">Rate</p><p class="text-base font-bold text-[#064e3b]">1.35</p></div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center space-x-4">
+                <span class="text-2xl">🔥</span>
+                <div><p class="text-[9px] uppercase font-black text-slate-400">Activity</p><p class="text-base font-bold text-[#b91c1c]">1,240 Booked</p></div>
+            </div>
+            <div class="bg-white p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center space-x-4">
+                <span class="text-2xl">🛡️</span>
+                <div><p class="text-[9px] uppercase font-black text-slate-400">Security</p><p class="text-base font-bold text-[#a3e635]">Verified</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. INTERACTIVE TAG FILTERS -->
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex overflow-x-auto space-x-3 scrollbar-hide mb-12">
+            <template x-for="tag in ['All', 'Must-See', 'Food', 'Nature', 'Hacks', 'Culture', 'Adventure']">
+                <button @click="activeCategory = tag.toLowerCase()" 
+                        :class="activeCategory === tag.toLowerCase() ? 'bg-[#064e3b] text-white' : 'bg-white text-slate-600 border border-slate-200'"
+                        class="px-8 py-3 rounded-full text-sm font-bold transition-all hover:border-[#064e3b] whitespace-nowrap" 
+                        x-text="tag"></button>
+            </template>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Sample Tour Card -->
+            <div class="group bg-white rounded-[32px] overflow-hidden shadow-sm border border-slate-100 hover:shadow-2xl transition-all duration-500">
+                <div class="relative h-56 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase text-[#064e3b]">Best Seller</span>
+                </div>
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg leading-tight">Whistler Ski Lesson</h3>
+                        <span class="text-yellow-500 font-bold text-sm">★ 4.9</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-6">Experience the peak of the Rockies with expert guides.</p>
+                    <div class="flex items-center justify-between">
+                        <div><p class="text-[10px] text-slate-400 uppercase font-bold">From</p><p class="text-xl font-black text-[#064e3b]">$89 <span class="text-xs font-medium">CAD</span></p></div>
+                        <a href="tours/whistler-ski-lesson.html" class="bg-[#b91c1c] text-white px-5 py-2.5 rounded-full text-xs font-bold hover:bg-[#064e3b]">Book Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other tours... -->
+        </div>
+    </section>
+
+    <!-- 5. BENTO PROVINCES (FIXED RATIOS) -->
+    <section class="bg-[#064e3b] py-32 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16">
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic">Explore the Provinces</h2>
+                <div class="h-1 w-24 bg-[#b91c1c] mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[700px]">
+                <div class="md:col-span-8 group relative rounded-[40px] overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b] via-transparent p-10 flex flex-col justify-end">
+                        <h3 class="text-4xl font-black uppercase">Alberta</h3>
+                        <p class="text-white/60 mt-2 text-sm max-w-sm">Rugged peaks and turquoise glacial lakes.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-4 group relative rounded-[40px] overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent p-8 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold uppercase">Ontario</h3>
+                    </div>
+                </div>
+                <!-- Row 2 -->
+                <div class="md:col-span-4 group relative rounded-[40px] overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1517090504586-fde19ea6066f" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent p-8 flex flex-col justify-end">
+                        <h3 class="text-2xl font-bold uppercase tracking-widest">Yukon</h3>
+                    </div>
+                </div>
+                <div class="md:col-span-8 group relative rounded-[40px] overflow-hidden shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 via-transparent p-10 flex flex-col justify-end">
+                        <h3 class="text-3xl font-black uppercase tracking-widest">British Columbia</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CRAZY 6-COLUMN FOOTER (SEO HUB) -->
+    <footer class="bg-slate-950 pt-32 pb-12 text-white border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 pb-24">
+                <div>
+                    <h4 class="text-xl font-black mb-6 tracking-tighter uppercase brand-font">Tours North</h4>
+                    <p class="text-[10px] text-white/40 leading-relaxed uppercase font-bold tracking-widest mb-8">Definitive Canadian Booking Engine</p>
+                    <div class="flex space-x-3 opacity-30">
+                        <div class="border border-white p-1 text-[8px] font-bold">TICO</div>
+                        <div class="border border-white p-1 text-[8px] font-bold">SSL</div>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-black uppercase tracking-[3px] text-[#a3e635] mb-8">Regions</h5>
+                    <ul class="text-[11px] space-y-4 text-white/50 font-bold uppercase tracking-tighter">
+                        <li><a href="#" class="hover:text-white">Alberta Hub</a></li>
+                        <li><a href="#" class="hover:text-white">British Columbia</a></li>
+                        <li><a href="#" class="hover:text-white">Ontario Central</a></li>
+                        <li><a href="#" class="hover:text-white">Quebec Heritage</a></li>
+                        <li><a href="#" class="hover:text-white">The Maritimes</a></li>
+                        <li><a href="#" class="hover:text-white">Arctic Territories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-black uppercase tracking-[3px] text-[#a3e635] mb-8">Top Cities</h5>
+                    <ul class="text-[11px] space-y-4 text-white/50 font-bold uppercase tracking-tighter">
+                        <li><a href="destinations/toronto.html" class="hover:text-white">Toronto</a></li>
+                        <li><a href="destinations/vancouver.html" class="hover:text-white">Vancouver</a></li>
+                        <li><a href="destinations/banff.html" class="hover:text-white">Banff Hub</a></li>
+                        <li><a href="destinations/montreal.html" class="hover:text-white">Montreal</a></li>
+                        <li><a href="#" class="hover:text-white">Niagara Falls</a></li>
+                        <li><a href="#" class="hover:text-white">Whistler Hub</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-black uppercase tracking-[3px] text-[#a3e635] mb-8">Experiences</h5>
+                    <ul class="text-[11px] space-y-4 text-white/50 font-bold uppercase tracking-tighter">
+                        <li><a href="#" class="hover:text-white">Northern Lights</a></li>
+                        <li><a href="#" class="hover:text-white">Whale Watching</a></li>
+                        <li><a href="#" class="hover:text-white">Heli-Skiing</a></li>
+                        <li><a href="#" class="hover:text-white">St. Lawrence Food</a></li>
+                        <li><a href="#" class="hover:text-white">National Parks</a></li>
+                        <li><a href="#" class="hover:text-white">Wildlife Safari</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-black uppercase tracking-[3px] text-[#a3e635] mb-8">Intelligence</h5>
+                    <ul class="text-[11px] space-y-4 text-white/50 font-bold uppercase tracking-tighter">
+                        <li><a href="guides/canada-travel-visa-guide.html" class="hover:text-white">Visa Guide</a></li>
+                        <li><a href="#" class="hover:text-white">Transit Hacks</a></li>
+                        <li><a href="#" class="hover:text-white">Budget Travel</a></li>
+                        <li><a href="journal/index.html" class="hover:text-white">The Journal</a></li>
+                        <li><a href="sitemap.xml" class="hover:text-white">XML Sitemap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-black uppercase tracking-[3px] text-[#a3e635] mb-8">Partner</h5>
+                    <ul class="text-[11px] space-y-4 text-white/50 font-bold uppercase tracking-tighter">
+                        <li><a href="partners.html" class="hover:text-white">List your tour</a></li>
+                        <li><a href="partners/dashboard.html" class="hover:text-white">Merchant Portal</a></li>
+                        <li><a href="#" class="hover:text-white">Biz Dev</a></li>
+                        <li><a href="#" class="hover:text-white">Media Room</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] font-black uppercase tracking-[2px] text-white/20">
+                <p>&copy; 2026 Tours North. Designed for North American Wilderness.</p>
+                <div class="flex space-x-8 mt-8 md:mt-0">
+                    <a href="privacy-policy.html">Privacy</a>
+                    <a href="#">Terms</a>
+                    <a href="contact.html">Safety Hotline</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/search.js"></script>
+    <script src="assets/js/fomo.js"></script>
+</body>
+</html>

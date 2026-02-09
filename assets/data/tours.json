@@ -34,5 +34,18 @@
     "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e",
     "security_level": "Verified",
     "inventory": 2
+  },
+  {
+    "id": "banff-gondola",
+    "name": "Banff Gondola Experience",
+    "city": "Banff",
+    "price": 55,
+    "rating": 4.6,
+    "category": "Scenic",
+    "url": "tours/banff-gondola.html",
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+    "security_level": "Verified",
+    "inventory": 8,
+    "inventory_status": "Low"
   }
 ]

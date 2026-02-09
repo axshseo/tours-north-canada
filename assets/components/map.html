@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours North | Canada's Ultimate Booking Portal</title>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        surface: '#f8fafc',
+                        secondary: '#a3e635'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Syne', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        html { scroll-behavior: smooth; }
+        #map { height: 600px; width: 100%; }
+    </style>
+</head>
+<body class="bg-surface font-sans">
+
+    <div w3-include-html="assets/components/header.html"></div>
+
+    <section class="max-w-7xl mx-auto px-4 py-16">
+        <h1 class="text-4xl font-bold text-primary font-heading text-center mb-8">Explore Canada's Adventures</h1>
+        <div id="map" class="rounded-2xl shadow-lg"></div>
+        <p class="text-center mt-4 text-gray-600">Click on markers to discover tour locations across Canada.</p>
+    </section>
+
+    <div w3-include-html="assets/components/footer.html"></div>
+
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([56.1304, -106.3468], 4); // Centered on Canada
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add some sample markers for Canadian destinations
+        var markers = [
+            { lat: 45.4215, lng: -75.6972, title: 'Ottawa', description: 'Capital city tours' },
+            { lat: 43.6532, lng: -79.3832, title: 'Toronto', description: 'City adventures' },
+            { lat: 49.2827, lng: -123.1207, title: 'Vancouver', description: 'West coast experiences' },
+            { lat: 51.0447, lng: -114.0719, title: 'Banff', description: 'Rocky Mountain tours' },
+            { lat: 45.5017, lng: -73.5673, title: 'Montreal', description: 'Cultural explorations' },
+            { lat: 50.1172, lng: -122.9543, title: 'Whistler', description: 'Winter sports' },
+            { lat: 60.7212, lng: -135.0568, title: 'Whitehorse', description: 'Yukon adventures' }
+        ];
+
+        markers.forEach(function(marker) {
+            L.marker([marker.lat, marker.lng])
+                .addTo(map)
+                .bindPopup('<b>' + marker.title + '</b><br>' + marker.description);
+        });
+    </script>
+
+</body>
+</html>
