@@ -1,0 +1,38 @@
+<gsd_state>
+    <project_info>
+        <name>Tours North Canada</name>
+        <vision>Modernize the Canadian tourism experience through a 9-layer taxonomy engine and 2026 design system.</vision>
+        <architecture>Database-less static frontend with Alpine.js hydration and JSON inventory.</architecture>
+    </project_info>
+
+    <major_phases>
+        <phase id="1" status="completed" name="Toronto Destination Overhaul">
+            <description>Revamped toronto.html with carousels, bento grids, and dynamic Alpine.js loading.</description>
+        </phase>
+        <phase id="2" status="active" name="9-Layer Taxonomy Engine">
+            <description>Implementing the L1-L9 data schema to enable concierge-style navigation and smart bundling.</description>
+            <milestones>
+                <milestone id="2.1" status="completed">Migrate tours.json to L1-L9 schema</milestone>
+                <milestone id="2.2" status="completed">Implement Concierge Global Header</milestone>
+                <milestone id="2.3" status="completed">Implement Taxonomic Hydration Engine (tour-renderer.js)</milestone>
+                <milestone id="2.4" status="in_progress">Workflow Tooling (GSD, Ralph, CodeRabbit) Integration</milestone>
+            </milestones>
+        </phase>
+        <phase id="3" status="active" name="Supabase Live Backend Integration">
+            <description>Transition from static JSON to live PostgreSQL inventory.</description>
+            <milestones>
+                <milestone id="3.1" status="completed">Initialize db-engine.js</milestone>
+                <milestone id="3.2" status="pending">Connect Persona views</milestone>
+                <milestone id="3.3" status="pending">Live Inventory Sync</milestone>
+            </milestones>
+        </phase>
+        <phase id="4" status="pending" name="Automated Inventory Scaling">
+            <description>Roll out L1-L9 schema to all 600+ product files and automate hub generation.</description>
+        </phase>
+    </major_phases>
+
+    <current_context>
+        <active_branch>main</active_branch>
+        <current_focus>Workflow infrastructure and AI agent role definitions.</current_focus>
+    </current_context>
+</gsd_state>

@@ -1,254 +1,170 @@
 [
   {
-    "id": "toronto-cn-tower",
+    "id": "toronto-cn-tower-001",
     "name": "CN Tower EdgeWalk Experience",
     "city": "Toronto",
-    "price": 195,
-    "rating": 4.9,
-    "category": "Icons",
     "url": "tours/toronto-cn-tower-edgewalk.html",
     "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Premium Certified",
-    "inventory": 4
+    "isLive": true,
+    "intent": "See & Do",
+    "category": "Attractions",
+    "sub_category": "Observation & Views",
+    "functional": {
+      "type": "Land",
+      "sub_types": ["Observation decks", "Landmarks"]
+    },
+    "marketing": {
+      "collection": "Urban-Explorer",
+      "sub_collection": "Rooftop views",
+      "vibe": "Iconic"
+    },
+    "personalization": {
+      "personas": ["Couples", "Families with Kids", "Luxury Travelers"],
+      "context": {
+        "seasonality": "All-year",
+        "weather_dependency": "Low",
+        "time_commitment": "1-2h",
+        "accessibility": ["Wheelchair-friendly"]
+      }
+    },
+    "revenue": {
+      "price_tier": "$$",
+      "base_price": 45,
+      "bundle_eligible": ["City Starter Pack"]
+    }
   },
   {
-    "id": "yukon-aurora",
-    "name": "Yukon Aurora Expedition",
-    "city": "Yukon",
-    "price": 299,
-    "rating": 4.8,
-    "category": "Adventure",
-    "url": "tours/yukon-aurora-expedition.html",
-    "image": "https://images.unsplash.com/photo-1531366930499-41f53c1753c1?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Arctic Safety Standard",
-    "inventory": 12
-  },
-  {
-    "id": "niagara-boat",
+    "id": "niagara-falls-001",
     "name": "Niagara Falls Boat Tour",
-    "city": "Niagara",
-    "price": 35,
-    "rating": 4.7,
-    "category": "Must-See",
+    "city": "Niagara Falls",
     "url": "tours/niagara-falls-boat-tour.html",
     "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 2
+    "isLive": true,
+    "intent": "See & Do",
+    "category": "Cruises",
+    "sub_category": "Waterfalls",
+    "functional": {
+      "type": "Water",
+      "sub_types": ["Boat Tours", "Landmarks"]
+    },
+    "marketing": {
+      "collection": "Nature-Lovers",
+      "sub_collection": "Waterfalls",
+      "vibe": "Awe-inspiring"
+    },
+    "personalization": {
+      "personas": ["Families with Kids", "Groups", "Photography Lovers"],
+      "context": {
+        "seasonality": "May-Oct",
+        "weather_dependency": "High",
+        "time_commitment": "1h",
+        "accessibility": ["Wheelchair-accessible"]
+      }
+    },
+    "revenue": {
+      "price_tier": "$",
+      "base_price": 35,
+      "bundle_eligible": ["City Starter Pack"]
+    }
   },
   {
-    "id": "whistler-ski",
+    "id": "whistler-ski-001",
     "name": "Whistler Blackcomb Ski Lesson",
     "city": "Whistler",
-    "price": 89,
-    "rating": 4.8,
-    "category": "Winter",
     "url": "tours/whistler-ski-lesson.html",
     "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Pro Guided",
-    "inventory": 8
+    "isLive": true,
+    "intent": "Get Active",
+    "category": "Adventure",
+    "sub_category": "Winter Sports",
+    "functional": {
+      "type": "Mountain",
+      "sub_types": ["Skiing", "Lessons"]
+    },
+    "marketing": {
+      "collection": "Mountain-Expedition",
+      "sub_collection": "Performance",
+      "vibe": "Energetic"
+    },
+    "personalization": {
+      "personas": ["Solo Travelers", "Families with Kids", "Beginners"],
+      "context": {
+        "seasonality": "Winter",
+        "weather_dependency": "Medium",
+        "time_commitment": "4h",
+        "accessibility": ["Adaptive Skiing possible"]
+      }
+    },
+    "revenue": {
+      "price_tier": "$$",
+      "base_price": 89,
+      "bundle_eligible": ["Alpine Explorer"]
+    }
   },
   {
-    "id": "toronto-ago",
-    "name": "Art Gallery of Ontario Tour",
+    "id": "toronto-food-poutine-001",
+    "name": "Toronto Poutine & Brews",
     "city": "Toronto",
-    "price": 25,
-    "rating": 4.6,
-    "category": "Culture",
-    "url": "tours/toronto-art-gallery-ago.html",
-    "image": "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 20
+    "url": "tours/toronto-food-poutine.html",
+    "image": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80",
+    "isLive": true,
+    "intent": "Eat & Drink",
+    "category": "Food Tours",
+    "sub_category": "Street Food",
+    "functional": {
+      "type": "Land",
+      "sub_types": ["Food Walking Tour", "Beer Tasting"]
+    },
+    "marketing": {
+      "collection": "City-Eats",
+      "sub_collection": "Local Favorites",
+      "vibe": "Casual"
+    },
+    "personalization": {
+      "personas": ["Foodies", "Couples", "Night Owls"],
+      "context": {
+        "seasonality": "All-year",
+        "weather_dependency": "Low",
+        "time_commitment": "3h",
+        "accessibility": ["Sidewalk-friendly"]
+      }
+    },
+    "revenue": {
+      "price_tier": "$$",
+      "base_price": 75,
+      "bundle_eligible": ["City Starter Pack"]
+    }
   },
   {
-    "id": "toronto-casa-loma",
-    "name": "Casa Loma Castle Explorer",
-    "city": "Toronto",
-    "price": 32,
-    "rating": 4.5,
-    "category": "History",
-    "url": "tours/toronto-casa-loma-castle.html",
-    "image": "https://images.unsplash.com/photo-1558713214-46df224d0382?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 15
-  },
-  {
-    "id": "toronto-hockey",
-    "name": "Hockey Hall of Fame Tickets",
-    "city": "Toronto",
-    "price": 28,
-    "rating": 4.7,
-    "category": "Sports",
-    "url": "tours/toronto-hockey-hall-of-fame.html",
-    "image": "https://images.unsplash.com/photo-1580748141549-71748ddf0bd1?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 25
-  },
-  {
-    "id": "toronto-aquarium",
-    "name": "Ripley's Aquarium Entry",
-    "city": "Toronto",
-    "price": 38,
-    "rating": 4.8,
-    "category": "Nature",
-    "url": "tours/toronto-ripleys-aquarium.html",
-    "image": "https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 30
-  },
-  {
-    "id": "toronto-rom",
-    "name": "Royal Ontario Museum Tour",
-    "city": "Toronto",
-    "price": 23,
-    "rating": 4.6,
-    "category": "Culture",
-    "url": "tours/toronto-rom-museum.html",
-    "image": "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 18
-  },
-  {
-    "id": "vancouver-whale",
-    "name": "Gaspé Whale Watching",
-    "city": "Quebec",
-    "price": 120,
-    "rating": 4.9,
-    "category": "Wildlife",
-    "url": "tours/gaspé-whale-watching.html",
-    "image": "https://images.unsplash.com/photo-1510137600163-2729bc6959a6?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Expert Certified",
-    "inventory": 6
-  },
-  {
-    "id": "banff-hotsprings",
-    "name": "Banff Hot Springs Relaxer",
-    "city": "Banff",
-    "price": 45,
-    "rating": 4.7,
-    "category": "Wellness",
-    "url": "tours/alberta-hub/tour-001.html",
-    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 40
-  },
-  {
-    "id": "montreal-food",
-    "name": "Montreal Poutine & Food Trail",
-    "city": "Montreal",
-    "price": 65,
-    "rating": 4.8,
-    "category": "Food",
-    "url": "tours/montreal-hub/tour-001.html",
-    "image": "https://images.unsplash.com/photo-1600271772470-bd22a4d7831c?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 12
-  },
-  {
-    "id": "churchill-bears",
-    "name": "Churchill Polar Bear Safari",
-    "city": "Churchill",
-    "price": 4500,
-    "rating": 5.0,
-    "category": "Once-in-a-Lifetime",
-    "url": "tours/churchill-polar-bear-safari.html",
-    "image": "https://images.unsplash.com/photo-1589182397057-b163ce4789ff?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Special Expedition",
-    "inventory": 3
-  },
-  {
-    "id": "vancouver-island",
-    "name": "Victoria Inner Harbour Tour",
-    "city": "Victoria",
-    "price": 55,
-    "rating": 4.6,
-    "category": "Must-See",
-    "url": "tours/british-columbia-hub/tour-005.html",
-    "image": "https://images.unsplash.com/photo-1522885147691-06d859633fb8?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 15
-  },
-  {
-    "id": "quebec-historic",
-    "name": "Old Quebec Walking Tour",
-    "city": "Quebec City",
-    "price": 25,
-    "rating": 4.8,
-    "category": "History",
-    "url": "tours/quebec-hub/tour-001.html",
-    "image": "https://images.unsplash.com/photo-1524143828343-7ec4055f2425?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 20
-  },
-  {
-    "id": "halifax-lobster",
-    "name": "Atlantic Lobster Boating",
-    "city": "Halifax",
-    "price": 145,
-    "rating": 4.7,
-    "category": "Food",
-    "url": "tours/nova-scotia-hub/tour-010.html",
-    "image": "https://images.unsplash.com/photo-1559742811-82428b49223b?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Expert Certified",
-    "inventory": 8
-  },
-  {
-    "id": "ottawa-parliament",
-    "name": "Parliament Hill Guided Tour",
-    "city": "Ottawa",
-    "price": 0,
-    "rating": 4.5,
-    "category": "Culture",
-    "url": "tours/ontario-hub/tour-020.html",
-    "image": "https://images.unsplash.com/photo-1529686342540-1b4e99febaba?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Government Standard",
-    "inventory": 100
-  },
-  {
-    "id": "whistler-gondola",
-    "name": "Peak 2 Peak Gondola Ticket",
-    "city": "Whistler",
-    "price": 75,
-    "rating": 4.9,
-    "category": "Icons",
-    "url": "tours/british-columbia-hub/tour-015.html",
-    "image": "https://images.unsplash.com/photo-1549421263-6064833b0fd1?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 50
-  },
-  {
-    "id": "banff-gondola",
-    "name": "Banff Gondola Experience",
-    "city": "Banff",
-    "price": 68,
-    "rating": 4.8,
-    "category": "Icons",
-    "url": "tours/alberta-hub/tour-005.html",
-    "image": "https://images.unsplash.com/photo-1614917529434-2e2e779808d9?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 45
-  },
-  {
-    "id": "montreal-basilica",
-    "name": "Notre-Dame Basilica Tour",
-    "city": "Montreal",
-    "price": 15,
-    "rating": 4.9,
-    "category": "Culture",
-    "url": "tours/montreal-hub/tour-008.html",
-    "image": "https://images.unsplash.com/photo-1551239126-d391456073f1?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 60
-  },
-  {
-    "id": "jasper-glacier",
-    "name": "Athabasca Glacier Skywalk",
-    "city": "Jasper",
-    "price": 110,
-    "rating": 4.8,
-    "category": "Nature",
-    "url": "tours/alberta-hub/tour-012.html",
-    "image": "https://images.unsplash.com/photo-1533031024823-74a6cd2140bb?auto=format&fit=crop&w=600&q=80",
-    "security_level": "Verified",
-    "inventory": 10
+    "id": "yukon-aurora-expedition-001",
+    "isLive": true,
+    "l1_intent": "Escape & Reset",
+    "l2_category": "Guided Tours",
+    "l3_sub_category": "Adventure Tours",
+    "l4_functional": {
+      "primary_type": "Air",
+      "sub_types": ["Heli-tours", "Northern lights chasing", "Photography pro-tips"]
+    },
+    "l5_marketing_vibe": "Only-in-Canada",
+    "l6_sub_collection": "Aurora Borealis",
+    "l7_persona": ["Couples", "Adventure Seekers", "Luxury Travelers"],
+    "l8_contextual": {
+      "seasonality": "Winter",
+      "weather_dependency": "High",
+      "time_commitment": "Night / 4-6h",
+      "accessibility": ["Limited"],
+      "price_tier": "$$$"
+    },
+    "l9_bundle_logic": {
+      "is_bundle_parent": false,
+      "eligible_bundles": ["Winter Survival Bundle"],
+      "cross_sell_ids": ["whitehorse-dog-sledding-001", "arctic-gear-rental-001"]
+    },
+    "content": {
+      "name": "Yukon Aurora Expedition: Private Glass Igloo Stay",
+      "price": 299.00,
+      "rating": 4.9,
+      "image": "/assets/img/tours/yukon-aurora.webp"
+    }
   }
 ]

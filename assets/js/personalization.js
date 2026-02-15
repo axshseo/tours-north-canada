@@ -181,9 +181,11 @@
         trackCityVisits();
 
         // Show sidebar after delay
+        /* Sidebar disabled per user request
         setTimeout(() => {
             createSidebarWidget();
         }, SIDEBAR_DELAY);
+        */
     }
 
     // Export for external use

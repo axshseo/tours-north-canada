@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{Product Name}} - Toronto Attractions - Tours North</title>
-    <meta name="description" content="Experience {{Product Name}} in Toronto with Tours North. {{Short Description}}. Book your premium Toronto adventure today.">
+    <title>Loading... - Tours North</title>
+    <meta name="description" content="Loading tour details...">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -16,354 +16,223 @@
                         accent: '#b91c1c',
                         base: '#0f172a',
                         snow: '#ffffff'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "{{Product Name}}",
-        "description": "{{Short Description}}",
-        "brand": "Tours North",
-        "offers": {
-            "@type": "Offer",
-            "price": "{{Price}}",
-            "priceCurrency": "CAD",
-            "availability": "https://schema.org/InStock"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "1250"
-        },
-        "seller": {
-            "@type": "Organization",
-            "name": "Tours North"
-        }
-    }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="bg-snow text-base" x-data="{ selectedDate: '', showMobileBooking: false }">
-    <!-- Sticky Glassmorphism Nav -->
-    <nav class="sticky top-0 z-50 glassmorphism">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold text-primary">Tours North</h1>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <div class="relative" x-data="{ destinationsOpen: false }">
-                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
-                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../destinations/banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
-                                    <a href="../destinations/toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
-                                    <a href="../destinations/vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
-                                    <a href="../destinations/quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
-                                    <a href="../destinations/montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
-                                    <a href="../destinations/whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
-                                    <a href="../destinations/halifax.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Halifax</a>
-                                    <a href="../destinations/jasper.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jasper</a>
-                                </div>
-                            </div>
-                            <div class="relative" x-data="{ toursOpen: false }">
-                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
-                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
-                                    <a href="banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
-                                    <a href="whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
-                                    <a href="northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
-                                    <a href="montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
-                                    <a href="whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
-                                    <a href="peggys-cove-day-trip.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Peggy's Cove Day Trip</a>
-                                </div>
-                            </div>
-                            <div class="relative group" x-data="{ guidesOpen: false }">
-                                <button @click="guidesOpen = !guidesOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
-                                <div x-show="guidesOpen" @click.away="guidesOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
-                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
-                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
-                                </div>
-                            </div>
-                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="bg-gray-50 text-base font-inter" x-data="{ selectedDate: '', showMobileBooking: false }">
+    <!-- Global Header Target -->
+    <div id="global-header"></div>
 
     <!-- Breadcrumbs -->
-    <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
+    <nav class="bg-white border-b border-gray-100 py-3" aria-label="Breadcrumb">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ol class="flex items-center space-x-2 text-sm text-gray-500">
-                <li><a href="../index.html" class="hover:text-primary">Home</a></li>
-                <li><span class="mx-2">></span></li>
-                <li><a href="../destinations/toronto.html" class="hover:text-primary">Toronto</a></li>
-                <li><span class="mx-2">></span></li>
-                <li class="text-gray-900 font-medium">{{Product Name}}</li>
+                <li><a href="/" class="hover:text-primary">Home</a></li>
+                <li><span class="mx-2 text-gray-300">/</span></li>
+                <li><a href="/destinations/" class="hover:text-primary" data-field="city">City</a></li>
+                <li><span class="mx-2 text-gray-300">/</span></li>
+                <li class="text-gray-900 font-semibold" data-field="name">Tour Name</li>
             </ol>
         </div>
     </nav>
 
     <!-- Hero Gallery -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div class="lg:col-span-2">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-2 h-[500px]">
+            <div class="lg:col-span-3">
+                <img data-field="image" src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1200&q=80" alt="Tour Hero" class="w-full h-full object-cover rounded-l-xl">
             </div>
-            <div class="space-y-4">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 1" class="w-full h-44 object-cover rounded-lg">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 2" class="w-full h-44 object-cover rounded-lg">
+            <div class="hidden lg:flex flex-col gap-2">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400&q=80" class="w-full h-1/2 object-cover rounded-tr-xl">
+                <img src="https://images.unsplash.com/photo-1444090542259-0af8fa96557e?auto=format&fit=crop&w=400&q=80" class="w-full h-1/2 object-cover rounded-br-xl">
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Left Content -->
-            <div class="lg:col-span-2">
-                <h1 class="text-4xl font-bold text-primary mb-4">{{Product Name}}</h1>
-                <div class="flex items-center mb-6">
-                    <span class="text-yellow-400 text-2xl">★★★★★</span>
-                    <span class="ml-2 text-lg text-gray-600">4.8 (1,250 reviews)</span>
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-12">
+            
+            <!-- Left: Tour Details -->
+            <div class="lg:w-2/3">
+                <div class="mb-8">
+                    <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full mb-4 uppercase tracking-wider" data-field="category">Category</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 font-syne mb-4" data-field="name">Loading Tour...</h1>
+                    <div class="flex items-center gap-4 text-sm text-slate-600">
+                        <div class="flex items-center text-yellow-500">
+                            <span>★★★★★</span>
+                            <span class="ml-2 font-bold text-slate-900" data-field="rating">4.8</span>
+                        </div>
+                        <span>•</span>
+                        <span data-field="city">City, Canada</span>
+                        <span>•</span>
+                        <span class="text-primary font-semibold">Free Cancellation</span>
+                    </div>
                 </div>
 
-                <!-- Quick Highlights -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Quick Highlights</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Guided tour with expert local</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Small group experience</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Free cancellation up to 24 hours</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Best price guarantee</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- The Experience -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">The Experience</h2>
-                    <p class="text-base mb-4">{{Full Description}}</p>
-                    <p class="text-base">This comprehensive tour takes you through the heart of Toronto, offering unique insights and unforgettable moments. Led by passionate local guides, you'll discover hidden gems and iconic landmarks that define this vibrant destination.</p>
-                </section>
-
-                <!-- Full Itinerary -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Full Itinerary</h2>
-                    <div class="space-y-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">1</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Meeting Point</h3>
-                                <p class="text-gray-600">Meet your expert guide at {{Meeting Point}} in downtown Toronto.</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">2</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Guided Exploration</h3>
-                                <p class="text-gray-600">Embark on a 2-hour journey through Toronto's most iconic attractions and hidden spots.</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">3</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Photo Opportunities</h3>
-                                <p class="text-gray-600">Capture unforgettable moments at prime locations throughout the tour.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Important Information -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Important Information</h2>
-                    <div class="bg-gray-50 p-6 rounded-lg">
+                <!-- Product Content -->
+                <div class="prose prose-slate max-w-none">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Tour Overview</h2>
+                    <p class="text-lg text-slate-600 leading-relaxed mb-6" data-field="name">Experience the best of this destination...</p>
+                    
+                    <div class="bg-white border border-slate-200 rounded-2xl p-8 mb-8 shadow-sm">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Key Highlights</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h3 class="font-semibold text-primary mb-2">Meeting Point</h3>
-                                <p class="text-gray-600">{{Meeting Point}}</p>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-primary mb-2">What to Bring</h3>
-                                <ul class="text-gray-600 space-y-1">
-                                    <li>• Comfortable walking shoes</li>
-                                    <li>• Weather-appropriate clothing</li>
-                                    <li>• Camera or smartphone</li>
-                                    <li>• Water bottle</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">✓</div>
+                                <!-- Weather & Context Alerts (Layer 8) -->
+            <div id="contextual-weather-alert" class="mb-8"></div>
 
-                <!-- What's Included -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">What's Included</h2>
-                    <div class="space-y-2">
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Expert local guide</span>
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 data-field="name" class="text-4xl md:text-6xl font-black text-slate-900 font-syne tracking-tighter mb-4">Loading Adventure...</h1>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <div class="flex items-center gap-1 text-yellow-400">
+                            <i class="fa-solid fa-star"></i>
+                            <span data-field="rating" class="text-slate-900 font-bold ml-1">...</span>
                         </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Transportation</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Entrance fees</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Small group (max 12 people)</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Photo opportunities</span>
-                        </div>
+                        <span class="text-slate-300">|</span>
+                        <div data-field="personalization.personas" class="persona-tags flex gap-2"></div>
                     </div>
-                </section>
-
-                <!-- Trust Bar -->
-                <section class="bg-gray-100 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Trusted by Travelers</h2>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <span class="text-yellow-400 text-2xl mr-2">★★★★★</span>
-                            <span class="text-lg font-semibold">4.8 out of 5</span>
-                        </div>
-                        <div class="flex space-x-4">
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">🛡️</span>
-                                <span>Safe Booking</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">✓</span>
-                                <span>Verified Reviews</span>
-                            </div>
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">🔒</span>
-                                <span>Secure Payment</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Booking Engine -->
-            <div class="lg:col-span-1">
-                <div class="sticky top-24 bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
-                    <div class="mb-4">
-                        <div class="text-3xl font-bold text-accent mb-2">${{Price}} CAD</div>
-                        <div class="text-sm text-gray-600">per person</div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium mb-1">Date Picker</label>
-                        <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
-                    </div>
-                    <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded">Check Availability</button>
-                    <p class="text-xs text-gray-500 mt-2">Free cancellation up to 24 hours before</p>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Mobile Booking Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden">
-        <div class="flex items-center justify-between">
-            <div>
-                <div class="text-lg font-bold text-accent">${{Price}} CAD</div>
-                <div class="text-sm text-gray-600">per person</div>
-            </div>
-            <button @click="showMobileBooking = true" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book Now</button>
-        </div>
-    </div>
+            <!-- Main Image & Meta -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-2 space-y-12">
+                    <div class="relative h-[500px] rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200/50 group">
+                        <img data-field="image" src="" alt="Tour" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <div class="absolute bottom-8 left-8">
+                            <span data-field="marketing.vibe" class="px-6 py-2 bg-white/90 backdrop-blur-md rounded-full text-xs font-black uppercase tracking-widest text-primary shadow-xl">Vibe: Iconic</span>
+                        </div>
+                    </div>
 
-    <!-- Mobile Booking Modal -->
-    <div x-show="showMobileBooking" class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden" @click="showMobileBooking = false">
-        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-lg p-6" @click.stop>
-            <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
-            <div class="mb-4">
-                <div class="text-3xl font-bold text-accent mb-2">${{Price}} CAD</div>
-                <div class="text-sm text-gray-600">per person</div>
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Select Date</label>
-                <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Number of Travelers</label>
-                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5+</option>
-                </select>
-            </div>
-            <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded mb-4">Book Now</button>
-            <button @click="showMobileBooking = false" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded">Cancel</button>
-        </div>
-    </div>
+                    <!-- Functional Details (Layer 4) -->
+                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-8 border-y border-slate-100 py-12">
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Duration</p>
+                            <p data-field="personalization.context.time_commitment" class="text-lg font-bold text-slate-900">Calculated...</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Season</p>
+                            <p data-field="personalization.context.seasonality" class="text-lg font-bold text-slate-900">Seasonal...</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Accessibility</p>
+                            <ul data-field="personalization.context.accessibility" class="accessibility-list space-y-1"></ul>
+                        </div>
+                    </div>
 
-    <!-- Recommended for You -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h3 class="text-2xl font-bold text-primary mb-6">Recommended for You</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="toronto-food-tour.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Toronto Food Tour" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">Toronto Food Tour</h4>
-                <p class="text-gray-600 mb-2">Explore Toronto's diverse culinary scene with local experts.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$75 CAD</span>
-            </a>
-            <a href="toronto-nightlife-experience.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Toronto Nightlife Experience" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">Toronto Nightlife Experience</h4>
-                <p class="text-gray-600 mb-2">Discover Toronto's vibrant nightlife and entertainment district.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$95 CAD</span>
-            </a>
-            <a href="toronto-architecture-walking-tour.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Toronto Architecture Walking Tour" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">Toronto Architecture Walking Tour</h4>
-                <p class="text-gray-600 mb-2">Learn about Toronto's architectural history and modern landmarks.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$65 CAD</span>
-            </a>
-        </div>
-    </section>
+                    <!-- Smart Bundle Upsell (Layer 9) -->
+                    <div id="smart-bundle-upsell"></div>
+                </div>
 
-    <!-- Footer -->
-    <footer class="bg-primary text-snow py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2023 Tours North. All rights reserved.</p>
+                <!-- Sticky Booking Sidebar -->
+                <aside class="relative">
+                    <div class="sticky top-28 bg-white border border-slate-100 rounded-[2.5rem] p-8 shadow-2xl shadow-slate-200/30">
+                        <div class="mb-8 pb-8 border-b border-slate-50">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Starts from</p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-primary">$</span>
+                                <span data-field="revenue.base_price" class="text-5xl font-black text-primary">...</span>
+                                <span class="text-slate-400 font-bold">CAD</span>
+                            </div>
+                        </div>
+
+                        <!-- Booking Actions -->
+                        <div class="space-y-4">
+                            <button class="w-full py-5 bg-accent text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-accent/20 hover:bg-slate-900 transition translate-all">Reserve Spot Now</button>
+                            <button class="w-full py-5 border-2 border-slate-100 text-slate-900 rounded-2xl font-black uppercase tracking-widest hover:bg-slate-50 transition">Ask Concierge</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>button class="w-full bg-accent hover:bg-red-700 text-white font-black py-4 rounded-xl transition-all shadow-lg shadow-red-200 active:scale-95 text-lg">
+                        Check Availability
+                    </button>
+
+                    <div class="mt-6 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-sm text-slate-600">
+                                <p class="text-slate-600"><strong class="text-slate-900">Expert Guide:</strong> Professional certified guides for all groups.</p>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">✓</div>
+                                <p class="text-slate-600"><strong class="text-slate-900">Small Groups:</strong> Intimate experiences capped at 12 travelers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Essential Info -->
+                <section class="mt-12 border-t border-slate-200 pt-12">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-8 font-syne">Essential Information</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">Meeting Point</h4>
+                            <p class="text-slate-600" data-field="city">Details confirmed upon booking.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 mb-2">Duration</h4>
+                            <p class="text-slate-600">Approximately 3-4 hours</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right: Sticky Booking Sidebar -->
+            <aside class="lg:w-1/3">
+                <div class="sticky top-24 bg-white border border-slate-200 rounded-3xl p-8 shadow-xl shadow-slate-200/50">
+                    <div class="mb-6">
+                        <span class="text-slate-500 text-sm">From</span>
+                        <div class="flex items-end gap-1">
+                            <span class="text-4xl font-extrabold text-slate-900">$<span data-field="price">0.00</span></span>
+                            <span class="text-slate-500 mb-1">CAD</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Select Date</label>
+                            <input type="date" class="w-full bg-transparent border-none focus:ring-0 text-slate-900 font-semibold" x-model="selectedDate">
+                        </div>
+                    </div>
+
+                    <button class="w-full bg-accent hover:bg-red-700 text-white font-black py-4 rounded-xl transition-all shadow-lg shadow-red-200 active:scale-95 text-lg">
+                        Check Availability
+                    </button>
+
+                    <div class="mt-6 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-sm text-slate-600">
+                            <span class="text-green-500 font-bold">✓</span>
+                            <span>Reserve now, pay later</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-slate-600">
+                            <span class="text-green-500 font-bold">✓</span>
+                            <span>Free 24h cancellation</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
-    </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../assets/js/global-header.js"></script>
+    <script src="../assets/js/tour-renderer.js"></script>
 </body>
 </html>

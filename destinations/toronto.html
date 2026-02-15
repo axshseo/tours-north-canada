@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Toronto Insider Portal - Tours North</title>
-    <meta name="description" content="Unlock Toronto's insider secrets with Tours North. Explore icons, foodie gems, hidden spots, and travel hacks for the ultimate Canadian adventure.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Toronto Unlocked - Tours North (2026)</title>
+    <meta name="description" content="Explore Toronto's iconic landmarks, food scene, and hidden secrets through our inventory-led dynamic portal.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -17,322 +14,329 @@
                     colors: {
                         primary: '#064e3b',
                         accent: '#b91c1c',
-                        snow: '#f8fafc',
-                        electric: '#3b82f6'
+                        ice: '#f0f9ff',
                     },
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                        'syne': ['Syne', 'sans-serif']
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        h1, h2, h3, h4 {
-            font-family: 'Syne', sans-serif;
-        }
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .night-mode {
-            background-color: #0a0a0a;
-            color: #ffffff;
-        }
-        .night-mode .glassmorphism {
-            background: rgba(26, 26, 26, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .lift-3d {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
-        .lift-3d:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        .marquee {
-            animation: scroll 20s linear infinite;
-        }
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
-<body class="text-gray-900" x-data="{
-    selectedCategory: 'All',
-    showModal: false,
-    selectedTour: null,
-    morningActivities: [],
-    afternoonActivities: [],
-    eveningActivities: [],
-    availableActivities: [
-        { id: 1, title: 'CN Tower Visit', time: 'morning' },
-        { id: 2, title: 'Food Tour', time: 'afternoon' },
-        { id: 3, title: 'Night Show', time: 'evening' }
-    ],
-    tours: [
-        { id: 1, title: 'CN Tower Experience', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 25, description: 'Skip the line and enjoy panoramic views of Toronto.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 2, title: 'Toronto Food Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 45, description: 'Explore local flavors and hidden culinary gems.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 3, title: 'Kensington Market Secrets', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: false, price: 35, description: 'Discover the vibrant heart of Toronto culture.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 4, title: 'Transit Hacks', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 20, description: 'Master Toronto\'s public transit system.', link: '../tours/product-template.html' },
-        { id: 5, title: 'Royal Ontario Museum Tour', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 30, description: 'Dive into world-class art and natural history.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 6, title: 'Distillery District Food Walk', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 50, description: 'Taste craft beers and artisanal treats.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 7, title: 'Graffiti Alley Exploration', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 15, description: 'Uncover Toronto\'s street art scene.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 8, title: 'Airport Transfer Tips', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: true, price: 10, description: 'Seamless travel from Pearson Airport.', link: '../tours/product-template.html' },
-        { id: 9, title: 'Casa Loma Castle Visit', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 28, description: 'Explore Gothic architecture and gardens.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 10, title: 'St. Lawrence Market Delights', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 40, description: 'Fresh produce and peameal bacon sandwiches.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 11, title: 'Leslieville Neighborhood Walk', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.3, verified: false, price: 25, description: 'Hip streets and vintage shops.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 12, title: 'Uber vs. TTC Guide', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.2, verified: true, price: 5, description: 'Choose the best transport option.', link: '../tours/product-template.html' },
-        { id: 13, title: 'Toronto Islands Ferry Ride', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 15, description: 'Escape to car-free islands.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 14, title: 'Koreatown Food Crawl', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 55, description: 'Authentic Korean BBQ and street food.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 15, title: 'The Junction Vintage Hunt', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: false, price: 20, description: 'Antique shops and craft breweries.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 16, title: 'Presto Card Optimization', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: true, price: 8, description: 'Save on transit fares.', link: '../tours/product-template.html' },
-        { id: 17, title: 'Art Gallery of Ontario', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 22, description: 'World-renowned art collections.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 18, title: 'Little Italy Pasta Making', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 60, description: 'Hands-on Italian cooking class.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 19, title: 'Trinity Bellwoods Park Picnic', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 30, description: 'Urban oasis with cherry blossoms.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 20, title: 'Baggage Storage Hacks', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.3, verified: true, price: 12, description: 'Secure storage near attractions.', link: '../tours/product-template.html' },
-        { id: 21, title: 'High Park Nature Walk', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 18, description: 'Toronto\'s largest public park.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 22, title: 'Chinatown Dumpling Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.9, verified: true, price: 35, description: 'Fresh dumplings and dim sum.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 23, title: 'The Beaches Boardwalk', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: false, price: 10, description: 'Seaside stroll and beach volleyball.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 24, title: 'Ride-Sharing Etiquette', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.4, verified: true, price: 6, description: 'Tips for safe and efficient rides.', link: '../tours/product-template.html' },
-        { id: 25, title: 'Toronto Zoo Adventure', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 40, description: 'See animals from around the world.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 26, title: 'Portuguese Bakery Tour', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.6, verified: true, price: 25, description: 'Pastéis de nata and custard tarts.', link: '../tours/whistler-ski-lesson.html' },
-        { id: 27, title: 'Evergreen Brick Works', category: 'Hidden Gems', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.5, verified: false, price: 15, description: 'Industrial heritage and nature trails.', link: '../tours/yukon-aurora-expedition.html' },
-        { id: 28, title: 'Currency Exchange Tips', category: 'Travel Hacks', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.2, verified: true, price: 4, description: 'Best rates for CAD to USD.', link: '../tours/product-template.html' },
-        { id: 29, title: 'Ripley\'s Aquarium Visit', category: 'Icons', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.8, verified: true, price: 35, description: 'Underwater tunnels and marine life.', link: '../tours/niagara-falls-boat-tour.html' },
-        { id: 30, title: 'Indian Spice Market', category: 'Foodie', image: 'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80', rating: 4.7, verified: true, price: 20, description: 'Aromatic spices and street snacks.', link: '../tours/whistler-ski-lesson.html' }
-    ]
-}">
-    <!-- Breadcrumbs -->
-    <nav class="bg-gray-100 py-3">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ol class="flex items-center space-x-2 text-sm">
-                <li><a href="../index.html" class="text-primary hover:underline">Home</a></li>
-                <li class="text-gray-500">></li>
-                <li class="text-gray-700 font-semibold">Toronto</li>
-            </ol>
-        </div>
-    </nav>
+<body class="bg-[#fcfdfd] font-inter text-slate-900" 
+      x-data="{ 
+        tours: [],
+        city: 'Toronto',
+        loading: true,
+        activeFilter: null,
+        async init() {
+            // Priority: Supabase -> Static JSON
+            if (window.DBEngine && window.DBEngine.getExperiencesByCity) {
+                this.tours = await window.DBEngine.getExperiencesByCity(this.city);
+            }
+            
+            if (!this.tours || this.tours.length === 0) {
+                const res = await fetch('/assets/data/tours.json');
+                this.tours = await res.json();
+            }
+            this.loading = false;
+        },
+        getShelf(type, isDayTrip = false) {
+            return this.tours.filter(t => {
+                if (isDayTrip) return (t.city || t.l8_contextual?.city) !== this.city;
+                const category = t.l2_category || t.category;
+                return (t.city || t.l8_contextual?.city) === this.city && category === type;
+            });
+        }
+      }">
 
-    <!-- Mega-Menu Navigation -->
-    <nav class="bg-primary text-white shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold font-syne">Tours North</h1>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <div class="relative">
-                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
-                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
-                                    <a href="toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
-                                    <a href="vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
-                                    <a href="quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
-                                    <a href="montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
-                                    <a href="whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
-                                    <a href="halifax.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Halifax</a>
-                                    <a href="jasper.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jasper</a>
-                                </div>
-                            </div>
-                            <div class="relative">
-                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
-                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../tours/niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
-                                    <a href="../tours/banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
-                                    <a href="../tours/whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
-                                    <a href="../tours/northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
-                                    <a href="../tours/montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
-                                    <a href="../tours/whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
-                                    <a href="../tours/peggys-cove-day-trip.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Peggy's Cove Day Trip</a>
-                                </div>
-                            </div>
-                            <div class="relative group">
-                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
-                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
-                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
-                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
-                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
-                                </div>
-                            </div>
-                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Global Header -->
+    <div id="global-header"></div>
 
-    <!-- Cinematic Hero Carousel -->
-    <section class="relative h-screen overflow-hidden" x-data="{ currentSlide: 0, slides: [
-        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        'https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
-    ] }">
-        <div class="absolute inset-0">
-            <template x-for="(slide, index) in slides" :key="index">
-                <img :src="slide" :alt="'Toronto Slide ' + (index + 1)" class="w-full h-full object-cover transition-opacity duration-1000" :class="index === currentSlide ? 'opacity-100' : 'opacity-0'" style="position: absolute;">
-            </template>
+    <!-- Cinematic Hero -->
+    <section class="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=1920&q=80" 
+             class="absolute inset-0 w-full h-full object-cover scale-105" alt="Toronto Skyline">
+        <div class="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/20 to-[#fcfdfd]"></div>
+        
+        <div class="relative z-10 text-center px-4">
+            <span class="inline-block px-4 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-xs font-black uppercase tracking-widest mb-6">Ontario, Canada</span>
+            <h1 class="text-6xl md:text-8xl font-black text-white font-syne tracking-tighter mb-4">TORONTO<br/><span class="text-ice">UNLOCKED.</span></h1>
+            <p class="text-white/90 text-xl font-medium max-w-2xl mx-auto drop-shadow-lg">Navigate the true north's urban heartbeat with real-time tour inventory and insider hacks.</p>
         </div>
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative z-10 flex flex-col items-center justify-center h-full px-4">
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-8 text-center font-syne">Ultimate Toronto Insider Portal</h1>
-            <div class="w-full max-w-md mb-4">
-                <input type="text" placeholder="Search Inventory..." class="w-full px-4 py-3 rounded-lg text-black font-inter shadow-lg">
-            </div>
-            <div class="bg-white bg-opacity-20 backdrop-blur-md rounded-lg px-4 py-2 text-white font-inter shadow-lg">
-                Current Weather in Toronto: 22°C | 15 Tours Available Today
-            </div>
-        </div>
-        <!-- Carousel Controls -->
-        <button @click="currentSlide = (currentSlide - 1 + slides.length) % slides.length" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 transition">&larr;</button>
-        <button @click="currentSlide = (currentSlide + 1) % slides.length" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-4xl hover:text-gray-300 transition">&rarr;</button>
-        <!-- Auto-slide -->
-        <script>
-            setInterval(() => {
-                Alpine.store('hero', { currentSlide: (Alpine.store('hero')?.currentSlide || 0 + 1) % 3 });
-            }, 5000);
-        </script>
     </section>
 
-    <!-- Sticky Filter Bar -->
-    <div class="sticky top-0 bg-white shadow-md z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex space-x-4 overflow-x-auto">
-                <button @click="selectedCategory = 'All'" :class="selectedCategory === 'All' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">All</button>
-                <button @click="selectedCategory = 'Icons'" :class="selectedCategory === 'Icons' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Icons</button>
-                <button @click="selectedCategory = 'Foodie'" :class="selectedCategory === 'Foodie' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Foodie</button>
-                <button @click="selectedCategory = 'Hidden Gems'" :class="selectedCategory === 'Hidden Gems' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Hidden Gems</button>
-                <button @click="selectedCategory = 'Travel Hacks'" :class="selectedCategory === 'Travel Hacks' ? 'bg-accent text-white' : 'bg-gray-200 text-gray-700'" class="px-4 py-2 rounded-full font-medium hover:bg-accent hover:text-white transition whitespace-nowrap">Travel Hacks</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Inventory Showcase -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-4xl font-bold text-primary mb-8 text-center font-syne">Explore Toronto</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <template x-for="tour in tours.filter(t => selectedCategory === 'All' || t.category === selectedCategory)" :key="tour.id">
-                <div class="glassmorphism rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition duration-300">
-                    <div class="relative">
-                        <img :src="tour.image" :alt="tour.title" class="w-full h-48 object-cover">
-                        <div x-show="tour.verified" class="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold">Verified</div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold mb-2 font-syne" x-text="tour.title"></h3>
-                        <div class="flex items-center mb-2">
-                            <div class="flex text-yellow-400">
-                                <span x-for="star in 5" :class="star <= Math.floor(tour.rating) ? 'text-yellow-400' : 'text-gray-300'">★</span>
-                            </div>
-                            <span class="ml-2 text-sm text-gray-600" x-text="tour.rating"></span>
-                        </div>
-                        <p class="text-sm text-gray-600 mb-4" x-text="tour.description"></p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-primary" x-text="'$' + tour.price + ' CAD'"></span>
-                            <div class="space-x-2">
-                                <button @click="selectedTour = tour; showModal = true" class="bg-gray-500 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm">Quick View</button>
-                                <a :href="tour.link" class="bg-accent hover:bg-red-700 text-white px-3 py-1 rounded text-sm inline-block">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Dynamic Filter Hub (Layer 4) -->
+    <section class="max-w-7xl mx-auto px-6 py-12" x-show="!loading">
+        <div class="flex flex-wrap items-center gap-4">
+            <span class="text-xs font-black uppercase tracking-widest text-slate-400 mr-4">Quick Filter:</span>
+            <button @click="activeFilter = null" 
+                class="px-6 py-2 rounded-full text-sm font-bold transition-all border"
+                :class="activeFilter === null ? 'bg-primary text-white border-primary shadow-lg' : 'bg-white text-slate-600 border-slate-200 hover:border-primary'">
+                All Experiences
+            </button>
+            <template x-for="type in [...new Set(tours.filter(t => t.city === city).flatMap(t => t.functional?.sub_types || []))]" :key="type">
+                <button @click="activeFilter = type"
+                    class="px-6 py-2 rounded-full text-sm font-bold transition-all border"
+                    :class="activeFilter === type ? 'bg-primary text-white border-primary shadow-lg' : 'bg-white text-slate-600 border-slate-200 hover:border-primary'"
+                    x-text="type">
+                </button>
             </template>
         </div>
     </section>
 
-    <!-- Quick View Modal -->
-    <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="showModal = false">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4" @click.stop>
-            <h3 class="text-2xl font-bold mb-4 font-syne" x-text="selectedTour?.title"></h3>
-            <img :src="selectedTour?.image" :alt="selectedTour?.title" class="w-full h-48 object-cover rounded mb-4">
-            <p class="text-gray-600 mb-4" x-text="selectedTour?.description"></p>
-            <div class="flex justify-between items-center">
-                <span class="text-lg font-bold text-primary" x-text="'$' + selectedTour?.price + ' CAD'"></span>
-                <button class="bg-accent hover:bg-red-700 text-white px-4 py-2 rounded">Book Now</button>
+    <!-- Thematic Shelves -->
+    <main class="max-w-[1440px] mx-auto px-6 lg:px-12 py-10 space-y-32" x-data="{ activeFilter: null }">
+        
+        <!-- Shelf 1: Iconic Landmarks -->
+        <section x-show="!loading && (!activeFilter || getShelf('Landmarks').some(t => t.functional?.sub_types?.includes(activeFilter)))">
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-4xl font-extrabold font-syne text-primary tracking-tight">Iconic Landmarks</h2>
+                    <p class="text-slate-500 font-medium">The essential 6ix bucket list items.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button @click="$refs.shelf1.scrollBy({left: -400, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition shadow-sm"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="$refs.shelf1.scrollBy({left: 400, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:shadow-lg hover:shadow-primary/20 transition"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
             </div>
-            <button @click="showModal = false" class="mt-4 text-gray-500 hover:text-gray-700">Close</button>
-        </div>
-    </div>
 
-    <!-- Local Intelligence & Hacks -->
-    <section class="bg-gray-100 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-primary mb-8 text-center font-syne">Local Intelligence & Hacks</h2>
-            <div class="overflow-x-auto">
-                <div class="flex space-x-6 pb-4">
-                    <a href="../guides/toronto-transit-hacks.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Toronto Transit Hacks</h3>
-                        <p class="text-gray-600">Master the TTC system with insider tips for seamless travel.</p>
-                    </a>
-                    <a href="../guides/budget-toronto-guide.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Budget Toronto Guide</h3>
-                        <p class="text-gray-600">Save money while exploring the best of Toronto.</p>
-                    </a>
-                    <a href="../blog/best-hidden-patios.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Best Hidden Patios</h3>
-                        <p class="text-gray-600">Discover secret outdoor spots for dining and drinks.</p>
-                    </a>
-                    <a href="../guides/winter-survival-tips.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Winter Survival Tips</h3>
-                        <p class="text-gray-600">Stay warm and enjoy Toronto's winter wonders.</p>
-                    </a>
-                    <a href="../guides/canada-travel-visa-guide.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Canada Travel Visa Guide</h3>
-                        <p class="text-gray-600">Everything you need to know about visiting Canada.</p>
-                    </a>
-                    <a href="../guides/best-time-to-visit-canada.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex-shrink-0 w-80">
-                        <h3 class="text-xl font-semibold mb-2 font-syne">Best Time to Visit Canada</h3>
-                        <p class="text-gray-600">Plan your trip for the perfect Canadian experience.</p>
-                    </a>
+            <!-- Thematic Tour Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <template x-for="tour in tours.filter(t => !activeFilter || (t.l4_functional?.sub_types || []).includes(activeFilter))" :key="tour.id">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group hover:shadow-2xl transition duration-500">
+                        <div class="relative aspect-[4/3] overflow-hidden">
+                            <img :src="tour.content.image" :alt="tour.content.name" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            
+                            <!-- Persona Tag (L7) -->
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-primary drop-shadow-sm" x-text="tour.l7_persona[0] || 'Exclusive'"></span>
+                            </div>
+
+                            <!-- Live Price (L8) -->
+                            <div class="absolute bottom-4 left-4 bg-primary text-white px-4 py-2 rounded-2xl font-black text-lg drop-shadow-xl" x-text="'$' + tour.content.price"></div>
+                        </div>
+
+                        <div class="p-8 flex flex-col flex-grow">
+                            <div class="flex justify-between items-start mb-4">
+                                <!-- Intent & Category (L1/L2) -->
+                                <div class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+                                    <span x-text="tour.l1_intent"></span> &bull; <span x-text="tour.l2_category"></span>
+                                </div>
+                                <!-- Rating -->
+                                <div class="flex items-center gap-1 text-yellow-500 font-bold text-xs" x-show="tour.content.rating">
+                                    <svg class="w-3 h-3 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>
+                                    <span x-text="tour.content.rating"></span>
+                                </div>
+                            </div>
+
+                            <h3 class="text-xl font-black text-slate-800 leading-tight mb-6 group-hover:text-primary transition" x-text="tour.content.name"></h3>
+
+                            <!-- Badges (Layer 8 - Ops/Security) -->
+                            <div class="flex flex-wrap gap-2 mb-8">
+                                <span class="bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Security Verified
+                                </span>
+                                <span class="bg-blue-50 text-blue-700 border border-blue-100 px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest flex items-center gap-1" x-show="tour.l8_contextual?.weather_dependency === 'Low'">
+                                    Weather Safe
+                                </span>
+                            </div>
+
+                            <div class="mt-auto flex items-center justify-between pt-6 border-t border-gray-100">
+                                <div class="text-[10px] font-black uppercase tracking-widest text-[#a3e635]">
+                                    Instant Booking
+                                </div>
+                                <a :href="'/tours/product-template.html?id=' + tour.id" 
+                                   class="bg-accent text-white px-6 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-900 transition shadow-lg shadow-accent/20">
+                                    Book Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Shelf 2: Foodie Playbook -->
+        <section x-show="!loading">
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-4xl font-extrabold font-syne text-primary tracking-tight">Foodie Playbook</h2>
+                    <p class="text-slate-500 font-medium">Taste the multicultural soul of the city.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button @click="$refs.shelf2.scrollBy({left: -400, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition shadow-sm"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="$refs.shelf2.scrollBy({left: 400, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:shadow-lg hover:shadow-primary/20 transition"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div x-ref="shelf2" class="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6">
+                <template x-for="tour in getShelf('Food')" :key="tour.id">
+                    <div class="min-w-[340px] md:min-w-[420px] snap-start group">
+                        <a :href="'/' + tour.url" class="block">
+                            <div class="relative h-[500px] rounded-[2.5rem] overflow-hidden mb-6 shadow-xl shadow-slate-200/50">
+                                <img :src="tour.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" :alt="tour.name">
+                                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent"></div>
+                                <div class="absolute bottom-8 left-8 right-8 text-white">
+                                    <h3 class="text-2xl font-bold font-syne mb-2 leading-tight" x-text="tour.name"></h3>
+                                    <div class="flex items-center justify-between mt-4">
+                                        <span class="text-xl font-black" x-text="'$' + tour.price"></span>
+                                        <span class="text-xs uppercase font-black bg-accent text-white px-4 py-2 rounded-xl">Hunt Flavors</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <!-- Travel Hacks Bento Grid -->
+        <section id="hacks">
+            <div class="mb-12">
+                <h2 class="text-4xl font-extrabold font-syne text-primary tracking-tight mb-2">Local Intelligence</h2>
+                <p class="text-slate-500 font-medium tracking-wide">Expert travel hacks for the modern traveler.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 h-auto md:h-[600px]">
+                <div class="md:col-span-2 md:row-span-2 bg-primary rounded-[3rem] p-12 text-white flex flex-col justify-end relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8">
+                        <i class="fa-solid fa-bolt-lightning text-6xl text-white/10 group-hover:scale-125 transition duration-500"></i>
+                    </div>
+                    <h3 class="text-4xl font-black font-syne mb-4">Transit Optimization</h3>
+                    <p class="text-white/70 mb-8 max-w-sm">From UP Express hacks to mastering the PATH, save hours of travel time.</p>
+                    <a href="/guides/toronto-transit-hacks.html" class="inline-flex items-center gap-2 font-black text-sm uppercase tracking-widest hover:gap-4 transition-all uppercase">Read Strategy <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="bg-ice border border-blue-100 rounded-[3rem] p-8 flex flex-col justify-between group">
+                    <h4 class="text-xl font-bold text-primary font-syne">Free Entry Windows</h4>
+                    <p class="text-slate-600 text-sm">Knowing when the ROM and AGO open their doors for free.</p>
+                    <a href="/guides/free-toronto.html" class="text-accent font-black text-xs uppercase tracking-widest">Go to Guide</a>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-[3rem] p-8 flex flex-col justify-between shadow-sm">
+                    <h4 class="text-xl font-bold text-primary font-syne">Secret Views</h4>
+                    <p class="text-slate-600 text-sm">Rooftop bars and park peaks that don't cost a dime.</p>
+                    <a href="/guides/toronto-views.html" class="text-accent font-black text-xs uppercase tracking-widest">Explore Map</a>
+                </div>
+
+                <div class="md:col-span-2 bg-[#022c22] rounded-[3rem] p-8 flex items-center justify-between text-white overflow-hidden relative">
+                    <div class="relative z-10 w-2/3">
+                        <h4 class="text-2xl font-bold font-syne mb-2">Seasonal Survival</h4>
+                        <p class="text-white/60 text-sm">Summer humidity to winter wind tunnels—pack like a local.</p>
+                    </div>
+                    <div class="w-1/3">
+                        <i class="fa-solid fa-snowflake text-8xl text-white/5 absolute -right-4 -bottom-4"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shelf 3: Day Trips -->
+        <section x-show="!loading">
+            <div class="flex items-end justify-between mb-10">
+                <div>
+                    <h2 class="text-4xl font-extrabold font-syne text-primary tracking-tight">Day Trips</h2>
+                    <p class="text-slate-500 font-medium">Escaping the concrete jungle for a day.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button @click="$refs.shelf3.scrollBy({left: -400, behavior: 'smooth'})" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition shadow-sm"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button @click="$refs.shelf3.scrollBy({left: 400, behavior: 'smooth'})" class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:shadow-lg hover:shadow-primary/20 transition"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div x-ref="shelf3" class="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6">
+                <template x-for="tour in getShelf('', true)" :key="tour.id">
+                    <div class="min-w-[340px] md:min-w-[420px] snap-start group">
+                        <a :href="'/' + tour.url" class="block">
+                            <div class="relative h-[500px] rounded-[2.5rem] overflow-hidden mb-6 shadow-xl shadow-slate-200/50">
+                                <img :src="tour.image" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" :alt="tour.name">
+                                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent"></div>
+                                <div class="absolute bottom-8 left-8 right-8 text-white">
+                                    <span class="text-xs font-black uppercase tracking-[0.2em] text-accent mb-2 block" x-text="tour.city"></span>
+                                    <h3 class="text-2xl font-bold font-syne mb-2 leading-tight" x-text="tour.name"></h3>
+                                    <div class="flex items-center justify-between mt-4">
+                                        <span class="text-xl font-black" x-text="'$' + tour.price"></span>
+                                        <span class="text-xs uppercase font-black text-white/70">Beyond City Limits →</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Antigravity Moose Footer -->
+    <footer class="bg-primary pt-32 pb-12 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-16 border-b border-white/10 pb-20">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center shadow-lg">
+                            <i class="fa-solid fa-moose text-white text-3xl"></i>
+                        </div>
+                        <div>
+                            <span class="text-white font-black text-2xl font-syne tracking-tighter uppercase">TOURS NORTH</span>
+                            <p class="text-white/50 text-[10px] uppercase font-black tracking-widest">By Antigravity Architecture</p>
+                        </div>
+                    </div>
+                    <p class="text-white/60 text-lg max-w-md leading-relaxed">Scaling the true north through design-forward exploration and inventory-driven technology.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-black uppercase text-xs tracking-widest mb-8">Quick Links</h4>
+                    <ul class="space-y-4 text-white/60 text-sm font-bold">
+                        <li><a href="/" class="hover:text-white transition">Home</a></li>
+                        <li><a href="/destinations/" class="hover:text-white transition">Destinations</a></li>
+                        <li><a href="/guides/" class="hover:text-white transition">Travel Guides</a></li>
+                        <li><a href="/about/" class="hover:text-white transition">Our Mission</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-black uppercase text-xs tracking-widest mb-8">Adventure Desk</h4>
+                    <ul class="space-y-4 text-white/60 text-sm font-bold">
+                        <li><a href="mailto:expeditions@toursnorth.ca" class="hover:text-white transition">expeditions@toursnorth.ca</a></li>
+                        <li><a href="tel:+1800NORTH" class="hover:text-white transition">1-800-TRUE-NORTH</a></li>
+                        <li class="pt-4 flex gap-4 text-xl">
+                            <i class="fa-brands fa-instagram hover:text-white cursor-pointer transition"></i>
+                            <i class="fa-brands fa-tiktok hover:text-white cursor-pointer transition"></i>
+                            <i class="fa-brands fa-youtube hover:text-white cursor-pointer transition"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-12 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/30">
+                <p>&copy; 2026 Tours North. Built with Antigravity Logic.</p>
+                <div class="flex gap-8 mt-4 md:mt-0">
+                    <a href="#">Security Status: Optimal</a>
+                    <a href="#">Terms & Privacy</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Why Tours North? -->
-    <section class="bg-primary text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold mb-8 text-center font-syne">Why Tours North?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 font-syne">Traveler Security</h3>
-                    <p class="text-gray-200">Your safety is our top priority with 24/7 support and verified partners.</p>
-                </div>
-                <div class="text-center">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 font-syne">24/7 Adventure Support</h3>
-                    <p class="text-gray-200">Round-the-clock assistance for all your travel needs and emergencies.</p>
-                </div>
-                <div class="text-center">
-                    <div class="flex justify-center mb-4">
-                        <svg class="w-16 h-16 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2 font-syne">Local Expertise</h3>
-                    <p class="text-gray-200">Insider knowledge from locals who know Canada like the back of their hand.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script src="../assets/js/global-header.js"></script>
+</body>
+</html>
