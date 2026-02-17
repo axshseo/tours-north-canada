@@ -1,36 +1,57 @@
 [
   {
     "id": "toronto-cn-tower-001",
-    "name": "CN Tower EdgeWalk Experience",
-    "city": "Toronto",
     "url": "tours/toronto-cn-tower-edgewalk.html",
-    "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=600&q=80",
     "isLive": true,
-    "intent": "See & Do",
-    "category": "Attractions",
-    "sub_category": "Observation & Views",
-    "functional": {
-      "type": "Land",
+    "l1_intent": "See & Do",
+    "l2_category": "Attractions",
+    "l3_sub_category": "Observation & Views",
+    "l4_functional": {
+      "primary_type": "Land",
       "sub_types": ["Observation decks", "Landmarks"]
     },
-    "marketing": {
-      "collection": "Urban-Explorer",
-      "sub_collection": "Rooftop views",
-      "vibe": "Iconic"
+    "l5_marketing_vibe": "Iconic",
+    "l6_sub_collection": "Rooftop views",
+    "l7_persona": ["Couples", "Families with Kids", "Luxury Travelers"],
+    "l8_contextual": {
+      "seasonality": "All-year",
+      "weather_dependency": "Low",
+      "time_commitment": "1-2h",
+      "accessibility": ["Wheelchair-friendly"],
+      "price_tier": "$$"
     },
-    "personalization": {
-      "personas": ["Couples", "Families with Kids", "Luxury Travelers"],
-      "context": {
-        "seasonality": "All-year",
-        "weather_dependency": "Low",
-        "time_commitment": "1-2h",
-        "accessibility": ["Wheelchair-friendly"]
-      }
+    "l9_bundle_logic": {
+      "is_bundle_parent": false,
+      "eligible_bundles": ["City Starter Pack"],
+      "cross_sell_ids": ["toronto-ripleys-aquarium-001", "toronto-rom-museum-001"]
     },
-    "revenue": {
-      "price_tier": "$$",
-      "base_price": 45,
-      "bundle_eligible": ["City Starter Pack"]
+    "content": {
+      "name": "CN Tower EdgeWalk Experience",
+      "city": "Toronto",
+      "price": 45.00,
+      "rating": 4.9,
+      "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=800&q=80",
+      "highlights": [
+        "Guided tour with expert local",
+        "Small group experience",
+        "Free cancellation up to 24 hours",
+        "Best price guarantee"
+      ],
+      "description": "Walk around the outside of the CN Tower at dizzying heights. This comprehensive tour takes you through the heart of Toronto, offering unique insights and unforgettable moments. Led by passionate local guides, you'll discover hidden gems and iconic landmarks that define this vibrant destination.",
+      "meeting_point": "CN Tower, 290 Bremner Blvd, Toronto, ON M5V 3L9",
+      "itinerary": [
+        { "step": 1, "title": "Meeting Point", "desc": "Meet your expert guide at CN Tower in downtown Toronto." },
+        { "step": 2, "title": "Guided Exploration", "desc": "Embark on a thrilling walk around the outside of the CN Tower at 1168 feet above ground." },
+        { "step": 3, "title": "Photo Opportunities", "desc": "Capture unforgettable moments with panoramic views of Toronto." }
+      ],
+      "included_items": [
+        "Professional certified guide",
+        "EdgeWalk safety harness & gear",
+        "Tower admission tickets",
+        "Keepsake video and photos",
+        "Achievement certificate",
+        "Small group (max 12 travelers)"
+      ]
     }
   },
   {

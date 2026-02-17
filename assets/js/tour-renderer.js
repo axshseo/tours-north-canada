@@ -58,8 +58,10 @@ const TaxonomicHydrator = {
         if (val === null || val === undefined) {
             const mappings = {
                 'name': 'content.name',
+                'title': 'name',
                 'price': 'content.price',
                 'image': 'content.image',
+                'image_url': 'image',
                 'rating': 'content.rating',
                 'intent': 'l1_intent',
                 'category': 'l2_category',

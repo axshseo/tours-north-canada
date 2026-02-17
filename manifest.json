@@ -1,0 +1,21 @@
+{
+  "name": "Tours North",
+  "short_name": "Tours North",
+  "description": "Category-leading North American travel and booking platform.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#064e3b",
+  "theme_color": "#064e3b",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

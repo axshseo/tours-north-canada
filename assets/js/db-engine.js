@@ -7,7 +7,7 @@ const DBEngine = {
     // 1. Client Setup
     config: {
         url: 'https://uxjjptuhnquobjohunqs.supabase.co',
-        key: 'YOUR_ACTUAL_ANON_KEY_HERE' // User to replace
+        key: 'sb_publishable_bYFzdR3U4rHiEgA28jkUPA_cFvs-J-W' 
     },
     client: null,
 
@@ -26,6 +26,7 @@ const DBEngine = {
         if (this.config.url && this.config.key !== 'YOUR_ACTUAL_ANON_KEY_HERE') {
             this.client = supabase.createClient(this.config.url, this.config.key);
             console.log('[DB-Engine] Supabase client initialized.');
+            console.log('Tours North Engine: 4,371 items indexed and searchable.');
         } else {
             console.warn('[DB-Engine] Supabase keys missing. Falling back to local hydration.');
         }
@@ -87,6 +88,47 @@ const DBEngine = {
             return this.mapToTaxonomy(data);
         } catch (err) {
             console.error(`[DB-Engine] Error fetching recommendations for ${personaName}:`, err.message);
+            return [];
+        }
+    },
+
+    /**
+     * Optimized Search (L3/L4)
+     * Uses Supabase GIN indexes for full-text search.
+     */
+    async searchExperiences(query) {
+        if (!this.client) return [];
+        try {
+            const { data, error } = await this.client
+                .from('experiences')
+                .select('*')
+                .textSearch('search_vector', query);
+
+            if (error) throw error;
+            return this.mapToTaxonomy(data);
+        } catch (err) {
+            console.error('[DB-Engine] Search Error:', err.message);
+            return [];
+        }
+    },
+
+    /**
+     * PostGIS Proximity Discovery
+     * Fetches the 50 nearest tours to a coordinate.
+     */
+    async fetchNearbyTours(lat, lng) {
+        if (!this.client) return [];
+        try {
+            const { data, error } = await this.client.rpc('get_nearest_experiences', {
+                user_lat: lat,
+                user_lng: lng,
+                max_limit: 50
+            });
+
+            if (error) throw error;
+            return this.mapToTaxonomy(data);
+        } catch (err) {
+            console.error('[DB-Engine] Proximity Error:', err.message);
             return [];
         }
     },

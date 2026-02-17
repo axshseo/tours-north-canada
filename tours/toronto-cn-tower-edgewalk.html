@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CN Tower EdgeWalk - Toronto Attractions - Tours North</title>
-    <meta name="description" content="Experience CN Tower EdgeWalk in Toronto with Tours North. Walk around the outside of the CN Tower at dizzying heights. Book your premium Toronto adventure today.">
+    <title data-field="name">CN Tower EdgeWalk - Tours North</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -16,35 +15,16 @@
                         accent: '#b91c1c',
                         base: '#0f172a',
                         snow: '#ffffff'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": "CN Tower EdgeWalk",
-        "description": "Walk around the outside of the CN Tower at dizzying heights.",
-        "brand": "Tours North",
-        "offers": {
-            "@type": "Offer",
-            "price": "45",
-            "priceCurrency": "CAD",
-            "availability": "https://schema.org/InStock"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "reviewCount": "1250"
-        },
-        "seller": {
-            "@type": "Organization",
-            "name": "Tours North"
-        }
-    }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
         .glassmorphism {
             background: rgba(255, 255, 255, 0.25);
@@ -53,59 +33,9 @@
         }
     </style>
 </head>
-<body class="bg-snow text-base" x-data="{ selectedDate: '', showMobileBooking: false }">
-    <!-- Sticky Glassmorphism Nav -->
-    <nav class="sticky top-0 z-50 glassmorphism">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <h1 class="text-xl font-bold text-primary">Tours North</h1>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                            <div class="relative" x-data="{ destinationsOpen: false }">
-                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
-                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../destinations/banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
-                                    <a href="../destinations/toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
-                                    <a href="../destinations/vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
-                                    <a href="../destinations/quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
-                                    <a href="../destinations/montreal.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal</a>
-                                    <a href="../destinations/whistler.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler</a>
-                                    <a href="../destinations/halifax.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Halifax</a>
-                                    <a href="../destinations/jasper.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Jasper</a>
-                                </div>
-                            </div>
-                            <div class="relative" x-data="{ toursOpen: false }">
-                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
-                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
-                                    <a href="banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
-                                    <a href="whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
-                                    <a href="northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
-                                    <a href="montreal-food-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Montreal Food Tour</a>
-                                    <a href="whistler-ski-lesson.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Lesson</a>
-                                    <a href="peggys-cove-day-trip.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Peggy's Cove Day Trip</a>
-                                </div>
-                            </div>
-                            <div class="relative group" x-data="{ guidesOpen: false }">
-                                <button @click="guidesOpen = !guidesOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
-                                <div x-show="guidesOpen" @click.away="guidesOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
-                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
-                                    <a href="../guides/canada-travel-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Travel Visa Guide</a>
-                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
-                                </div>
-                            </div>
-                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
-                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="bg-snow text-base font-inter" x-data="{ selectedDate: '', showMobileBooking: false }">
+    <!-- Global Header -->
+    <div id="global-header"></div>
 
     <!-- Breadcrumbs -->
     <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
@@ -113,9 +43,9 @@
             <ol class="flex items-center space-x-2 text-sm text-gray-500">
                 <li><a href="../index.html" class="hover:text-primary">Home</a></li>
                 <li><span class="mx-2">></span></li>
-                <li><a href="../destinations/toronto.html" class="hover:text-primary">Toronto</a></li>
+                <li><a href="../destinations/toronto.html" class="hover:text-primary" data-field="city">Toronto</a></li>
                 <li><span class="mx-2">></span></li>
-                <li class="text-gray-900 font-medium">CN Tower EdgeWalk</li>
+                <li class="text-gray-900 font-medium" data-field="name">CN Tower EdgeWalk</li>
             </ol>
         </div>
     </nav>
@@ -124,7 +54,7 @@
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div class="lg:col-span-2">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg">
+                <img data-field="image" src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg">
             </div>
             <div class="space-y-4">
                 <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 1" class="w-full h-44 object-cover rounded-lg">
@@ -135,89 +65,63 @@
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Weather Alert (Layer 8) -->
+        <div id="contextual-weather-alert"></div>
+
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Left Content -->
             <div class="lg:col-span-2">
-                <h1 class="text-4xl font-bold text-primary mb-4">CN Tower EdgeWalk</h1>
+                <h1 class="text-4xl font-black text-slate-900 font-syne tracking-tighter mb-4 uppercase" data-field="name">CN Tower EdgeWalk</h1>
                 <div class="flex items-center mb-6">
                     <span class="text-yellow-400 text-2xl">★★★★★</span>
-                    <span class="ml-2 text-lg text-gray-600">4.9 (1,250 reviews)</span>
+                    <span class="ml-2 text-lg text-gray-600"><span data-field="rating">4.9</span> (1,250 reviews)</span>
                 </div>
 
+                <!-- Personalization Tags (Layer 7) -->
+                <div data-field="l7_persona" class="flex flex-wrap gap-2 mb-8"></div>
+
                 <!-- Quick Highlights -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Quick Highlights</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Guided tour with expert local</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Small group experience</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Free cancellation up to 24 hours</span>
-                        </div>
-                        <div class="flex items-center">
-                            <span class="text-accent mr-2">✓</span>
-                            <span>Best price guarantee</span>
-                        </div>
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-6">Quick Highlights</h2>
+                    <div data-field="content.highlights" class="highlights-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Dynamic Highlights -->
                     </div>
                 </section>
 
                 <!-- The Experience -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">The Experience</h2>
-                    <p class="text-base mb-4">Walk around the outside of the CN Tower at dizzying heights.</p>
-                    <p class="text-base">This comprehensive tour takes you through the heart of Toronto, offering unique insights and unforgettable moments. Led by passionate local guides, you'll discover hidden gems and iconic landmarks that define this vibrant destination.</p>
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-6">The Experience</h2>
+                    <div class="prose prose-slate max-w-none">
+                        <p data-field="content.description" class="text-lg text-slate-600 leading-relaxed mb-6"></p>
+                    </div>
                 </section>
 
                 <!-- Full Itinerary -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Full Itinerary</h2>
-                    <div class="space-y-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">1</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Meeting Point</h3>
-                                <p class="text-gray-600">Meet your expert guide at CN Tower in downtown Toronto.</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">2</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Guided Exploration</h3>
-                                <p class="text-gray-600">Embark on a thrilling walk around the outside of the CN Tower at 1168 feet above ground.</p>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="flex-shrink-0 w-8 h-8 bg-primary text-snow rounded-full flex items-center justify-center text-sm font-bold mr-4">3</div>
-                            <div>
-                                <h3 class="font-semibold text-primary">Photo Opportunities</h3>
-                                <p class="text-gray-600">Capture unforgettable moments with panoramic views of Toronto.</p>
-                            </div>
-                        </div>
+                <section class="mb-12 pt-12 border-t border-slate-100">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">Full Itinerary</h2>
+                    <div id="itinerary-list" data-field="content.itinerary" class="space-y-0">
+                        <!-- Dynamic Itinerary Items -->
                     </div>
                 </section>
 
                 <!-- Important Information -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Important Information</h2>
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">Important Information</h2>
+                    <div class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div>
-                                <h3 class="font-semibold text-primary mb-2">Meeting Point</h3>
-                                <p class="text-gray-600">CN Tower, 290 Bremner Blvd, Toronto, ON M5V 3L9</p>
+                                <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">Meeting Point</h3>
+                                <p class="text-slate-600 font-medium" data-field="content.meeting_point">CN Tower, Toronto</p>
                             </div>
                             <div>
-                                <h3 class="font-semibold text-primary mb-2">What to Bring</h3>
-                                <ul class="text-gray-600 space-y-1">
-                                    <li>• Comfortable walking shoes</li>
-                                    <li>• Weather-appropriate clothing</li>
-                                    <li>• Camera or smartphone</li>
-                                    <li>• Water bottle</li>
+                                <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">Good to Know</h3>
+                                <ul class="space-y-2 text-slate-600 font-medium">
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-accent">•</span> Weather-dependent safety checks
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-accent">•</span> Comfortable footwear required
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -225,85 +129,66 @@
                 </section>
 
                 <!-- What's Included -->
-                <section class="mb-8">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">What's Included</h2>
-                    <div class="space-y-2">
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Expert local guide</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Transportation</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Entrance fees</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Small group (max 12 people)</span>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" checked disabled class="mr-3">
-                            <span class="text-base">Photo opportunities</span>
-                        </div>
-                    </div>
+                <section class="mb-12 pt-12 border-t border-slate-100">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">What's Included</h2>
+                    <ul data-field="content.included_items" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Dynamic Included items -->
+                    </ul>
                 </section>
 
                 <!-- Trust Bar -->
-                <section class="bg-gray-100 p-6 rounded-lg">
-                    <h2 class="text-2xl font-semibold text-primary mb-4">Trusted by Travelers</h2>
-                    <div class="flex items-center justify-between">
+                <section class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/20">
+                    <h2 class="text-xl font-black text-slate-900 font-syne mb-6 uppercase">Trusted by Travelers</h2>
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                         <div class="flex items-center">
                             <span class="text-yellow-400 text-2xl mr-2">★★★★★</span>
-                            <span class="text-lg font-semibold">4.8 out of 5</span>
+                            <span class="text-lg font-black text-slate-900">4.8 out of 5</span>
                         </div>
-                        <div class="flex space-x-4">
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">🛡️</span>
-                                <span>Safe Booking</span>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">🛡️</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Safe Booking</span>
                             </div>
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">✓</span>
-                                <span>Verified Reviews</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">✓</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Verified Reviews</span>
                             </div>
-                            <div class="flex items-center">
-                                <span class="text-accent mr-2">🔒</span>
-                                <span>Secure Payment</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">🔒</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Secure Payment</span>
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
 
-            <!-- Booking Engine -->
+            <!-- Sidebar remains persistent -->
             <div class="lg:col-span-1">
-                <div class="sticky top-24 bg-white shadow-lg rounded-lg p-6">
-                    <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
-                    <div class="mb-4">
-                        <div class="text-3xl font-bold text-accent mb-2">$45 CAD</div>
-                        <div class="text-sm text-gray-600">per person</div>
+                <div class="sticky top-24 bg-white shadow-lg rounded-lg p-8 border border-slate-100 shadow-slate-200/50">
+                    <h3 class="text-xl font-bold text-slate-900 font-syne mb-4">Book Adventure</h3>
+                    <div class="mb-6">
+                        <div class="text-4xl font-black text-accent mb-1">$<span data-field="price">45</span></div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">per person &bull; CAD</div>
                     </div>
                     <div class="mb-4">
-                        <label class="block text-sm font-medium mb-1">Date Picker</label>
-                        <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                        <label class="block text-sm font-black uppercase tracking-widest text-slate-400 mb-2">Select Date</label>
+                        <input x-model="selectedDate" type="date" class="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent font-bold">
                     </div>
-                    <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded">Check Availability</button>
-                    <p class="text-xs text-gray-500 mt-2">Free cancellation up to 24 hours before</p>
+                    <button class="w-full bg-accent hover:bg-slate-900 text-white font-black py-4 rounded-xl transition duration-300 shadow-xl shadow-accent/20">Check Availability</button>
+                    <p class="text-[10px] text-center font-bold text-slate-400 mt-4 uppercase tracking-widest">Free cancellation up to 24 hours before</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Mobile Booking Bar -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 md:hidden">
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 md:hidden z-10">
         <div class="flex items-center justify-between">
             <div>
-                <div class="text-lg font-bold text-accent">$45 CAD</div>
-                <div class="text-sm text-gray-600">per person</div>
+                <div class="text-xl font-black text-accent">$<span data-field="price">45</span></div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">per person</div>
             </div>
-            <button @click="showMobileBooking = true" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Book Now</button>
+            <button @click="showMobileBooking = true" class="bg-accent hover:bg-slate-900 text-white font-black py-3 px-6 rounded-xl shadow-xl shadow-accent/20 transition">Book Now</button>
         </div>
     </div>
 
@@ -334,36 +219,15 @@
         </div>
     </div>
 
-    <!-- Recommended for You -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h3 class="text-2xl font-bold text-primary mb-6">Recommended for You</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a href="toronto-rom-museum.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="ROM Museum" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">ROM Museum</h4>
-                <p class="text-gray-600 mb-2">Explore world-class art and natural history collections.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$25 CAD</span>
-            </a>
-            <a href="toronto-ripleys-aquarium.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Ripley's Aquarium" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">Ripley's Aquarium</h4>
-                <p class="text-gray-600 mb-2">Dive into underwater tunnels and marine life exhibits.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$40 CAD</span>
-            </a>
-            <a href="toronto-casa-loma-castle.html" class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Casa Loma Castle" class="w-full h-32 object-cover rounded-lg mb-4">
-                <h4 class="text-lg font-semibold text-primary mb-2">Casa Loma Castle</h4>
-                <p class="text-gray-600 mb-2">Tour Gothic architecture and beautiful gardens.</p>
-                <span class="bg-accent text-white px-3 py-1 rounded-full text-sm font-bold">$30 CAD</span>
-            </a>
-        </div>
+    <!-- Smart Recommendations & Bundling -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100 mt-12">
+        <div id="smart-bundle-upsell"></div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-primary text-snow py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2023 Tours North. All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- Smart Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/db-engine.js"></script>
+    <script src="../assets/js/global-header.js"></script>
+    <script src="../assets/js/tour-renderer.js"></script>
 </body>
 </html>

@@ -5,8 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tours North | Canada's Ultimate Booking Portal</title>
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#064e3b">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
     <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',   // Forest Green
+                        accent: '#b91c1c',    // Maple Red
+                        highlight: '#a3e635'  // Neon Moss
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        syne: ['Syne', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@700&display=swap" rel="stylesheet">
     <!-- Flatpickr for Date Ranges -->
@@ -1499,5 +1520,16 @@
 <!-- <script src="assets/js/fomo.js"></script> -->
 <script src="assets/js/init-datepicker.js"></script>
 
+
+    <!-- PWA Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(reg => console.log('[PWA] Service Worker Registered', reg))
+            .catch(err => console.log('[PWA] Service Worker Failed', err));
+        });
+      }
+    </script>
 </body>
 </html>

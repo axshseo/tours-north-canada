@@ -29,8 +29,19 @@ const ConciergeHeader = {
         return [...new Set(this.tours.map(t => t.city))].sort();
     },
 
-    render() {
-        // Ensure container exists
+    async getNavData() {
+        const cities = await this.getUniqueCities();
+        const activeIntents = [...new Set(this.tours.map(t => t.l1_intent || t.intent))].filter(Boolean);
+        const activePersonas = [...new Set(this.tours.flatMap(t => t.l7_persona || t.personalization?.personas || []))].filter(Boolean);
+        
+        return {
+            cities,
+            intents: activeIntents.sort(),
+            personas: activePersonas.sort()
+        };
+    },
+
+    async render() {
         let headerEl = document.getElementById('global-header');
         if (!headerEl) {
             headerEl = document.createElement('div');
@@ -38,19 +49,22 @@ const ConciergeHeader = {
             document.body.prepend(headerEl);
         }
 
+        const navData = await this.getNavData();
+
         const navHTML = `
             <div x-data="{ 
                 megaMenu: null, 
                 mobileOpen: false, 
                 currentPersona: null,
                 searchQuery: '',
-                intents: ['See & Do', 'Eat & Drink', 'Get Active', 'Move Around', 'Stay Over'],
-                personas: ['Families with Kids', 'Couples', 'Luxury Travelers', 'Adventure Seekers'],
-                cities: [],
+                intents: ${JSON.stringify(navData.intents)},
+                personas: ${JSON.stringify(navData.personas)},
+                cities: ${JSON.stringify(navData.cities)},
+                tours: ${JSON.stringify(this.tours)},
                 selectedLang: localStorage.getItem('tn_lang') || 'EN',
                 selectedCurrency: localStorage.getItem('tn_currency') || 'CAD',
-                async init() {
-                    this.cities = await ConciergeHeader.getUniqueCities();
+                init() {
+                    console.log('[Concierge] Alpine initialized with live inventory.');
                 },
                 setLang(lang) {
                     this.selectedLang = lang;
@@ -121,7 +135,7 @@ const ConciergeHeader = {
                                      x-transition:enter="transition ease-out duration-200"
                                      x-transition:enter-start="opacity-0 translate-y-2"
                                      x-transition:enter-end="opacity-100 translate-y-0"
-                                     class="absolute top-full left-0 w-[600px] bg-white shadow-2xl rounded-xl border border-gray-100 p-8 grid grid-cols-3 gap-8 mt-4">
+                                     class="absolute top-full right-0 w-[600px] bg-white shadow-2xl rounded-xl border border-gray-100 p-8 grid grid-cols-3 gap-8 mt-4">
                                     <template x-for="cityName in cities" :key="cityName">
                                         <div>
                                             <a :href="'/destinations/' + cityName.toLowerCase().replace(/ /g, '-') + '.html'" 
@@ -179,8 +193,7 @@ const ConciergeHeader = {
                                         <a href="/concierge/" class="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-accent transition">View All Matches →</a>
                                     </div>
                                     <div class="grid grid-cols-3 gap-6">
-                                        <!-- Placeholder for results - in real app, this iterates over filtered array -->
-                                    <template x-for="tour in ${JSON.stringify(this.tours)}.filter(t => (t.l7_persona || t.personalization?.personas || []).includes(currentPersona)).slice(0, 3)">
+                                        <template x-for="tour in tours.filter(t => (t.l7_persona || t.personalization?.personas || []).includes(currentPersona)).slice(0, 3)">
                                             <a :href="'/' + (tour.url || tour.id + '.html')" class="group block bg-slate-50 rounded-[2rem] p-4 hover:bg-white hover:shadow-2xl hover:shadow-slate-200/50 transition-all border border-transparent hover:border-slate-100">
                                                 <img :src="tour.content?.image || tour.image" class="w-full h-40 object-cover rounded-[1.5rem] mb-4">
                                                 <h5 class="font-bold text-slate-900 group-hover:text-primary transition" x-text="tour.content?.name || tour.name"></h5>
@@ -193,7 +206,7 @@ const ConciergeHeader = {
                         </div>
 
                         <!-- Standard Intent Menus (Layer 1) -->
-                        <template x-for="intent in intents">
+                        <template x-for="intent in intents" :key="intent">
                             <div x-show="megaMenu === intent" class="grid grid-cols-4 gap-8">
                                 <div class="col-span-1">
                                     <h3 class="text-3xl font-black font-syne text-primary mb-4" x-text="intent"></h3>
@@ -201,7 +214,7 @@ const ConciergeHeader = {
                                     <button class="bg-primary/5 text-primary text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-full hover:bg-primary hover:text-white transition">Explore Category</button>
                                 </div>
                                 <div class="col-span-3 grid grid-cols-3 gap-6">
-                                     <template x-for="tour in ${JSON.stringify(this.tours)}.filter(t => (t.l1_intent || t.intent) === intent).slice(0, 3)">
+                                     <template x-for="tour in tours.filter(t => (t.l1_intent || t.intent) === intent).slice(0, 3)">
                                         <a :href="'/' + (tour.url || tour.id + '.html')" class="group flex gap-4 p-4 hover:bg-slate-50 rounded-3xl transition">
                                             <div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
                                                 <img :src="tour.content?.image || tour.image" class="w-full h-full object-cover group-hover:scale-110 transition-duration-500">
@@ -222,9 +235,8 @@ const ConciergeHeader = {
 
                 <!-- 4. Mobile Menu -->
                 <div x-show="mobileOpen" class="lg:hidden bg-white border-t border-slate-100 p-6">
-                    <!-- Mobile content simplified -->
                     <div class="space-y-4">
-                        <template x-for="intent in intents">
+                        <template x-for="intent in intents" :key="intent">
                             <a :href="'/intent/' + intent.toLowerCase()" class="block text-lg font-bold text-slate-900" x-text="intent"></a>
                         </template>
                     </div>
