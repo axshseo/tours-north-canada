@@ -100,3 +100,72 @@ export async function getLatestTravelHacks(cityName, limit = 3) {
         { title: "Winter Wind Tunnels", snippet: "The 3 corners to avoid when the temp drops below -10C.", url: "/guides/winter-survival" }
     ].slice(0, limit);
 }
+
+/**
+ * FETCH TOURS BY COLLECTION (L5/L6)
+ */
+export async function getToursByCollection(cityName, collectionName, limit = 10) {
+    const { data, error } = await supabase
+        .from('experiences')
+        .select(`
+            *,
+            categories(name),
+            experience_collections!inner(name)
+        `)
+        .eq('city_id', cityName)
+        .eq('published', true)
+        .eq('experience_collections.name', collectionName)
+        .limit(limit);
+
+    if (error) {
+        console.error("Collection Fetch Error:", error);
+        return [];
+    }
+    return data;
+}
+
+/**
+ * FETCH TOURS BY TAG (L8)
+ */
+export async function getToursByTag(cityName, tagName, limit = 10) {
+    const { data, error } = await supabase
+        .from('experiences')
+        .select(`
+            *,
+            categories(name),
+            experience_context_tags!inner(name)
+        `)
+        .eq('city_id', cityName)
+        .eq('published', true)
+        .eq('experience_context_tags.name', tagName)
+        .limit(limit);
+
+    if (error) {
+        console.error("Tag Fetch Error:", error);
+        return [];
+    }
+    return data;
+}
+
+/**
+ * FETCH WEATHER SAFE TOURS (Indoor or specific tags)
+ */
+export async function getWeatherSafeTours(cityName, limit = 10) {
+    const { data, error } = await supabase
+        .from('experiences')
+        .select(`
+            *,
+            categories(name),
+            types!inner(name)
+        `)
+        .eq('city_id', cityName)
+        .eq('published', true)
+        .or('name.eq.Indoor', { foreignTable: 'types' }) // Indoor types are weather safe
+        .limit(limit);
+
+    if (error) {
+        console.error("Weather Safe Fetch Error:", error);
+        return [];
+    }
+    return data;
+}

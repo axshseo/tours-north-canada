@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master City Destination | Tours North</title>
+    
+    <!-- Design System: Syne & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',   // Forest
+                        accent: '#b91c1c',    // Maple
+                        background: '#f8fafc' // Snow
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    spacing: {
+                        '16': '64px'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Strict Vertical Rhythm */
+        section { padding-top: 4rem; padding-bottom: 4rem; } 
+        
+        /* Carousel Snap */
+        .snap-x { scroll-snap-type: x mandatory; }
+        .snap-start { scroll-snap-align: start; }
+    </style>
+</head>
+<body class="bg-background font-inter text-slate-900">
+
+    <!-- 1. Precision Hero (Search Engine) -->
+    <section class="relative min-h-[500px] max-h-[60vh] flex items-center justify-center overflow-hidden bg-primary pt-0 pb-0">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80" 
+             class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" alt="City Background">
+        <div class="absolute inset-0 bg-black/40"></div>
+        
+        <div class="relative z-10 w-full max-w-3xl px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-syne font-extrabold text-white mb-8 tracking-tighter">Discover Your Next Adventure</h1>
+            
+            <!-- Smart Search Card -->
+            <div class="bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center gap-2">
+                <div class="flex-1 w-full border-r border-slate-100 px-4 py-2 text-left">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Destination</label>
+                    <input type="text" placeholder="Where to?" class="w-full font-bold text-primary outline-none text-sm">
+                </div>
+                <div class="flex-1 w-full border-r border-slate-100 px-4 py-2 text-left">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Date</label>
+                    <input type="date" class="w-full font-bold text-primary outline-none text-sm">
+                </div>
+                <div class="flex-1 w-full px-4 py-2 text-left">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Guests</label>
+                    <input type="number" placeholder="2 Guests" class="w-full font-bold text-primary outline-none text-sm">
+                </div>
+                <button class="bg-accent w-full md:w-auto px-10 py-4 rounded-xl text-white font-syne font-bold uppercase tracking-widest hover:bg-red-700 transition">
+                    Search
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. USP Trust Strip -->
+    <div class="h-16 bg-slate-50 border-b border-slate-200 flex items-center overflow-x-auto no-scrollbar">
+        <div class="max-w-7xl mx-auto w-full flex justify-between px-6 gap-8 min-w-[800px]">
+            <div class="flex items-center gap-3 whitespace-nowrap">
+                <i class="fa-solid fa-calendar-check text-primary"></i>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Free Cancellation</span>
+            </div>
+            <div class="flex items-center gap-3 whitespace-nowrap">
+                <i class="fa-solid fa-tags text-primary"></i>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Lowest Price Guarantee</span>
+            </div>
+            <div class="flex items-center gap-3 whitespace-nowrap">
+                <i class="fa-solid fa-headset text-primary"></i>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">24/7 Local Support</span>
+            </div>
+            <div class="flex items-center gap-3 whitespace-nowrap">
+                <i class="fa-solid fa-shield-halved text-primary"></i>
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">TICO Certified</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Intent Pills (Nav) -->
+    <div class="bg-white sticky top-0 z-30 border-b border-slate-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
+            <div class="flex gap-4">
+                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-ticket"></i> Tickets
+                </button>
+                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-bus"></i> Tours
+                </button>
+                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-ship"></i> Cruises
+                </button>
+                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-helicopter"></i> Helicopter
+                </button>
+                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
+                    <i class="fa-solid fa-utensils"></i> Food
+                </button>
+            </div>
+            <button class="hidden lg:flex items-center gap-2 text-xs font-black text-accent uppercase tracking-widest transition">
+                <i class="fa-solid fa-filter"></i> Filters
+            </button>
+        </div>
+    </div>
+
+    <!-- 4. Flash Deal Banner -->
+    <section class="max-w-7xl mx-auto px-6" x-data="{ timer: 7200 }">
+        <div class="h-48 bg-primary rounded-[2.5rem] overflow-hidden relative flex items-center justify-between px-12 text-white">
+            <div class="relative z-10">
+                <span class="bg-accent px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 inline-block">Flash Deal</span>
+                <h2 class="text-3xl md:text-4xl font-syne font-extrabold mb-2 underline decoration-highlight">Winter Survival Bundle</h2>
+                <p class="text-white/60 font-bold uppercase tracking-widest text-xs">Limited Stock: 20% Off All Tours</p>
+            </div>
+            
+            <!-- Countdown Timer -->
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="flex gap-2 text-2xl font-black font-syne" x-init="setInterval(() => timer--, 1000)">
+                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="Math.floor(timer / 3600)">02</div>
+                    <span>:</span>
+                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="Math.floor((timer % 3600) / 60)">00</div>
+                    <span>:</span>
+                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="timer % 60">00</div>
+                </div>
+                <span class="text-[8px] font-black uppercase tracking-[0.3em]">Hurry! Booking fast</span>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=800&q=50" 
+                 class="absolute inset-x-0 w-full h-full object-cover opacity-20" alt="Flash Deal BG">
+        </div>
+    </section>
+
+    <!-- 5. Top 10 Bestsellers (Snap Carousel) -->
+    <section class="max-w-7xl mx-auto px-6">
+        <div class="flex items-end justify-between mb-8">
+            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter">THE TOP 10.</h2>
+            <div class="flex gap-2">
+                <button @click="$refs.top10.scrollBy({left: -320, behavior: 'smooth'})" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></button>
+                <button @click="$refs.top10.scrollBy({left: 320, behavior: 'smooth'})" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <div x-ref="top10" class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory">
+            <template x-for="i in 10">
+                <div class="min-w-[280px] lg:min-w-[320px] aspect-[3/4] snap-start group relative rounded-3xl overflow-hidden bg-slate-200 shadow-xl transition-transform hover:-translate-y-2">
+                    <img src="https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=400&q=80" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Tour Image">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <div class="flex items-center gap-1 mb-2">
+                            <template x-for="star in 5">
+                                <i class="fa-solid fa-star text-[8px] text-highlight"></i>
+                            </template>
+                        </div>
+                        <h3 class="text-xl font-syne font-extrabold text-white mb-2 leading-tight">Toronto Island Sunset Kayaking</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-highlight">$85 CAD</span>
+                            <span class="text-[8px] font-black uppercase text-white tracking-widest bg-white/20 px-2 py-1 rounded-full">Bestseller</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- 6. Collections Rail (2-Row Masonry) -->
+    <section class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter mb-12">COLLECTIONS.</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+            <div class="col-span-2 row-span-1 rounded-3xl relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1543783230-278385764042?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <h3 class="text-2xl font-black font-syne text-white uppercase italic tracking-tighter underline decoration-highlight decoration-4 underline-offset-8">Only In Canada</h3>
+                </div>
+            </div>
+            <div class="col-span-1 row-span-1 rounded-3xl relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-primary/40 flex items-center justify-center p-4 text-center">
+                    <h3 class="text-xl font-black font-syne text-white uppercase leading-tight">Rainy Day Safe</h3>
+                </div>
+            </div>
+            <div class="col-span-1 row-span-2 rounded-3xl relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1515523110800-9415d13b84a8?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-accent/40 flex items-end p-8">
+                    <h3 class="text-3xl font-black font-syne text-white uppercase leading-tight">Indigenous Heritage</h3>
+                </div>
+            </div>
+            <div class="col-span-2 row-span-1 rounded-3xl relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <h3 class="text-2xl font-black font-syne text-white uppercase italic tracking-tighter underline decoration-accent decoration-4 underline-offset-8">Winter Warriors</h3>
+                </div>
+            </div>
+            <div class="col-span-1 row-span-1 rounded-3xl relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1555412654-72a95a495858?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-black/40 flex items-center justify-center p-4 text-center">
+                    <h3 class="text-xl font-black font-syne text-white uppercase leading-tight">Poutine Trails</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Trending Now (3x3 Compact Grid) -->
+    <section class="max-w-7xl mx-auto px-6 bg-slate-50 py-16 -mx-6 md:mx-auto md:rounded-[4rem] border border-slate-100">
+        <div class="flex items-center gap-4 mb-12">
+            <span class="w-3 h-3 bg-accent rounded-full animate-pulse"></span>
+            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter uppercase italic">Trending Now.</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-8">
+            <template x-for="i in 9">
+                <div class="flex items-center gap-4 group cursor-pointer pb-4 border-b border-slate-100 hover:border-primary transition">
+                    <div class="h-20 w-20 rounded-2xl overflow-hidden bg-slate-200 flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=150" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold text-primary group-hover:text-accent transition leading-tight mb-1">Hockey Hall of Fame Skip-the-Line Access</h4>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-black text-slate-400">$25 CAD</span>
+                            <span class="text-[8px] font-black text-primary px-2 py-0.5 bg-highlight rounded-full">LIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- 8. Destination Bento Grid -->
+    <section class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter mb-12">MAP THE NORTH.</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[600px]">
+            <!-- Featured -->
+            <div class="col-span-2 row-span-2 rounded-[3.5rem] relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1562914101-768f5c3bd88c?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-12">
+                    <span class="text-highlight font-black text-xs uppercase tracking-[0.4em] mb-4">The Crown Jewel</span>
+                    <h3 class="text-6xl font-syne font-extrabold text-white tracking-tighter mb-4">BANFF.</h3>
+                    <a href="/destinations/banff.html" class="inline-block px-8 py-3 bg-white rounded-full text-primary font-black text-[10px] uppercase tracking-widest w-fit hover:bg-accent hover:text-white transition">Explore Hub</a>
+                </div>
+            </div>
+            <!-- Secondary -->
+            <div class="col-span-1 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1543783230-278385764042?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-6">
+                    <h3 class="text-2xl font-syne font-extrabold text-white tracking-tighter">TORONTO.</h3>
+                </div>
+            </div>
+            <!-- Secondary -->
+            <div class="col-span-1 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1560814304-4f05eb58af38?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-6">
+                    <h3 class="text-2xl font-syne font-extrabold text-white tracking-tighter">VANCOUVER.</h3>
+                </div>
+            </div>
+            <!-- Tertiary -->
+            <div class="col-span-2 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute inset-0 bg-primary/40 flex flex-col justify-center px-12">
+                    <h3 class="text-4xl font-syne font-extrabold text-white tracking-tighter">YUKON TERRITORIES.</h3>
+                    <span class="text-highlight font-black font-syne uppercase tracking-widest text-[10px]">Aurora Season Active</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. AI Concierge Interruption (Personalization) -->
+    <section class="max-w-7xl mx-auto px-6" x-data="{ selected: null }">
+        <div class="bg-primary rounded-[4rem] p-12 md:p-24 relative overflow-hidden flex flex-col items-center text-center">
+            <div class="absolute top-0 right-0 p-20 opacity-10 pointer-events-none transform rotate-12">
+                <i class="fa-solid fa-moose text-[30rem] text-white"></i>
+            </div>
+            
+            <div class="relative z-10 max-w-2xl">
+                <div class="w-16 h-16 bg-highlight rounded-2xl flex items-center justify-center text-primary text-2xl mb-8 mx-auto shadow-2xl">
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
+                <p class="text-highlight font-black text-xs uppercase tracking-[0.5em] mb-4">North AI Concierge</p>
+                <h2 class="text-4xl md:text-5xl font-syne font-extrabold text-white mb-12 tracking-tighter leading-none">Who are you traveling with?</h2>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button @click="selected = 'Family'" :class="selected === 'Family' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
+                        <i class="fa-solid fa-child mr-2"></i> Family
+                    </button>
+                    <button @click="selected = 'Couple'" :class="selected === 'Couple' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
+                        <i class="fa-solid fa-heart mr-2"></i> Couple
+                    </button>
+                    <button @click="selected = 'Solo'" :class="selected === 'Solo' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
+                        <i class="fa-solid fa-user mr-2"></i> Solo
+                    </button>
+                    <button @click="selected = 'Friends'" :class="selected === 'Friends' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
+                        <i class="fa-solid fa-users mr-2"></i> Friends
+                    </button>
+                </div>
+
+                <div x-show="selected" x-cloak x-transition class="mt-12 p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                    <p class="text-white/80 font-bold mb-4">Great! Filtering 4,371 experiences for <span class="text-highlight" x-text="selected"></span>...</p>
+                    <a href="#" class="inline-block bg-accent px-10 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] shadow-2xl">See Recommendations</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Travel Hacks Journal (4-Column Grid) -->
+    <section class="max-w-max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-12">
+            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter italic">TRAVEL HACKS.</h2>
+            <a href="#" class="text-[10px] font-black uppercase text-accent border-b-2 border-accent pb-1 tracking-widest">Read Journal</a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <template x-for="i in 4">
+                <div class="group cursor-pointer">
+                    <div class="aspect-video rounded-3xl overflow-hidden mb-4 bg-slate-200">
+                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=400&q=80" 
+                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700" alt="Journal Image">
+                    </div>
+                    <h3 class="text-lg font-bold text-primary group-hover:text-accent transition leading-tight"> Pearson to Downtown: The $12 Transit Secret</h3>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <!-- 11. App Download CTA -->
+    <section class="max-w-7xl mx-auto px-6">
+        <div class="h-80 bg-slate-900 rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row items-center border border-white/10 shadow-3xl">
+            <!-- App Mockup Image -->
+            <div class="w-full md:w-1/2 h-full relative overflow-hidden bg-primary/20 flex items-center justify-center">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=50" 
+                     class="w-[200px] h-[400px] object-cover rounded-[3rem] border-[8px] border-slate-800 shadow-3xl rotate-12 translate-y-20 transform hover:-translate-y-0 transition duration-1000" alt="App Mockup">
+                <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 to-transparent"></div>
+            </div>
+            <!-- QR Code & Store Buttons -->
+            <div class="w-full md:w-1/2 p-12 text-center md:text-left">
+                <h2 class="text-3xl font-syne font-extrabold text-white mb-4 tracking-tighter leading-none">THE TRUE NORTH, MOBILE-ONLY.</h2>
+                <p class="text-white/40 font-bold uppercase tracking-widest text-[10px] mb-8">Get exclusive mobile deals & real-time discovery</p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-8">
+                    <div class="bg-white p-3 rounded-2xl w-24 h-24 flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-qrcode text-4xl text-primary"></i>
+                    </div>
+                    <div class="flex flex-col gap-3 w-full">
+                        <button class="bg-white text-primary px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-highlight transition">
+                            <i class="fa-brands fa-apple text-xl"></i> App Store
+                        </button>
+                        <button class="bg-white/10 text-white px-8 py-3 rounded-xl font-bold border border-white/20 flex items-center justify-center gap-3 hover:bg-white/20 transition">
+                            <i class="fa-brands fa-google-play text-xl"></i> Google Play
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. SEO Mega-Footer -->
+    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 mb-20">
+                <!-- Col 1 -->
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Provinces</h4>
+                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
+                        <li><a href="#" class="hover:text-white transition">Ontario</a></li>
+                        <li><a href="#" class="hover:text-white transition">British Columbia</a></li>
+                        <li><a href="#" class="hover:text-white transition">Alberta</a></li>
+                        <li><a href="#" class="hover:text-white transition">Quebec</a></li>
+                        <li><a href="#" class="hover:text-white transition">Nova Scotia</a></li>
+                        <li><a href="#" class="hover:text-white transition">Yukon</a></li>
+                    </ul>
+                </div>
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Top Cities</h4>
+                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
+                        <li><a href="#" class="hover:text-white transition">Toronto</a></li>
+                        <li><a href="#" class="hover:text-white transition">Vancouver</a></li>
+                        <li><a href="#" class="hover:text-white transition">Montreal</a></li>
+                        <li><a href="#" class="hover:text-white transition">Banff</a></li>
+                        <li><a href="#" class="hover:text-white transition">Calgary</a></li>
+                        <li><a href="#" class="hover:text-white transition">Ottawa</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Categories</h4>
+                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
+                        <li><a href="#" class="hover:text-white transition">Attractions</a></li>
+                        <li><a href="#" class="hover:text-white transition">Day Trips</a></li>
+                        <li><a href="#" class="hover:text-white transition">Outdoor</a></li>
+                        <li><a href="#" class="hover:text-white transition">Food Tours</a></li>
+                        <li><a href="#" class="hover:text-white transition">Winter Sports</a></li>
+                        <li><a href="#" class="hover:text-white transition">Cruises</a></li>
+                    </ul>
+                </div>
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Support</h4>
+                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
+                        <li><a href="#" class="hover:text-white transition">Manage Booking</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms & Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Legal Notice</a></li>
+                        <li><a href="#" class="hover:text-white transition">Partner Portal</a></li>
+                    </ul>
+                </div>
+                <!-- Col 5: Brand Block -->
+                <div class="col-span-2">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center text-white text-xl">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                        </div>
+                        <h3 class="text-2xl font-syne font-extrabold tracking-tighter uppercase">TOURS NORTH</h3>
+                    </div>
+                    <p class="text-white/40 text-xs font-medium leading-relaxed mb-8">Unlocking the True North through design-forward exploration and inventory-driven technology. Category Leader since 2026.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
+                <p>&copy; 2026 Tours North Canada. All Rights Reserved.</p>
+                <div class="flex gap-8 mt-4 md:mt-0">
+                    <span class="flex items-center gap-2 text-highlight font-black">
+                        <span class="w-1.5 h-1.5 bg-highlight rounded-full animate-pulse"></span>
+                        SYSTEM OPTIMAL
+                    </span>
+                    <span>TICO REG: 4928103</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Peak Illustration Overlay (Bottom Edge) -->
+        <div class="absolute bottom-0 left-0 right-0 h-40 opacity-5 pointer-events-none">
+            <svg viewBox="0 0 1200 200" preserveAspectRatio="none" class="w-full h-full fill-white">
+                <path d="M0,200 L1200,200 L1200,100 L1100,50 L1000,120 L900,20 L800,150 L700,40 L600,130 L500,10 L400,160 L300,60 L200,140 L100,30 L0,110 Z"></path>
+            </svg>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -165,6 +165,9 @@ const DBEngine = {
                 eligible_bundles: r.eligible_bundles,
                 cross_sell_ids: r.cross_sell_ids
             },
+            // Relational Layer
+            collections: r.experience_collections?.map(c => c.name) || [],
+            context_tags: r.experience_context_tags || [],
             content: {
                 name: r.name,
                 price: r.price,

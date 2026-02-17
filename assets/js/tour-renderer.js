@@ -22,11 +22,16 @@ const TaxonomicHydrator = {
         // Prefer live DB if available and initialized
         if (window.DBEngine && window.DBEngine.client) {
             console.log('[Hydrator] Fetching inventory from live Supabase...');
-            // In a real scenario, we might just fetch the specific tour
-            // For now, we'll maintain the current logic of fetching "inventory"
-            const { data, error } = await window.DBEngine.client
-                .from('vw_experiences_by_persona')
-                .select('*');
+            
+            // Check if we are on a specific tour page to do a relational join
+            const isTourPage = window.location.pathname.includes('/tours/');
+            let query = window.DBEngine.client.from('experiences').select(`
+                *,
+                experience_collections(name),
+                experience_context_tags(name, icon_class)
+            `);
+
+            const { data, error } = await query;
             
             if (!error && data) {
                 return window.DBEngine.mapToTaxonomy(data);
@@ -42,13 +47,11 @@ const TaxonomicHydrator = {
         // Path-based identification (e.g., /tours/toronto-cn-tower.html)
         const path = window.location.pathname;
         const filename = path.split('/').pop();
-        return this.tours.find(t => t.url && t.url.endsWith(filename));
+        return this.tours.find(t => t.url && t.url.endsWith(filename)) || this.tours[0]; // Fallback to first for template testing
     },
 
     /**
      * Traverses the 9-layer structure to find values for data-field attributes.
-     * Supports dot notation like data-field="personalization.context.time_commitment"
-     * Also handles the transition to l1_... l9_ prefixes and content block.
      */
     getValueByPath(obj, path) {
         // First try the literal path
@@ -58,19 +61,17 @@ const TaxonomicHydrator = {
         if (val === null || val === undefined) {
             const mappings = {
                 'name': 'content.name',
-                'title': 'name',
+                'title': 'content.name',
                 'price': 'content.price',
                 'image': 'content.image',
-                'image_url': 'image',
+                'image_url': 'content.image',
                 'rating': 'content.rating',
                 'intent': 'l1_intent',
                 'category': 'l2_category',
                 'sub_category': 'l3_sub_category',
-                'revenue.base_price': 'content.price',
-                'personalization.context.time_commitment': 'l8_contextual.time_commitment',
-                'personalization.context.seasonality': 'l8_contextual.seasonality',
-                'personalization.context.accessibility': 'l8_contextual.accessibility',
-                'personalization.personas': 'l7_persona'
+                'persona': 'l7_persona',
+                'usp': 'content.usp',
+                'description': 'content.description'
             };
             
             if (mappings[path]) {
@@ -87,15 +88,18 @@ const TaxonomicHydrator = {
             let value = this.getValueByPath(this.currentTour, field);
 
             if (value !== null && value !== undefined) {
-                // Specialized rendering logic
                 if (el.tagName === 'IMG') {
                     el.src = value;
                 } else if (el.tagName === 'META') {
                     el.setAttribute('content', value);
                 } else if (el.classList.contains('persona-tags')) {
                     this.renderPersonaTags(el, value);
-                } else if (el.classList.contains('accessibility-list')) {
-                    this.renderList(el, value);
+                } else if (el.classList.contains('collection-badge')) {
+                    this.renderCollectionBadge(el);
+                } else if (el.classList.contains('context-icons')) {
+                    this.renderContextIcons(el);
+                } else if (el.classList.contains('family-safety-check')) {
+                    this.renderFamilySafety(el);
                 } else {
                     el.innerText = value;
                 }
@@ -106,6 +110,47 @@ const TaxonomicHydrator = {
         this.updateSEO();
     },
 
+    renderCollectionBadge(container) {
+        const collections = this.currentTour.collections;
+        if (!collections || collections.length === 0) return;
+        
+        container.innerHTML = `
+            <span class="px-4 py-2 bg-accent text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-lg shadow-xl">
+                ${collections[0]}
+            </span>
+        `;
+    },
+
+    renderContextIcons(container) {
+        const tags = this.currentTour.context_tags;
+        if (!tags || tags.length === 0) return;
+
+        container.innerHTML = tags.map(tag => `
+            <div class="flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-slate-600">
+                <i class="${tag.icon_class || 'fa-solid fa-tag'} text-[10px]"></i>
+                <span class="text-[9px] font-bold uppercase tracking-widest">${tag.name}</span>
+            </div>
+        `).join('');
+    },
+
+    renderFamilySafety(container) {
+        const personas = this.currentTour.l7_persona || [];
+        if (personas.includes('Families')) {
+            container.innerHTML = `
+                <div class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-800">
+                    <i class="fa-solid fa-circle-check text-xl"></i>
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-widest leading-none mb-1">Family-Approved</p>
+                        <p class="text-xs font-semibold">Verified safety protocols and stroller friendly.</p>
+                    </div>
+                </div>
+            `;
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+    },
+
     renderPersonaTags(container, personas) {
         if (!Array.isArray(personas)) return;
         container.innerHTML = personas.map(p => 
@@ -113,103 +158,39 @@ const TaxonomicHydrator = {
         ).join('');
     },
 
-    renderList(container, items) {
-        if (!Array.isArray(items)) return;
-        container.innerHTML = items.map(i => 
-            `<li class="flex items-center gap-2 text-slate-500 text-sm"><i class="fa-solid fa-check text-accent text-[10px]"></i> ${i}</li>`
-        ).join('');
-    },
-
-    /**
-     * Contextual Logic (Layer 8)
-     * Handles weather dependency, accessibility alerts, etc.
-     */
-    processContextualLogic() {
-        const context = this.currentTour.l8_contextual || this.currentTour.personalization?.context;
-        if (!context) return;
-
-        // Weather Alert
-        const weatherEl = document.getElementById('contextual-weather-alert');
-        if (weatherEl) {
-            const isHighVulnerability = context.weather_dependency === 'High';
-            weatherEl.style.display = isHighVulnerability ? 'flex' : 'none';
-            weatherEl.innerHTML = `
-                <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center gap-4 text-amber-800">
-                    <i class="fa-solid fa-cloud-sun-rain text-xl"></i>
-                    <div>
-                        <p class="text-xs font-black uppercase tracking-widest mb-1">Weather Context</p>
-                        <p class="text-sm font-medium">This experience is sensitive to weather conditions. We offer a 100% dry-day guarantee.</p>
-                    </div>
-                </div>
-            `;
-        }
-    },
-
-    /**
-     * Smart Bundling (Layer 9)
-     * Renders 'Complete the Set' upsell component
-     */
-    processSmartBundling() {
-        const bundles = this.currentTour.l9_bundle_logic?.eligible_bundles || this.currentTour.revenue?.bundle_eligible;
-        if (!bundles || bundles.length === 0) return;
-
-        const bundleContainer = document.getElementById('smart-bundle-upsell');
-        if (!bundleContainer) return;
-
-        // Find matches in the same bundle
-        const matches = this.tours.filter(t => 
-            t.id !== this.currentTour.id && 
-            (
-                (t.l9_bundle_logic?.eligible_bundles?.some(b => bundles.includes(b))) ||
-                (t.revenue?.bundle_eligible?.some(b => bundles.includes(b)))
-            )
-        ).slice(0, 2);
-
-        if (matches.length > 0) {
-            bundleContainer.innerHTML = `
-                <div class="mt-12 p-8 bg-slate-50 rounded-[3rem] border border-slate-100">
-                    <h4 class="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-6 text-center">Complete the Set</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        ${matches.map(tour => `
-                            <a href="/${tour.url || (tour.id + '.html')}" class="flex items-center gap-4 bg-white p-4 rounded-2xl shadow-sm hover:shadow-xl transition group">
-                                <img src="${tour.content?.image || tour.image}" class="w-16 h-16 object-cover rounded-xl">
-                                <div>
-                                    <p class="text-[10px] font-black uppercase text-accent tracking-widest">${tour.city || 'Adventure'}</p>
-                                    <h5 class="font-bold text-slate-900 group-hover:text-primary transition">${tour.content?.name || tour.name}</h5>
-                                    <p class="text-sm font-black text-primary">$${tour.content?.price || tour.revenue?.base_price || tour.price}</p>
-                                </div>
-                            </a>
-                        `).join('')}
-                    </div>
-                    <div class="mt-8 text-center">
-                        <p class="text-xs font-bold text-slate-500 mb-4">Add either of these to save 15% on the entire bundle.</p>
-                        <button class="bg-primary text-white text-[10px] font-black uppercase tracking-widest px-8 py-3 rounded-full hover:bg-accent transition shadow-lg">Activate Bundle Discount</button>
-                    </div>
-                </div>
-            `;
-        }
-    },
-
     updateSEO() {
         const name = this.currentTour.content?.name || this.currentTour.name;
-        const vibe = this.currentTour.l5_marketing_vibe || this.currentTour.marketing?.vibe;
-        const price = this.currentTour.content?.price || this.currentTour.revenue?.base_price || this.currentTour.price;
-        const types = this.currentTour.l4_functional?.sub_types || this.currentTour.functional?.sub_types;
-
-        if (name) document.title = `${name} - Tours North`;
+        const collections = this.currentTour.collections || [];
+        const tags = this.currentTour.context_tags?.map(t => t.name) || [];
+        const price = this.currentTour.content?.price || this.currentTour.revenue?.base_price;
         
-        // JSON-LD Schema
+        if (name) document.title = `${name} - Tours North`;
+
+        // Update Meta Description
+        const description = this.currentTour.content?.description || this.currentTour.description || this.currentTour.content?.usp;
+        if (description) {
+            let metaDesc = document.querySelector('meta[name="description"]');
+            if (!metaDesc) {
+                metaDesc = document.createElement('meta');
+                metaDesc.name = 'description';
+                document.head.appendChild(metaDesc);
+            }
+            metaDesc.setAttribute('content', description.substring(0, 160));
+        }
+
+        // SEO Keywords Automation
+        const keywords = [...collections, ...tags, this.currentTour.l2_category].filter(Boolean);
+        
         const schema = {
             "@context": "https://schema.org",
             "@type": "TravelTour",
             "name": name,
-            "description": vibe || "",
+            "keywords": keywords.join(', '),
             "offers": {
                 "@type": "Offer",
                 "price": price,
                 "priceCurrency": "CAD"
-            },
-            "tourType": types?.join(', ')
+            }
         };
 
         const script = document.createElement('script');
