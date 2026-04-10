@@ -1,9 +1,4 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-// THE SINGLE SOURCE OF TRUTH
-const supabaseUrl = 'https://uxjjptuhnquobjohunqs.supabase.co'
-const supabaseKey = 'sb_publishable_bYFzdR3U4rHiEgA28jkUPA_cFvs-J-W'
-export const supabase = createClient(supabaseUrl, supabaseKey)
+import { supabase } from './supabase-config.js';
 
 /**
  * FETCH 9-LAYER CITY INVENTORY
@@ -16,15 +11,21 @@ export async function getCityInventory(cityName) {
             *,
             categories(name),
             sub_categories(name),
-            types(name)
+            types(name),
+            province_id
         `)
         .eq('city_id', cityName)
         .eq('published', true);
 
     if (error) {
-        console.error("Infrastructure Error: Stockroom Sync Failed", error);
+        console.error(`[Infrastructure] Hub Handshake Failed for ${cityName}:`, error);
         return [];
     }
+    
+    if (!data || data.length === 0) {
+        console.warn(`[Infrastructure] Hub Handshake returned 0 results for ${cityName}. Check city_id and published status.`);
+    }
+    
     return data;
 }
 
@@ -168,4 +169,80 @@ export async function getWeatherSafeTours(cityName, limit = 10) {
         return [];
     }
     return data;
+}
+
+/**
+ * STREAM B: REGIONAL HUB
+ * Fetches tours in the same province but different cities.
+ */
+export async function getRegionalTours(provinceId, excludedCityId, limit = 10) {
+    const { data, error } = await supabase
+        .from('experiences')
+        .select('*, categories(name), sub_categories(name)')
+        .eq('province_id', provinceId)
+        .neq('city_id', excludedCityId)
+        .eq('published', true)
+        .limit(limit);
+
+    if (error) {
+        console.error("[Infrastructure] Regional Fetch Failed:", error);
+        return [];
+    }
+    return data;
+}
+
+/**
+ * STREAM D: INTENT SHELF
+ * Fetches tours by super_category_id (The 'Intent' Layer)
+ */
+export async function getToursByIntent(superCategoryId, cityName, limit = 10) {
+    const { data, error } = await supabase
+        .from('experiences')
+        .select('*, categories(name), sub_categories(name)')
+        .eq('city_id', cityName)
+        .eq('super_category_id', superCategoryId)
+        .eq('published', true)
+        .limit(limit);
+
+    if (error) {
+        console.error("[Infrastructure] Intent Fetch Failed:", error);
+        return [];
+    }
+    return data;
+}
+/**
+ * DISCOVERY: FETCH UNIQUE PROVINCES
+ */
+export async function getProvinces(limit = 5) {
+    const { data, error } = await supabase
+        .from('provinces')
+        .select('*')
+        .limit(limit);
+
+    if (error) {
+        console.error("[Infrastructure] Province Discovery Failed:", error);
+        return [];
+    }
+    return data;
+}
+
+/**
+ * DISCOVERY: FETCH UNIQUE CITY HUBS
+ */
+export async function getCityHubs(limit = 10) {
+    // Assuming you have a cities table or can derive from experiences
+    const { data, error } = await supabase
+        .from('experiences')
+        .select('city_id')
+        .eq('published', true)
+        .limit(limit);
+
+    if (error) {
+        console.error("[Infrastructure] City Discovery Failed:", error);
+        return [];
+    }
+    
+    // De-duplicate if fetching from experiences
+    const uniqueCities = [...new Set(data.map(item => item.city_id))];
+    return uniqueCities.map(id => ({ id, name: id }));
 }

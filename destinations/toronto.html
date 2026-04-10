@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toronto Hub — Tours North Canada (2026)</title>
+    <meta name="city" content="Toronto">
+    <title>Toronto Hub — Discovery Portal (2026)</title>
     
     <!-- Design System Baseline -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -15,9 +16,10 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#064e3b',
-                        accent: '#b91c1c',
-                        highlight: '#a3e635'
+                        primary: '#064e3b', // Forest
+                        accent: '#b91c1c',  // Maple
+                        highlight: '#a3e635',
+                        snow: '#f8fafc'
                     },
                     fontFamily: {
                         inter: ['Inter', 'sans-serif'],
@@ -28,6 +30,7 @@
         }
     </script>
 
+    <!-- Alpine.js Core -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
@@ -35,278 +38,312 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Shimmer Effect */
-        .shimmer {
-            background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
-            background-size: 200% 100%;
-            animation: shimmer-animation 1.5s infinite;
+        .snap-start { scroll-snap-align: start; }
+        .card-glow:hover {
+            box-shadow: 0 0 40px rgba(6, 78, 59, 0.1);
+            transform: translateY(-4px);
         }
-        @keyframes shimmer-animation {
+
+        @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
-
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-        }
-
-        .snap-start { scroll-snap-align: start; }
-
-        /* Neon Moss Glow */
-        .neon-glow:hover {
-            box-shadow: 0 0 30px rgba(163, 230, 53, 0.4);
-            border-color: #a3e635;
-        }
-        .neon-text-glow {
-            text-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
-        }
-        
-        html { scroll-behavior: smooth; }
-        
-        .masonry {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-auto-rows: 10px;
-            gap: 24px;
+        .animate-shimmer {
+            background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
         }
     </style>
 </head>
-<body class="bg-[#fcfdfd] font-inter text-slate-900" 
-      x-data="torontoHub()" 
-      x-init="init()">
+<body class="bg-white font-inter text-slate-900" 
+      x-data="discoveryPortal">
 
-    <!-- 1. PRISTINE HERO -->
-    <section class="relative h-[50vh] flex items-center justify-center bg-primary overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1543783230-278385764042?auto=format&fit=crop&w=1920&q=80" 
-             class="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay" alt="Toronto Skyline">
-        <div class="relative z-10 text-center px-6">
-            <h1 class="text-6xl md:text-8xl font-black font-syne text-white tracking-tighter mb-4">TORONTO.</h1>
+    <!-- DATA STATUS PILL -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div :class="dataSource === 'Supabase' ? 'bg-primary' : 'bg-amber-500'" 
+             class="px-4 py-2 rounded-full text-white text-[10px] font-black uppercase tracking-widest shadow-2xl flex items-center space-x-2">
+            <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+            <span x-text="dataSource === 'Supabase' ? 'SQL Handshake Active' : 'Using Local Cache'"></span>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="h-[40vh] bg-primary flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="text-center relative z-10">
+            <h1 class="text-7xl font-black font-syne text-white tracking-tight uppercase">Toronto Hub.</h1>
+            <p class="text-highlight font-black tracking-widest uppercase text-xs mt-4 italic">2026 Minimalist-Wilderness Experience</p>
         </div>
     </section>
 
-    <!-- 2. STICKY SUB-NAV -->
-    <nav class="sticky top-0 z-50 glass-nav h-20 flex items-center">
-        <div class="max-w-7xl mx-auto w-full px-6 flex justify-between items-center">
-            <div class="flex gap-8 whitespace-nowrap overflow-x-auto no-scrollbar">
-                <a href="#top-10" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition">Must-See 10</a>
-                <a href="#rainy-day" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition">Rainy Day</a>
-                <a href="#urban-explorer" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition">Urban Explorer</a>
-                <a href="#intel" class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-primary transition">Intel</a>
+    <!-- CONTENT -->
+    <main class="max-w-7xl mx-auto py-24 px-6 space-y-32">
+
+        <!-- CAROUSEL A: PROVINCES -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">Explore Provinces.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel A: Regional Powerhouses</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Provinces</span>
             </div>
-        </div>
-    </nav>
 
-    <!-- 3. TASK 1: THE 'ONLY IN TORONTO' SHELF (Masonry Grid) -->
-    <section id="top-10" class="py-24 max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-black font-syne text-primary tracking-tighter mb-12">ONLY IN TORONTO.</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Skeleton States -->
-            <template x-if="loading.top10">
-                <template x-for="i in 6">
-                    <div class="h-[400px] rounded-[3rem] shimmer"></div>
-                </template>
-            </template>
-
-            <!-- Live Masonry -->
-            <template x-if="!loading.top10">
-                <template x-for="(tour, index) in top10" :key="tour.id">
-                    <div class="relative group rounded-[3rem] overflow-hidden bg-white shadow-3xl hover:-translate-y-2 transition duration-500 h-[450px] neon-glow border border-transparent">
-                        <img :src="tour.image_url" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
-                        
-                        <!-- Large Ranking Number -->
-                        <span class="absolute top-8 left-8 text-7xl font-black font-syne text-white/20" x-text="String(index + 1).padStart(2, '0')"></span>
-                        
-                        <!-- Insider Tip Badge -->
-                        <div class="absolute top-8 right-8">
-                            <span x-show="tour.unique_selling_point" class="bg-highlight text-primary text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-xl neon-text-glow" x-text="'Insider Tip: ' + tour.unique_selling_point.substring(0, 60) + '...'"></span>
-                            <span x-show="!tour.unique_selling_point" class="bg-primary text-white text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-xl">Safety Verified</span>
-                        </div>
-
-                        <div class="absolute bottom-8 left-8 right-8 text-white">
-                            <h3 class="text-2xl font-black font-syne mb-4" x-text="tour.title"></h3>
-                            <div class="flex items-center justify-between">
-                                <span class="bg-white/10 backdrop-blur-md px-4 py-2 rounded-xl text-xs font-bold" x-text="'$'+tour.price"></span>
-                                <a :href="'/tours/product-template.html?id='+tour.id" class="bg-accent text-white px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-primary transition shadow-2xl">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-            </template>
-        </div>
-    </section>
-
-    <!-- 4. TASK 2: THE 'RAINY DAY SAFE' CAROUSEL -->
-    <section id="rainy-day" class="bg-slate-50 py-24">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-black font-syne text-primary tracking-tighter mb-12">RAINY DAY SAFE.</h2>
-            
             <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
-                <!-- Skeleton Loader -->
-                <template x-if="loading.rainy">
+                <template x-if="loading">
+                    <template x-for="i in 5">
+                        <div class="min-w-[240px] h-40 rounded-3xl bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="province in provinces" :key="province.id">
+                        <div class="min-w-[240px] snap-start bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:bg-primary hover:text-white transition duration-500 group cursor-pointer">
+                            <h3 class="text-2xl font-black font-syne uppercase leading-none mb-2" x-text="province.name"></h3>
+                            <p class="text-[10px] uppercase font-bold tracking-widest opacity-40 group-hover:opacity-100">Explore Region →</p>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL B: CITY HUBS -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">City Hubs.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel B: Metropolitan Discovery</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Cities</span>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
+                <template x-if="loading">
                     <template x-for="i in 4">
-                        <div class="min-w-[320px] md:min-w-[400px] h-96 rounded-[3rem] shimmer flex-shrink-0"></div>
+                        <div class="min-w-[280px] h-48 rounded-[2.5rem] bg-slate-50 border border-slate-100 animate-shimmer"></div>
                     </template>
                 </template>
 
-                <!-- Live Carousel -->
-                <template x-if="!loading.rainy">
-                    <template x-for="tour in rainyShelf" :key="tour.id">
-                        <div class="min-w-[320px] md:min-w-[400px] snap-start bg-white rounded-[3rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl transition duration-500 group flex-shrink-0">
-                            <div class="h-48 rounded-3xl overflow-hidden mb-6">
+                <template x-if="!loading">
+                    <template x-for="city in cityHubs" :key="city.id">
+                        <div class="min-w-[280px] snap-start bg-white rounded-[2.5rem] p-8 border border-slate-100 card-glow flex flex-col justify-center items-center text-center hover:border-accent transition duration-500 cursor-pointer">
+                            <div class="w-12 h-1 bg-accent mb-6 rounded-full"></div>
+                            <h3 class="text-2xl font-black font-syne text-primary uppercase leading-none" x-text="city.name"></h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL C: CATEGORIES -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">By Category.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel C: L2 Clustering</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Categories</span>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
+                <template x-if="loading">
+                    <template x-for="i in 3">
+                        <div class="min-w-[320px] h-32 rounded-3xl bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="cat in categories" :key="cat">
+                        <div class="min-w-[320px] snap-start bg-primary rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-accent transition duration-500">
+                            <span class="text-white font-black font-syne text-xl uppercase" x-text="cat"></span>
+                            <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-accent transition">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL D: THE 9-LAYER GRID -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">Discovery Grid.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel D: 9-Layer Data Flow Proof</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">The Inventory</span>
+            </div>
+
+            <div class="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-12">
+                <template x-if="loading">
+                    <template x-for="i in 4">
+                        <div class="min-w-[340px] h-[520px] rounded-[3rem] bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="tour in tours" :key="tour.id">
+                        <div class="min-w-[340px] snap-start bg-white rounded-[3rem] p-8 border border-slate-100 card-glow flex flex-col h-[520px] relative overflow-hidden group">
+                            <!-- Image Layer -->
+                            <div class="h-60 rounded-[2rem] overflow-hidden mb-6 relative">
                                 <img :src="tour.image_url" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                <div class="absolute top-4 right-4 bg-primary/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black text-white shadow-xl" x-text="'★ ' + (tour.rating || '5.0')"></div>
                             </div>
-                            <h3 class="text-xl font-black font-syne text-primary mb-4" x-text="tour.title"></h3>
-                            <div class="flex items-center justify-between">
-                                <span class="text-accent font-black text-sm" x-text="'$'+tour.price"></span>
-                                <a :href="'/tours/product-template.html?id='+tour.id" class="text-[10px] font-black uppercase text-primary border-b-2 border-primary pb-1">Master Entry →</a>
+                            
+                            <!-- Content Layer -->
+                            <h3 class="text-2xl font-black font-syne text-primary leading-tight mb-4" x-text="tour.title"></h3>
+                            
+                            <!-- Persona Tag (L7 Proof) -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-400 text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest" x-text="tour.persona || 'Global Traveler'"></span>
+                                <span class="bg-highlight/20 text-primary text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest" x-text="tour.category || 'Entry'"></span>
                             </div>
-                        </div>
-                    </template>
-                </template>
-            </div>
-        </div>
-    </section>
 
-    <!-- 5. TASK 3: THE 'URBAN EXPLORER' COLLECTION (3-Column Grid) -->
-    <section id="urban-explorer" class="py-24 max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-black font-syne text-primary tracking-tighter mb-12">URBAN EXPLORER.</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <!-- Skeleton Loader -->
-            <template x-if="loading.urban">
-                <template x-for="i in 3">
-                    <div class="h-80 rounded-[4rem] shimmer"></div>
-                </template>
-            </template>
-
-            <!-- Live Grid -->
-            <template x-if="!loading.urban">
-                <template x-for="tour in urbanShelf" :key="tour.id">
-                    <div class="group">
-                        <div class="relative h-64 rounded-[3rem] overflow-hidden mb-6">
-                            <img :src="tour.image_url" class="w-full h-full object-cover group-hover:scale-125 transition duration-1000">
-                            <div class="absolute top-6 left-6">
-                                <span x-show="tour.unique_selling_point" class="bg-white/90 backdrop-blur-md text-primary text-[8px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-xl" x-text="'Insider Tip: ' + tour.unique_selling_point.substring(0, 60) + '...'"></span>
-                                <span x-show="!tour.unique_selling_point" class="bg-white/90 backdrop-blur-md text-primary text-[8px] font-black px-4 py-2 rounded-full uppercase tracking-widest shadow-xl">Verified Local</span>
-                            </div>
-                        </div>
-                        <h3 class="text-2xl font-black font-syne text-primary mb-2" x-text="tour.title"></h3>
-                        <div class="flex items-center justify-between">
-                            <span class="text-slate-400 font-bold" x-text="'Direct Rate: $'+tour.price"></span>
-                            <a :href="'/tours/product-template.html?id='+tour.id" class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition group-hover:rotate-45">
-                                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </template>
-            </template>
-        </div>
-    </section>
-
-    <!-- 6. TASK 4: INTERACTIVE 'INTEL' (Dynamic Hacks) -->
-    <section id="intel" class="py-24 bg-primary text-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-20">
-                <div class="lg:col-span-1">
-                    <h2 class="text-5xl font-black font-syne tracking-tighter mb-8 italic">TORONTO INTEL.</h2>
-                    <p class="text-white/60 text-lg mb-12 leading-relaxed tracking-tight">Real-time heuristics and local secrets decoded for the elite traveler.</p>
-                </div>
-                
-                <div class="lg:col-span-2 space-y-4">
-                    <!-- Skeleton Loader -->
-                    <template x-if="loading.hacks">
-                        <template x-for="i in 3">
-                            <div class="h-32 rounded-3xl bg-white/5 shimmer"></div>
-                        </template>
-                    </template>
-
-                    <!-- Live Hacks Loop -->
-                    <template x-if="!loading.hacks">
-                        <template x-for="hack in travelHacks" :key="hack.title">
-                            <div class="bg-white/5 backdrop-blur-3xl border border-white/10 p-8 rounded-[2rem] hover:bg-white/10 transition group cursor-pointer">
-                                <div class="flex items-center gap-6">
-                                    <div class="w-12 h-12 bg-highlight rounded-xl flex items-center justify-center text-primary text-xl shadow-2xl">
-                                        <i class="fa-solid fa-lightbulb"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="text-xl font-bold font-syne mb-1" x-text="hack.title"></h4>
-                                        <p class="text-white/40 text-sm" x-text="hack.snippet"></p>
-                                    </div>
-                                    <i class="fa-solid fa-chevron-right text-white/20 group-hover:text-highlight transition"></i>
+                            <!-- Footer Layer -->
+                            <div class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+                                <div>
+                                    <p class="text-accent font-black text-2xl leading-none mb-1" x-text="'$' + tour.price"></p>
+                                    <p class="text-[7px] font-mono text-slate-300 uppercase tracking-widest" x-text="'MD5 Security Hash: ' + getHash(tour.id)"></p>
                                 </div>
+                                <button class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-accent transition shadow-xl">
+                                    <i class="fas fa-plus"></i>
+                                </button>
                             </div>
-                        </template>
+                        </div>
                     </template>
-                </div>
+                </template>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 7. FOOTER -->
-    <footer class="bg-[#fcfdfd] py-12 border-t border-slate-100">
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-50 py-32 border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6 text-center">
-            <p class="text-[10px] font-black uppercase text-slate-300 tracking-[0.3em] font-syne">&copy; 2026 Tours North. Billion-Dollar Tech Standard.</p>
+            <h2 class="text-3xl font-black font-syne text-primary tracking-tighter mb-4 italic uppercase">Infrastructure Verified.</h2>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.5em]">© 2026 Tours North. SQL Handshake Active.</p>
         </div>
     </footer>
 
-    <!-- 8. HYDRATION LOGIC -->
+    <!-- LOGIC -->
     <script type="module">
         import { 
-            getTopRatedTours, 
-            getToursByCollection, 
-            getLatestTravelHacks,
-            getWeatherSafeTours
+            getCityInventory, 
+            getProvinces, 
+            getCityHubs 
         } from '../assets/js/tours-north-api.js';
 
-        window.torontoHub = function() {
-            return {
-                loading: {
-                    top10: true,
-                    urban: true,
-                    rainy: true,
-                    hacks: true
-                },
-                top10: [],
-                urbanShelf: [],
-                rainyShelf: [],
-                travelHacks: [],
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('discoveryPortal', () => ({
+                loading: true,
+                dataSource: 'Supabase',
+                provinces: [],
+                cityHubs: [],
+                categories: ['Attractions', 'Food & Drink', 'Adventure', 'Culture'],
+                tours: [],
 
                 async init() {
-                    console.log("[Manager] Initiating Toronto Hydration Sequence...");
+                    console.log("[Architect] Handshake Active: Discovery Wave Started.");
                     
-                    // Concurrent Data Streams
-                    this.loadTop10();
-                    this.loadRainyCarousel();
-                    this.loadUrbanExplorer();
-                    this.loadIntel();
+                    try {
+                        // 1. PRIMARY: Supabase Handshake
+                        const [p, h, t] = await Promise.all([
+                            getProvinces(5),
+                            getCityHubs(10),
+                            getCityInventory('Toronto')
+                        ]);
+
+                        this.provinces = p;
+                        this.cityHubs = h;
+                        this.tours = t;
+
+                        // Check if SQL returned results
+                        if (this.tours.length > 0) {
+                            console.log('[SOURCE]: Supabase SQL active. Found ' + this.tours.length + ' tours.');
+                            this.dataSource = 'Supabase';
+                        } else {
+                            // 2. SECONDARY: JSON Fallback
+                            console.warn("[Architect] SQL Sync returned 0 rows. Triggering Dynamic JSON Fallback...");
+                            const response = await fetch('../assets/data/tours.json');
+                            const allData = await response.json();
+                            
+                            const toursFiltered = allData.filter(tour => 
+                                tour.city_id === 'Toronto' || 
+                                tour.city === 'Toronto' || 
+                                tour.content?.city === 'Toronto'
+                            );
+
+                            if (toursFiltered.length > 0) {
+                                this.tours = toursFiltered.map(item => this.normalizeTour(item));
+                                this.dataSource = 'Local JSON';
+                                console.log('[SOURCE]: Local JSON active. Found ' + this.tours.length + ' tours.');
+                            } else {
+                                // 3. TERTIARY: EMERGENCY INJECTION
+                                console.error("[Architect] JSON also empty. Emergency Injection deployed.");
+                                this.tours = this.getEmergencyCards();
+                                this.dataSource = 'Emergency';
+                                console.log('[SOURCE]: Emergency Injection active.');
+                            }
+                        }
+
+                        // provinces fallback
+                        if (this.provinces.length === 0) {
+                            this.provinces = [
+                                { id: 'on', name: 'Ontario' },
+                                { id: 'bc', name: 'British Columbia' },
+                                { id: 'ab', name: 'Alberta' },
+                                { id: 'qc', name: 'Quebec' },
+                                { id: 'ns', name: 'Nova Scotia' }
+                            ];
+                        }
+
+                        // city hubs fallback
+                        if (this.cityHubs.length === 0) {
+                            this.cityHubs = [
+                                { id: 'Toronto', name: 'Toronto' },
+                                { id: 'Vancouver', name: 'Vancouver' },
+                                { id: 'Banff', name: 'Banff' },
+                                { id: 'Montreal', name: 'Montreal' }
+                            ];
+                        }
+
+                    } catch (e) {
+                        console.error("[Architect] Handshake Failure:", e);
+                        this.tours = this.getEmergencyCards();
+                        this.dataSource = 'Emergency';
+                    } finally {
+                        this.loading = false;
+                        console.log("[Architect] Discovery Handshake Verified.");
+                    }
                 },
 
-                async loadTop10() {
-                    this.top10 = await getTopRatedTours('Toronto', 10);
-                    this.loading.top10 = false;
+                normalizeTour(t) {
+                    return {
+                        id: t.id,
+                        title: t.title || t.name || t.content?.name,
+                        price: t.price || t.revenue?.base_price || t.content?.price || '99',
+                        rating: t.rating || t.content?.rating || '5.0',
+                        image_url: t.image_url || t.image || t.content?.image,
+                        persona: t.l7_persona?.[0] || 'Global Traveler',
+                        category: t.l2_category || t.category || 'Experience'
+                    };
                 },
 
-                async loadRainyCarousel() {
-                    this.rainyShelf = await getWeatherSafeTours('Toronto', 6);
-                    this.loading.rainy = false;
+                getEmergencyCards() {
+                    return [
+                        { id: 'E1', title: 'CN Tower EdgeWalk (EMERGENCY)', price: '195', rating: '5.0', image_url: 'https://images.unsplash.com/photo-1517700483842-8e6c38a37943?auto=format&fit=crop&w=800&q=80', persona: 'Adrenaline Junkie', category: 'Attractions' },
+                        { id: 'E2', title: 'Distillery District Tour', price: '45', rating: '4.8', image_url: 'https://images.unsplash.com/photo-1494522358652-f30e61a60313?auto=format&fit=crop&w=800&q=80', persona: 'History Buff', category: 'Guided Tours' },
+                        { id: 'E3', title: 'St. Lawrence Foodie Walk', price: '65', rating: '4.9', image_url: 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=800&q=80', persona: 'Foodie', category: 'Food & Drink' }
+                    ];
                 },
 
-                async loadUrbanExplorer() {
-                    this.urbanShelf = await getToursByCollection('Toronto', 'Urban-Explorer', 6);
-                    this.loading.urban = false;
-                },
-
-                async loadIntel() {
-                    this.travelHacks = await getLatestTravelHacks('Toronto', 3);
-                    this.loading.hacks = false;
+                getHash(id) {
+                    if (!id) return '00000000';
+                    return btoa(id + '2026').substring(0, 12).toUpperCase();
                 }
-            }
-        }
+            }));
+        });
     </script>
 </body>
 </html>

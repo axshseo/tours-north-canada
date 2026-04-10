@@ -67,7 +67,7 @@
                     price: tourPrice || 'From $99 CAD',
                     url: window.location.pathname,
                     image: tourImage,
-                    timestamp: Date.now()
+                    timestamp: Date.now()   
                 };
 
                 addToRecentlyViewed(tourData);

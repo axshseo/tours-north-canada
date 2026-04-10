@@ -3,472 +3,795 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master City Destination | Tours North</title>
-    
-    <!-- Design System: Syne & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS via CDN -->
+    <title>Toronto Tours & Adventures - Tours North</title>
+    <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#064e3b',   // Forest
-                        accent: '#b91c1c',    // Maple
-                        background: '#f8fafc' // Snow
-                    },
-                    fontFamily: {
-                        syne: ['Syne', 'sans-serif'],
-                        inter: ['Inter', 'sans-serif']
-                    },
-                    spacing: {
-                        '16': '64px'
-                    }
-                }
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Syne:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+        [x-cloak] { display: none !important; }
+
+        /* Ken Burns Animation */
+        .ken-burns {
+            animation: ken-burns 20s ease-out infinite alternate;
+        }
+
+        @keyframes ken-burns {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+            100% {
+                transform: scale(1.1) translate(-5%, -5%);
             }
         }
-    </script>
 
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        /* Marquee Animation */
+        .animate-marquee {
+            animation: marquee 30s linear infinite;
+        }
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
 
-    <style>
-        [x-cloak] { display: none !important; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Strict Vertical Rhythm */
-        section { padding-top: 4rem; padding-bottom: 4rem; } 
-        
-        /* Carousel Snap */
-        .snap-x { scroll-snap-type: x mandatory; }
-        .snap-start { scroll-snap-align: start; }
+        /* Hide scrollbar for discovery bar */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
     </style>
 </head>
-<body class="bg-background font-inter text-slate-900">
+<body x-data="{ 
+    activeTab: 'cities', 
+    langOpen: false, 
+    currencyOpen: false, 
+    selectedLang: 'EN', 
+    selectedCurrency: 'CAD', 
+    destinationsOpen: false, 
+    collectionsOpen: false,
+    searchOpen: false,
+    searchQuery: '',
+    chips: [
+        { id: 'must-see', label: 'Must-See Icons' },
+        { id: 'food', label: 'Food & Drink' },
+        { id: 'adrenaline', label: 'Adrenaline' },
+        { id: 'nature', label: 'Nature' },
+        { id: 'day-trips', label: 'Day Trips' }
+    ]
+}">
 
-    <!-- 1. Precision Hero (Search Engine) -->
-    <section class="relative min-h-[500px] max-h-[60vh] flex items-center justify-center overflow-hidden bg-primary pt-0 pb-0">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80" 
-             class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" alt="City Background">
-        <div class="absolute inset-0 bg-black/40"></div>
-        
-        <div class="relative z-10 w-full max-w-3xl px-6 text-center">
-            <h1 class="text-4xl md:text-6xl font-syne font-extrabold text-white mb-8 tracking-tighter">Discover Your Next Adventure</h1>
-            
-            <!-- Smart Search Card -->
-            <div class="bg-white p-2 rounded-2xl shadow-2xl flex flex-col md:flex-row items-center gap-2">
-                <div class="flex-1 w-full border-r border-slate-100 px-4 py-2 text-left">
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Destination</label>
-                    <input type="text" placeholder="Where to?" class="w-full font-bold text-primary outline-none text-sm">
+    <!-- [LAYER 1] UTILITY STRIP (40px) -->
+    <div class="h-10 bg-[#064e3b] text-white text-[10px] font-bold uppercase tracking-widest hidden md:block">
+        <div class="max-w-7xl mx-auto px-4 h-full flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <span class="flex items-center space-x-2">
+                    <span class="text-xs">🇨🇦</span>
+                    <span>100% Canadian Owned</span>
+                </span>
+                <span class="w-px h-3 bg-white/20"></span>
+                <span class="flex items-center space-x-2 opacity-80">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <span>TICO Registered</span>
+                </span>
+            </div>
+            <div class="flex items-center space-x-8">
+                <!-- Currency Dropdown -->
+                <div class="relative" x-data="{ open: false }">
+                    <button aria-label="Select Currency" @click="open = !open" class="flex items-center space-x-2 hover:text-[#b91c1c] transition">
+                        <span x-text="selectedCurrency"></span>
+                        <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-cloak 
+                         class="absolute top-full right-0 mt-2 bg-white text-slate-900 rounded-xl shadow-2xl py-2 w-24 z-[100] border border-slate-100">
+                        <template x-for="curr in ['CAD', 'USD', 'GBP', 'EUR']">
+                            <button @click="selectedCurrency = curr; open = false" 
+                                    class="w-full text-left px-4 py-2 hover:bg-slate-50 hover:text-[#b91c1c] transition text-[10px]" x-text="curr"></button>
+                        </template>
+                    </div>
                 </div>
-                <div class="flex-1 w-full border-r border-slate-100 px-4 py-2 text-left">
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Date</label>
-                    <input type="date" class="w-full font-bold text-primary outline-none text-sm">
+                <!-- Language Dropdown -->
+                <div class="relative" x-data="{ open: false }">
+                    <button aria-label="Select Language" @click="open = !open" class="flex items-center space-x-2 hover:text-[#b91c1c] transition">
+                        <span x-text="selectedLang"></span>
+                        <i class="fa-solid fa-chevron-down text-[8px]"></i>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-cloak 
+                         class="absolute top-full right-0 mt-2 bg-white text-slate-900 rounded-xl shadow-2xl py-2 w-20 z-[100] border border-slate-100">
+                        <template x-for="lang in ['EN', 'FR']">
+                            <button @click="selectedLang = lang; open = false" 
+                                    class="w-full text-left px-4 py-2 hover:bg-slate-50 hover:text-[#b91c1c] transition text-[10px]" x-text="lang"></button>
+                        </template>
+                    </div>
                 </div>
-                <div class="flex-1 w-full px-4 py-2 text-left">
-                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Guests</label>
-                    <input type="number" placeholder="2 Guests" class="w-full font-bold text-primary outline-none text-sm">
-                </div>
-                <button class="bg-accent w-full md:w-auto px-10 py-4 rounded-xl text-white font-syne font-bold uppercase tracking-widest hover:bg-red-700 transition">
-                    Search
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. USP Trust Strip -->
-    <div class="h-16 bg-slate-50 border-b border-slate-200 flex items-center overflow-x-auto no-scrollbar">
-        <div class="max-w-7xl mx-auto w-full flex justify-between px-6 gap-8 min-w-[800px]">
-            <div class="flex items-center gap-3 whitespace-nowrap">
-                <i class="fa-solid fa-calendar-check text-primary"></i>
-                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Free Cancellation</span>
-            </div>
-            <div class="flex items-center gap-3 whitespace-nowrap">
-                <i class="fa-solid fa-tags text-primary"></i>
-                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">Lowest Price Guarantee</span>
-            </div>
-            <div class="flex items-center gap-3 whitespace-nowrap">
-                <i class="fa-solid fa-headset text-primary"></i>
-                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">24/7 Local Support</span>
-            </div>
-            <div class="flex items-center gap-3 whitespace-nowrap">
-                <i class="fa-solid fa-shield-halved text-primary"></i>
-                <span class="text-xs font-bold text-slate-600 uppercase tracking-tighter">TICO Certified</span>
             </div>
         </div>
     </div>
 
-    <!-- 3. Intent Pills (Nav) -->
-    <div class="bg-white sticky top-0 z-30 border-b border-slate-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
-            <div class="flex gap-4">
-                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
-                    <i class="fa-solid fa-ticket"></i> Tickets
-                </button>
-                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
-                    <i class="fa-solid fa-bus"></i> Tours
-                </button>
-                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
-                    <i class="fa-solid fa-ship"></i> Cruises
-                </button>
-                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
-                    <i class="fa-solid fa-helicopter"></i> Helicopter
-                </button>
-                <button class="h-12 px-6 rounded-full bg-slate-100 text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition">
-                    <i class="fa-solid fa-utensils"></i> Food
-                </button>
-            </div>
-            <button class="hidden lg:flex items-center gap-2 text-xs font-black text-accent uppercase tracking-widest transition">
-                <i class="fa-solid fa-filter"></i> Filters
-            </button>
-        </div>
-    </div>
-
-    <!-- 4. Flash Deal Banner -->
-    <section class="max-w-7xl mx-auto px-6" x-data="{ timer: 7200 }">
-        <div class="h-48 bg-primary rounded-[2.5rem] overflow-hidden relative flex items-center justify-between px-12 text-white">
-            <div class="relative z-10">
-                <span class="bg-accent px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 inline-block">Flash Deal</span>
-                <h2 class="text-3xl md:text-4xl font-syne font-extrabold mb-2 underline decoration-highlight">Winter Survival Bundle</h2>
-                <p class="text-white/60 font-bold uppercase tracking-widest text-xs">Limited Stock: 20% Off All Tours</p>
-            </div>
+    <!-- [LAYER 2] ACTION NAV (72px Sticky) -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 h-[72px] flex items-center justify-between gap-8">
             
-            <!-- Countdown Timer -->
-            <div class="relative z-10 flex flex-col items-center gap-2">
-                <div class="flex gap-2 text-2xl font-black font-syne" x-init="setInterval(() => timer--, 1000)">
-                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="Math.floor(timer / 3600)">02</div>
-                    <span>:</span>
-                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="Math.floor((timer % 3600) / 60)">00</div>
-                    <span>:</span>
-                    <div class="bg-white/10 w-12 h-16 flex items-center justify-center rounded-xl" x-text="timer % 60">00</div>
-                </div>
-                <span class="text-[8px] font-black uppercase tracking-[0.3em]">Hurry! Booking fast</span>
-            </div>
-            
-            <img src="https://images.unsplash.com/photo-1517154421773-0529f29ea451?auto=format&fit=crop&w=800&q=50" 
-                 class="absolute inset-x-0 w-full h-full object-cover opacity-20" alt="Flash Deal BG">
-        </div>
-    </section>
+            <!-- Logo -->
+            <a href="/" class="flex-shrink-0 group">
+                <span class="text-xl font-black font-syne text-[#064e3b] tracking-tighter uppercase group-hover:text-[#b91c1c] transition-colors">Tours North</span>
+            </a>
 
-    <!-- 5. Top 10 Bestsellers (Snap Carousel) -->
-    <section class="max-w-7xl mx-auto px-6">
-        <div class="flex items-end justify-between mb-8">
-            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter">THE TOP 10.</h2>
-            <div class="flex gap-2">
-                <button @click="$refs.top10.scrollBy({left: -320, behavior: 'smooth'})" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition"><i class="fa-solid fa-arrow-left"></i></button>
-                <button @click="$refs.top10.scrollBy({left: 320, behavior: 'smooth'})" class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition"><i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-        </div>
-        
-        <div x-ref="top10" class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory">
-            <template x-for="i in 10">
-                <div class="min-w-[280px] lg:min-w-[320px] aspect-[3/4] snap-start group relative rounded-3xl overflow-hidden bg-slate-200 shadow-xl transition-transform hover:-translate-y-2">
-                    <img src="https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=400&q=80" 
-                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Tour Image">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <!-- Search Engine (The Centerpiece) -->
+            <div class="flex-1 max-w-2xl hidden md:block relative group">
+                <div class="relative flex items-center bg-white border border-slate-200 rounded-full pl-6 pr-2 py-1.5 transition-all group-hover:border-[#064e3b]/30 focus-within:ring-4 focus-within:ring-[#064e3b]/5 focus-within:border-[#064e3b]">
+                    <div class="flex-1 flex divide-x divide-slate-100">
+                        <div class="flex-1 px-2">
+                            <label class="block text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Where to?</label>
+                            <input type="text" x-model="searchQuery" placeholder="Search experiences..." class="w-full bg-transparent text-sm font-bold text-slate-700 placeholder-slate-300 outline-none">
+                        </div>
+                        <div class="px-6 hidden lg:block">
+                            <label class="block text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">When?</label>
+                            <span class="text-xs font-bold text-slate-400">Add dates</span>
+                        </div>
+                        <div class="px-6 hidden lg:block">
+                            <label class="block text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Guests</label>
+                            <span class="text-xs font-bold text-slate-400">Add guests</span>
+                        </div>
+                    </div>
+                    <button aria-label="Search" class="bg-[#b91c1c] text-white p-3.5 rounded-full hover:bg-[#064e3b] hover:scale-105 transition active:scale-95 shadow-lg shadow-red-900/10">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </button>
                     
-                    <div class="absolute bottom-6 left-6 right-6">
-                        <div class="flex items-center gap-1 mb-2">
-                            <template x-for="star in 5">
-                                <i class="fa-solid fa-star text-[8px] text-highlight"></i>
+                    <!-- Search Results Dropdown (Glassmorphism) -->
+                    <div x-show="searchQuery.length > 2" x-transition x-cloak class="absolute top-[calc(100%+12px)] left-0 w-full bg-white/95 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 p-6 z-[100]">
+                        <h4 class="text-[10px] font-black text-[#064e3b] uppercase tracking-[0.2em] mb-4">Suggested Destinations</h4>
+                        <div class="space-y-2">
+                            <template x-for="item in ['Toronto Architecture Walk', 'Niagara Falls Luxury Flight', 'Old Quebec Foodie Tour']">
+                                <a href="#" class="flex items-center space-x-4 p-3 rounded-2xl hover:bg-[#064e3b]/5 group transition">
+                                    <div class="w-10 h-10 bg-white rounded-xl shadow-sm flex items-center justify-center text-lg">📍</div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-bold text-slate-700 group-hover:text-[#064e3b]" x-text="item"></p>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Discovery Plane • L3 Category</p>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right text-[10px] text-slate-200 group-hover:text-[#b91c1c] transition"></i>
+                                </a>
                             </template>
                         </div>
-                        <h3 class="text-xl font-syne font-extrabold text-white mb-2 leading-tight">Toronto Island Sunset Kayaking</h3>
-                        <div class="flex items-center justify-between">
-                            <span class="text-lg font-bold text-highlight">$85 CAD</span>
-                            <span class="text-[8px] font-black uppercase text-white tracking-widest bg-white/20 px-2 py-1 rounded-full">Bestseller</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden xl:flex items-center space-x-8">
+                <!-- Destinations Mega-Menu -->
+                <div class="relative" @mouseenter="destinationsOpen = true" @mouseleave="destinationsOpen = false">
+                    <button aria-label="Toggle Destinations" class="flex items-center space-x-1.5 text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-[#b91c1c] transition py-8">
+                        <span>Destinations</span>
+                        <i class="fa-solid fa-chevron-down text-[8px] transition-transform duration-300" :class="destinationsOpen ? 'rotate-180' : ''"></i>
+                    </button>
+                    
+                    <!--style Mega-Menu -->
+                    <div x-show="destinationsOpen" x-transition x-cloak class="absolute top-full left-1/2 -translate-x-1/2 w-[900px] bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden z-[100] grid grid-cols-4 p-10 gap-10">
+                        <div>
+                            <h5 class="text-[10px] font-black text-[#064e3b] uppercase tracking-[0.2em] mb-6 flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 bg-[#a3e635] rounded-full"></span>
+                                <span>The Rockies</span>
+                            </h5>
+                            <ul class="space-y-3">
+                                <template x-for="city in ['Banff', 'Jasper', 'Whistler', 'Canmore', 'Revelstoke']">
+                                    <li><a href="#" class="text-xs font-bold text-slate-500 hover:text-[#b91c1c] transition" x-text="city"></a></li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-[10px] font-black text-[#064e3b] uppercase tracking-[0.2em] mb-6 flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 bg-[#a3e635] rounded-full"></span>
+                                <span>Central Canada</span>
+                            </h5>
+                            <ul class="space-y-3">
+                                <template x-for="city in ['Toronto', 'Montreal', 'Ottawa', 'Niagara Falls', 'Quebec City']">
+                                    <li><a href="#" class="text-xs font-bold text-slate-500 hover:text-[#b91c1c] transition" x-text="city"></a></li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="text-[10px] font-black text-[#064e3b] uppercase tracking-[0.2em] mb-6 flex items-center space-x-2">
+                                <span class="w-1.5 h-1.5 bg-[#a3e635] rounded-full"></span>
+                                <span>East Coast</span>
+                            </h5>
+                            <ul class="space-y-3">
+                                <template x-for="city in ['Halifax', 'St. Johns', 'Charlottetown', 'Baddeck', 'Lunenburg']">
+                                    <li><a href="#" class="text-xs font-bold text-slate-500 hover:text-[#b91c1c] transition" x-text="city"></a></li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 -m-10 p-10 border-l border-slate-100 flex flex-col justify-between">
+                            <div>
+                                <h5 class="text-[10px] font-black text-[#064e3b] uppercase tracking-[0.2em] mb-6">The North</h5>
+                                <ul class="space-y-3">
+                                    <template x-for="city in ['Whitehorse', 'Yellowknife', 'Iqaluit', 'Churchill']">
+                                        <li><a href="#" class="text-xs font-bold text-slate-500 hover:text-[#b91c1c] transition" x-text="city"></a></li>
+                                    </template>
+                                </ul>
+                            </div>
+                            <div class="mt-8">
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.1em] mb-4 leading-relaxed italic">"Beyond the map lies the magic of the Arctic."</p>
+                                <a href="#" class="text-[#064e3b] text-[10px] font-black uppercase tracking-widest border-b-2 border-[#a3e635] pb-1 hover:text-[#b91c1c] transition">Explore All 109 Hubs →</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </template>
-        </div>
-    </section>
 
-    <!-- 6. Collections Rail (2-Row Masonry) -->
-    <section class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter mb-12">COLLECTIONS.</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
-            <div class="col-span-2 row-span-1 rounded-3xl relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1543783230-278385764042?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <h3 class="text-2xl font-black font-syne text-white uppercase italic tracking-tighter underline decoration-highlight decoration-4 underline-offset-8">Only In Canada</h3>
-                </div>
-            </div>
-            <div class="col-span-1 row-span-1 rounded-3xl relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-primary/40 flex items-center justify-center p-4 text-center">
-                    <h3 class="text-xl font-black font-syne text-white uppercase leading-tight">Rainy Day Safe</h3>
-                </div>
-            </div>
-            <div class="col-span-1 row-span-2 rounded-3xl relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1515523110800-9415d13b84a8?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-accent/40 flex items-end p-8">
-                    <h3 class="text-3xl font-black font-syne text-white uppercase leading-tight">Indigenous Heritage</h3>
-                </div>
-            </div>
-            <div class="col-span-2 row-span-1 rounded-3xl relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1506146332389-18140dc7b2fb?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <h3 class="text-2xl font-black font-syne text-white uppercase italic tracking-tighter underline decoration-accent decoration-4 underline-offset-8">Winter Warriors</h3>
-                </div>
-            </div>
-            <div class="col-span-1 row-span-1 rounded-3xl relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1555412654-72a95a495858?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                <div class="absolute inset-0 bg-black/40 flex items-center justify-center p-4 text-center">
-                    <h3 class="text-xl font-black font-syne text-white uppercase leading-tight">Poutine Trails</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Trending Now (3x3 Compact Grid) -->
-    <section class="max-w-7xl mx-auto px-6 bg-slate-50 py-16 -mx-6 md:mx-auto md:rounded-[4rem] border border-slate-100">
-        <div class="flex items-center gap-4 mb-12">
-            <span class="w-3 h-3 bg-accent rounded-full animate-pulse"></span>
-            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter uppercase italic">Trending Now.</h2>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-8">
-            <template x-for="i in 9">
-                <div class="flex items-center gap-4 group cursor-pointer pb-4 border-b border-slate-100 hover:border-primary transition">
-                    <div class="h-20 w-20 rounded-2xl overflow-hidden bg-slate-200 flex-shrink-0">
-                        <img src="https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=150" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                    </div>
-                    <div class="flex-1">
-                        <h4 class="text-sm font-bold text-primary group-hover:text-accent transition leading-tight mb-1">Hockey Hall of Fame Skip-the-Line Access</h4>
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-black text-slate-400">$25 CAD</span>
-                            <span class="text-[8px] font-black text-primary px-2 py-0.5 bg-highlight rounded-full">LIVE</span>
+                <!-- Collections (Layer 5 Vibe Icons) -->
+                <div class="relative" @mouseenter="collectionsOpen = true" @mouseleave="collectionsOpen = false">
+                    <button class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-[#b91c1c] transition py-8">Collections</button>
+                    <div x-show="collectionsOpen" x-transition x-cloak class="absolute top-full left-1/2 -translate-x-1/2 w-[640px] bg-white rounded-3xl shadow-2xl border border-slate-100 p-8 z-[100]">
+                        <div class="grid grid-cols-2 gap-4">
+                            <template x-for="vibe in [
+                                { icon: '❄️', title: 'Winter Warriors', desc: 'Aurora, Skiing & Ice' },
+                                { icon: '🏙️', title: 'Urban Explorers', desc: 'Museums, Dining & Nightlife' },
+                                { icon: '🛶', title: 'Wilderness Spirit', desc: 'Hiking, Kayaking & Wildlife' },
+                                { icon: '🍷', title: 'Taste & Savour', desc: 'Vineyards, Foraging & Local' }
+                            ]">
+                                <a href="#" class="flex items-center space-x-4 p-4 rounded-2xl border border-slate-50 hover:border-[#a3e635] hover:bg-slate-50 transition group">
+                                    <span class="text-3xl" x-text="vibe.icon"></span>
+                                    <div>
+                                        <p class="text-xs font-bold text-[#064e3b] uppercase tracking-wide" x-text="vibe.title"></p>
+                                        <p class="text-[10px] text-slate-400 font-medium" x-text="vibe.desc"></p>
+                                    </div>
+                                </a>
+                            </template>
                         </div>
                     </div>
                 </div>
-            </template>
-        </div>
-    </section>
+            </nav>
 
-    <!-- 8. Destination Bento Grid -->
-    <section class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter mb-12">MAP THE NORTH.</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 h-[600px]">
-            <!-- Featured -->
-            <div class="col-span-2 row-span-2 rounded-[3.5rem] relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1562914101-768f5c3bd88c?auto=format&fit=crop&w=1200" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-12">
-                    <span class="text-highlight font-black text-xs uppercase tracking-[0.4em] mb-4">The Crown Jewel</span>
-                    <h3 class="text-6xl font-syne font-extrabold text-white tracking-tighter mb-4">BANFF.</h3>
-                    <a href="/destinations/banff.html" class="inline-block px-8 py-3 bg-white rounded-full text-primary font-black text-[10px] uppercase tracking-widest w-fit hover:bg-accent hover:text-white transition">Explore Hub</a>
-                </div>
-            </div>
-            <!-- Secondary -->
-            <div class="col-span-1 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1543783230-278385764042?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
-                <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-6">
-                    <h3 class="text-2xl font-syne font-extrabold text-white tracking-tighter">TORONTO.</h3>
-                </div>
-            </div>
-            <!-- Secondary -->
-            <div class="col-span-1 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1560814304-4f05eb58af38?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
-                <div class="absolute inset-0 bg-black/20 flex flex-col justify-end p-6">
-                    <h3 class="text-2xl font-syne font-extrabold text-white tracking-tighter">VANCOUVER.</h3>
-                </div>
-            </div>
-            <!-- Tertiary -->
-            <div class="col-span-2 row-span-1 rounded-[2.5rem] relative overflow-hidden group">
-                <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-1000">
-                <div class="absolute inset-0 bg-primary/40 flex flex-col justify-center px-12">
-                    <h3 class="text-4xl font-syne font-extrabold text-white tracking-tighter">YUKON TERRITORIES.</h3>
-                    <span class="text-highlight font-black font-syne uppercase tracking-widest text-[10px]">Aurora Season Active</span>
-                </div>
+            <!-- User Actions -->
+            <div class="flex items-center space-x-6">
+                <button class="hidden lg:block text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-[#b91c1c] transition">Sign In</button>
+                <a href="/cart" class="relative group p-2">
+                    <i class="fa-solid fa-cart-shopping text-slate-400 group-hover:text-[#064e3b] transition"></i>
+                    <span class="absolute -top-1 -right-1 w-4 h-4 bg-[#b91c1c] text-white text-[8px] font-black flex items-center justify-center rounded-full border-2 border-white">2</span>
+                </a>
+                <a href="/booking" class="bg-[#b91c1c] text-white px-7 py-3.5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-[#064e3b] hover:scale-105 transition active:scale-95 shadow-lg shadow-red-900/10">Book Adventure</a>
             </div>
         </div>
-    </section>
+    </header>
 
-    <!-- 9. AI Concierge Interruption (Personalization) -->
-    <section class="max-w-7xl mx-auto px-6" x-data="{ selected: null }">
-        <div class="bg-primary rounded-[4rem] p-12 md:p-24 relative overflow-hidden flex flex-col items-center text-center">
-            <div class="absolute top-0 right-0 p-20 opacity-10 pointer-events-none transform rotate-12">
-                <i class="fa-solid fa-moose text-[30rem] text-white"></i>
-            </div>
+    <!-- [LAYER 3] INVENTORY FILTER BAR (Sticky Filter Bar) -->
+    <div class="sticky top-[72px] z-40 bg-white border-b border-slate-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-center gap-8 overflow-x-auto no-scrollbar scrollbar-hide">
             
-            <div class="relative z-10 max-w-2xl">
-                <div class="w-16 h-16 bg-highlight rounded-2xl flex items-center justify-center text-primary text-2xl mb-8 mx-auto shadow-2xl">
-                    <i class="fa-solid fa-sparkles"></i>
-                </div>
-                <p class="text-highlight font-black text-xs uppercase tracking-[0.5em] mb-4">North AI Concierge</p>
-                <h2 class="text-4xl md:text-5xl font-syne font-extrabold text-white mb-12 tracking-tighter leading-none">Who are you traveling with?</h2>
-                
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button @click="selected = 'Family'" :class="selected === 'Family' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
-                        <i class="fa-solid fa-child mr-2"></i> Family
-                    </button>
-                    <button @click="selected = 'Couple'" :class="selected === 'Couple' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
-                        <i class="fa-solid fa-heart mr-2"></i> Couple
-                    </button>
-                    <button @click="selected = 'Solo'" :class="selected === 'Solo' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
-                        <i class="fa-solid fa-user mr-2"></i> Solo
-                    </button>
-                    <button @click="selected = 'Friends'" :class="selected === 'Friends' ? 'bg-highlight text-primary' : 'bg-white/10 text-white'" class="px-8 py-4 rounded-full font-bold uppercase text-xs tracking-widest hover:bg-highlight hover:text-primary transition border border-white/20">
-                        <i class="fa-solid fa-users mr-2"></i> Friends
-                    </button>
-                </div>
+            <!-- Chips (L1/L2 Discovery Layer) -->
+            <div class="flex items-center space-x-6">
+                <template x-for="chip in chips" :key="chip.id">
+                    <button class="whitespace-nowrap px-6 py-2 rounded-full border border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-[0.15em] hover:bg-slate-50 hover:text-[#b91c1c] hover:border-[#b91c1c]/20 transition active:bg-slate-100" x-text="chip.label"></button>
+                </template>
+            </div>
 
-                <div x-show="selected" x-cloak x-transition class="mt-12 p-8 bg-white/5 rounded-[2rem] border border-white/10">
-                    <p class="text-white/80 font-bold mb-4">Great! Filtering 4,371 experiences for <span class="text-highlight" x-text="selected"></span>...</p>
-                    <a href="#" class="inline-block bg-accent px-10 py-4 rounded-2xl text-white font-black text-xs uppercase tracking-[0.2em] shadow-2xl">See Recommendations</a>
-                </div>
+            <!-- Sort/View Toggle (Optional: kept but re-positioned) -->
+            <div class="hidden lg:flex items-center space-x-3 text-[10px] font-black text-slate-400 uppercase tracking-widest pl-8 border-l border-slate-100">
+                <span>View:</span>
+                <button aria-label="Grid View" class="text-[#064e3b] hover:text-[#b91c1c] transition"><i class="fa-solid fa-grid-2"></i> Grid</button>
+                <button aria-label="Map View" class="hover:text-[#064e3b] transition"><i class="fa-solid fa-map"></i> Map</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 10. Travel Hacks Journal (4-Column Grid) -->
-    <section class="max-w-max-w-7xl mx-auto px-6">
-        <div class="flex items-center justify-between mb-12">
-            <h2 class="text-4xl font-syne font-extrabold text-primary tracking-tighter italic">TRAVEL HACKS.</h2>
-            <a href="#" class="text-[10px] font-black uppercase text-accent border-b-2 border-accent pb-1 tracking-widest">Read Journal</a>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <template x-for="i in 4">
-                <div class="group cursor-pointer">
-                    <div class="aspect-video rounded-3xl overflow-hidden mb-4 bg-slate-200">
-                        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=400&q=80" 
-                             class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-700" alt="Journal Image">
-                    </div>
-                    <h3 class="text-lg font-bold text-primary group-hover:text-accent transition leading-tight"> Pearson to Downtown: The $12 Transit Secret</h3>
-                </div>
-            </template>
-        </div>
-    </section>
-
-    <!-- 11. App Download CTA -->
-    <section class="max-w-7xl mx-auto px-6">
-        <div class="h-80 bg-slate-900 rounded-[3.5rem] overflow-hidden flex flex-col md:flex-row items-center border border-white/10 shadow-3xl">
-            <!-- App Mockup Image -->
-            <div class="w-full md:w-1/2 h-full relative overflow-hidden bg-primary/20 flex items-center justify-center">
-                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=50" 
-                     class="w-[200px] h-[400px] object-cover rounded-[3rem] border-[8px] border-slate-800 shadow-3xl rotate-12 translate-y-20 transform hover:-translate-y-0 transition duration-1000" alt="App Mockup">
-                <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 to-transparent"></div>
-            </div>
-            <!-- QR Code & Store Buttons -->
-            <div class="w-full md:w-1/2 p-12 text-center md:text-left">
-                <h2 class="text-3xl font-syne font-extrabold text-white mb-4 tracking-tighter leading-none">THE TRUE NORTH, MOBILE-ONLY.</h2>
-                <p class="text-white/40 font-bold uppercase tracking-widest text-[10px] mb-8">Get exclusive mobile deals & real-time discovery</p>
-                
-                <div class="flex flex-col sm:flex-row items-center gap-8">
-                    <div class="bg-white p-3 rounded-2xl w-24 h-24 flex items-center justify-center flex-shrink-0">
-                        <i class="fa-solid fa-qrcode text-4xl text-primary"></i>
-                    </div>
-                    <div class="flex flex-col gap-3 w-full">
-                        <button class="bg-white text-primary px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-highlight transition">
-                            <i class="fa-brands fa-apple text-xl"></i> App Store
-                        </button>
-                        <button class="bg-white/10 text-white px-8 py-3 rounded-xl font-bold border border-white/20 flex items-center justify-center gap-3 hover:bg-white/20 transition">
-                            <i class="fa-brands fa-google-play text-xl"></i> Google Play
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 12. SEO Mega-Footer -->
-    <footer class="bg-primary text-white pt-24 pb-12 relative overflow-hidden">
-        <!-- Decoration -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-12 mb-20">
-                <!-- Col 1 -->
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Provinces</h4>
-                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
-                        <li><a href="#" class="hover:text-white transition">Ontario</a></li>
-                        <li><a href="#" class="hover:text-white transition">British Columbia</a></li>
-                        <li><a href="#" class="hover:text-white transition">Alberta</a></li>
-                        <li><a href="#" class="hover:text-white transition">Quebec</a></li>
-                        <li><a href="#" class="hover:text-white transition">Nova Scotia</a></li>
-                        <li><a href="#" class="hover:text-white transition">Yukon</a></li>
-                    </ul>
-                </div>
-                <!-- Col 2 -->
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Top Cities</h4>
-                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
-                        <li><a href="#" class="hover:text-white transition">Toronto</a></li>
-                        <li><a href="#" class="hover:text-white transition">Vancouver</a></li>
-                        <li><a href="#" class="hover:text-white transition">Montreal</a></li>
-                        <li><a href="#" class="hover:text-white transition">Banff</a></li>
-                        <li><a href="#" class="hover:text-white transition">Calgary</a></li>
-                        <li><a href="#" class="hover:text-white transition">Ottawa</a></li>
-                    </ul>
-                </div>
-                <!-- Col 3 -->
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Categories</h4>
-                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
-                        <li><a href="#" class="hover:text-white transition">Attractions</a></li>
-                        <li><a href="#" class="hover:text-white transition">Day Trips</a></li>
-                        <li><a href="#" class="hover:text-white transition">Outdoor</a></li>
-                        <li><a href="#" class="hover:text-white transition">Food Tours</a></li>
-                        <li><a href="#" class="hover:text-white transition">Winter Sports</a></li>
-                        <li><a href="#" class="hover:text-white transition">Cruises</a></li>
-                    </ul>
-                </div>
-                <!-- Col 4 -->
-                <div>
-                    <h4 class="text-[10px] font-black uppercase tracking-widest text-highlight mb-6">Support</h4>
-                    <ul class="text-[12px] font-bold text-white/50 space-y-3">
-                        <li><a href="#" class="hover:text-white transition">Manage Booking</a></li>
-                        <li><a href="#" class="hover:text-white transition">Terms & Privacy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
-                        <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
-                        <li><a href="#" class="hover:text-white transition">Legal Notice</a></li>
-                        <li><a href="#" class="hover:text-white transition">Partner Portal</a></li>
-                    </ul>
-                </div>
-                <!-- Col 5: Brand Block -->
-                <div class="col-span-2">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="w-12 h-12 bg-accent rounded-xl flex items-center justify-center text-white text-xl">
-                            <i class="fa-solid fa-mountain-sun"></i>
-                        </div>
-                        <h3 class="text-2xl font-syne font-extrabold tracking-tighter uppercase">TOURS NORTH</h3>
-                    </div>
-                    <p class="text-white/40 text-xs font-medium leading-relaxed mb-8">Unlocking the True North through design-forward exploration and inventory-driven technology. Category Leader since 2026.</p>
-                    <div class="flex gap-4">
-                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-tiktok"></i></a>
-                        <a href="#" class="text-white/40 hover:text-highlight transition text-xl"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[0.3em] text-white/20">
-                <p>&copy; 2026 Tours North Canada. All Rights Reserved.</p>
-                <div class="flex gap-8 mt-4 md:mt-0">
-                    <span class="flex items-center gap-2 text-highlight font-black">
-                        <span class="w-1.5 h-1.5 bg-highlight rounded-full animate-pulse"></span>
-                        SYSTEM OPTIMAL
+    <!-- 3. HERO REFINED (Search omnipresent in header) -->
+    <section class="relative h-[75vh] min-h-[500px] flex flex-col justify-center overflow-hidden bg-slate-900 mt-[-112px] md:mt-[-112px]">
+        <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1920&q=80" alt="Toronto" class="absolute inset-0 w-full h-full object-cover opacity-60 ken-burns">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#064e3b]/40 via-transparent to-[#f8fafc]"></div>
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 pt-40">
+            <span class="inline-block px-4 py-1.5 bg-[#a3e635] text-[#064e3b] text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6 shadow-xl shadow-lime-900/10">600+ Verified Experiences</span>
+            <h1 class="text-6xl md:text-8xl text-white font-black mb-8 leading-[0.9] tracking-tighter uppercase font-syne">
+                Explore Toronto's<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#a3e635] to-white italic">Urban Pulse</span>
+            </h1>
+            <p class="text-white/80 text-lg md:text-xl font-medium max-w-xl mb-12 border-l-4 border-[#b91c1c] pl-8">
+                From CN Tower views to hidden distillery dives. Discover the iconic and the indigenous.
+            </p>
+            <div class="flex items-center space-x-6">
+                <button class="bg-white text-[#064e3b] px-10 py-5 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-[#a3e635] transition shadow-2xl">Start Discovering</button>
+                <button class="text-white text-xs font-black uppercase tracking-widest flex items-center space-x-3 group">
+                    <span class="w-12 h-12 rounded-full border-2 border-white/20 flex items-center justify-center group-hover:bg-[#b91c1c] transition">
+                        <i class="fa-solid fa-play ml-1"></i>
                     </span>
-                    <span>TICO REG: 4928103</span>
+                    <span>Watch Discovery Film</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2.5 SECONDARY SUB-NAV & MEGA-DRAWER (The Headout Move) -->
+    <div class="sticky top-20 z-40 bg-white border-b border-slate-100 shadow-sm" x-data="{ 
+        megaOpen: false, 
+        activeL2: 'Attractions',
+        categories: {
+            'Attractions': ['Observation Decks', 'Museums', 'National Parks', 'Castles', 'Theme Parks'],
+            'Guided Tours': ['Walking Tours', 'Bike Tours', 'Day Trips', 'Private Tours', 'Night Tours'],
+            'Wellness': ['Spas', 'Thermal Baths', 'Yoga Retreats', 'Massage'],
+            'Transport': ['Airport Transfers', 'Hop-on Hop-off', 'Private Drivers', 'Boat Charters'],
+            'Culture': ['Indigenous Heritage', 'Art Galleries', 'History Walks', 'Theaters']
+        },
+        chips: [
+            { id: 'must-see', label: 'Must-See Icons' },
+            { id: 'guided', label: 'Guided Tours' },
+            { id: 'day-trips', label: 'Day Trips' },
+            { id: 'water', label: 'Water & Cruises' },
+            { id: 'food', label: 'Food & Drink' },
+            { id: 'adventure', label: 'Adventure' }
+        ]
+    }">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center h-16">
+                
+                <!-- ALL CATEGORIES CHIP (DRAWER TRIGGER) -->
+                <button @click="megaOpen = !megaOpen" 
+                        class="flex items-center space-x-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-full hover:border-[#b91c1c] transition-colors group">
+                    <i class="fa-solid fa-bars text-slate-400 group-hover:text-[#b91c1c]"></i>
+                    <span class="text-xs font-bold text-slate-600 uppercase tracking-widest group-hover:text-[#b91c1c]">All Categories</span>
+                </button>
+
+                <div class="w-px h-6 bg-slate-100 mx-6"></div>
+
+                <!-- HORIZONTAL CHIP BAR (INTER) -->
+                <div class="flex-1 overflow-x-auto no-scrollbar scrollbar-hide flex items-center space-x-6">
+                    <template x-for="chip in chips" :key="chip.id">
+                        <button class="whitespace-nowrap text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-[#b91c1c] transition-colors" x-text="chip.label"></button>
+                    </template>
+                </div>
+
+                <div class="w-px h-6 bg-slate-100 mx-6 lg:block hidden"></div>
+
+                <!-- QUICK ACTIONS -->
+                <div class="lg:flex hidden items-center space-x-4">
+                    <button class="text-[10px] font-black uppercase text-[#064e3b] tracking-widest border border-[#064e3b]/20 px-4 py-2 rounded-full hover:bg-[#064e3b] hover:text-white transition">Filter By Map</button>
                 </div>
             </div>
         </div>
-        
-        <!-- Peak Illustration Overlay (Bottom Edge) -->
-        <div class="absolute bottom-0 left-0 right-0 h-40 opacity-5 pointer-events-none">
-            <svg viewBox="0 0 1200 200" preserveAspectRatio="none" class="w-full h-full fill-white">
-                <path d="M0,200 L1200,200 L1200,100 L1100,50 L1000,120 L900,20 L800,150 L700,40 L600,130 L500,10 L400,160 L300,60 L200,140 L100,30 L0,110 Z"></path>
-            </svg>
+
+        <!-- MEGA-DRAWER (SYNE + INTER) -->
+        <div x-show="megaOpen" 
+             x-cloak
+             x-transition:enter="transition ease-out duration-300 transform"
+             x-transition:enter-start="-translate-y-4 opacity-0"
+             x-transition:enter-end="translate-y-0 opacity-100"
+             x-transition:leave="transition ease-in duration-200 transform"
+             x-transition:leave-start="translate-y-0 opacity-100"
+             x-transition:leave-end="-translate-y-4 opacity-0"
+             class="absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-2xl z-50 overflow-hidden"
+             style="height: 480px;">
+            <div class="max-w-7xl mx-auto px-4 h-full flex">
+                
+                <!-- LEFT PANE: L2 CATEGORIES -->
+                <div class="w-1/4 border-r border-slate-100 py-12 space-y-2 pr-8">
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-8 font-syne">Explore Categories</h4>
+                    <template x-for="(subcats, catName) in categories" :key="catName">
+                        <button @click="activeL2 = catName" 
+                                :class="activeL2 === catName ? 'bg-slate-50 text-[#064e3b]' : 'text-slate-500 hover:text-[#b91c1c]'"
+                                class="w-full text-left px-6 py-4 rounded-2xl flex items-center justify-between transition-all group">
+                            <span class="text-sm font-bold uppercase tracking-wider" x-text="catName"></span>
+                            <i class="fa-solid fa-chevron-right text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                        </button>
+                    </template>
+                </div>
+
+                <!-- RIGHT PANE: L3 SUB-TYPES -->
+                <div class="flex-1 py-12 pl-12 bg-slate-50/30">
+                    <div class="flex justify-between items-end mb-12">
+                        <div>
+                            <span class="text-[#b91c1c] font-black text-[10px] uppercase tracking-[0.4em] mb-2 block">Discovery Plane</span>
+                            <h3 class="text-5xl font-black font-syne text-[#064e3b] tracking-tighter uppercase leading-none" x-text="activeL2"></h3>
+                        </div>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Viewing 400+ Results</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-y-6 gap-x-12">
+                        <template x-for="l3 in categories[activeL2]" :key="l3">
+                            <a href="#" class="group block">
+                                <span class="text-sm font-bold text-slate-600 group-hover:text-[#b91c1c] transition-colors block mb-1" x-text="l3"></span>
+                                <span class="text-[8px] font-black text-slate-300 uppercase tracking-widest">Explore Collection →</span>
+                            </a>
+                        </template>
+                    </div>
+
+                    <!-- FEATURED CARD IN DRAWER -->
+                    <div class="mt-16 pt-8 border-t border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-16 h-16 bg-white rounded-2xl border border-slate-100 flex items-center justify-center text-2xl">
+                                🏙️
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-black font-syne text-[#064e3b] uppercase">Toronto Iconic Pass</h5>
+                                <p class="text-[10px] font-bold text-slate-400">Save 40% on top 5 attractions</p>
+                            </div>
+                        </div>
+                        <button class="bg-[#064e3b] text-white px-8 py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-[#b91c1c] transition">View Deal</button>
+                    </div>
+                </div>
+
+                <!-- CLOSE BUTTON -->
+                <button @click="megaOpen = false" class="absolute top-8 right-8 text-slate-300 hover:text-[#b91c1c] transition-colors">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SAFETY & SECURITY TRUST BLOCK -->
+    <div w3-include-html="assets/components/trust-block.html"></div>
+
+    <!-- 5. TAB-WRAPPED COLLECTIONS -->
+    <section class="max-w-7xl mx-auto px-4 py-24">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-[#064e3b] mb-8">Discover Your Adventure</h2>
+            <!-- Primary Tabs -->
+            <div class="inline-flex bg-slate-200 p-1 rounded-full mb-8">
+                <button @click="collectionTab = 'winter'" :class="collectionTab === 'winter' ? 'bg-[#064e3b] text-white' : 'text-slate-500'" class="px-6 py-2 rounded-full font-bold transition-all">Winter Adventures</button>
+                <button @click="collectionTab = 'city'" :class="collectionTab === 'city' ? 'bg-[#064e3b] text-white' : 'text-slate-500'" class="px-6 py-2 rounded-full font-bold transition-all">City Escapes</button>
+                <button @click="collectionTab = 'food'" :class="collectionTab === 'food' ? 'bg-[#064e3b] text-white' : 'text-slate-500'" class="px-6 py-2 rounded-full font-bold transition-all">Foodie Tours</button>
+                <button @click="collectionTab = 'wildlife'" :class="collectionTab === 'wildlife' ? 'bg-[#064e3b] text-white' : 'text-slate-500'" class="px-6 py-2 rounded-full font-bold transition-all">Wildlife</button>
+            </div>
+
+            <!-- Sub-tabs for Winter -->
+            <div x-show="collectionTab === 'winter'" x-cloak class="mb-8">
+                <div class="inline-flex bg-slate-100 p-1 rounded-full">
+                    <button @click="winterSubTab = 'skiing'" :class="winterSubTab === 'skiing' ? 'bg-[#b91c1c] text-white' : 'text-slate-600'" class="px-4 py-2 rounded-full font-medium transition-all">Skiing</button>
+                    <button @click="winterSubTab = 'aurora'" :class="winterSubTab === 'aurora' ? 'bg-[#b91c1c] text-white' : 'text-slate-600'" class="px-4 py-2 rounded-full font-medium transition-all">Aurora</button>
+                    <button @click="winterSubTab = 'hotsprings'" :class="winterSubTab === 'hotsprings' ? 'bg-[#b91c1c] text-white' : 'text-slate-600'" class="px-4 py-2 rounded-full font-medium transition-all">Hot Springs</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Winter Adventures Grid -->
+        <div x-show="collectionTab === 'winter'" x-cloak class="grid grid-cols-4 gap-6">
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Whistler Ski Lesson</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $89 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1516053337920-c20847990715?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Toronto Light Festival</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $0 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Banff Hot Springs</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $45 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Niagara Ice Wine Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $125 CAD</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- City Escapes Grid -->
+        <div x-show="collectionTab === 'city'" x-cloak class="grid grid-cols-4 gap-6">
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Toronto City Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $65 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Vancouver Explorer</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $75 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Montreal Cultural Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $55 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Quebec City Historic Walk</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $45 CAD</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Foodie Tours Grid -->
+        <div x-show="collectionTab === 'food'" x-cloak class="grid grid-cols-4 gap-6">
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Toronto Food Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $85 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Vancouver Seafood Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $95 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Montreal Poutine Trail</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $65 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Halifax Lobster Festival</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $120 CAD</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wildlife Grid -->
+        <div x-show="collectionTab === 'wildlife'" x-cloak class="grid grid-cols-4 gap-6">
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Yukon Wildlife Safari</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $199 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Banff Bear Watching</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $149 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Whistler Bird Watching</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $79 CAD</p>
+                </div>
+            </div>
+            <div class="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+                    <h3 class="text-white text-lg font-bold">Jasper Elk Herd Tour</h3>
+                    <p class="text-[#a3e635] text-xs font-bold">From $89 CAD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TRAVEL HACKS SECTION -->
+    <section class="bg-slate-50 py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-[#064e3b] text-center mb-12">Travel Hacks & Tips</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="guides/best-time-to-visit-canada.html" class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl mb-4">📅</div>
+                    <h3 class="text-xl font-bold text-[#064e3b] mb-2">Best Time to Visit Canada</h3>
+                    <p class="text-gray-600">Plan your perfect Canadian adventure with our seasonal guide.</p>
+                </a>
+                <a href="guides/canada-travel-visa-guide.html" class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl mb-4">🛂</div>
+                    <h3 class="text-xl font-bold text-[#064e3b] mb-2">Visa & Entry Requirements</h3>
+                    <p class="text-gray-600">Everything you need to know about traveling to Canada.</p>
+                </a>
+                <a href="guides/top-10-winter-activities.html" class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                    <div class="text-4xl mb-4">❄️</div>
+                    <h3 class="text-xl font-bold text-[#064e3b] mb-2">Top 10 Winter Activities</h3>
+                    <p class="text-gray-600">Discover Canada's winter wonderland activities.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. DISCOUNT COUPON CTA -->
+    <section class="bg-[#b91c1c] py-12">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-4">Save 20% on Your Next Adventure!</h2>
+            <p class="text-white/90 mb-6">Use code CANADA20 at checkout for exclusive savings on all tours.</p>
+            <button class="bg-white text-[#b91c1c] px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors">Claim Discount</button>
+        </div>
+    </section>
+
+    <!-- 8. TOP 5 PROVINCES (VISUAL BENTO) -->
+    <section class="max-w-7xl mx-auto px-4 py-24">
+        <h2 class="text-4xl font-bold text-[#064e3b] text-center mb-12">Explore Canada's Provinces</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="group relative h-80 rounded-3xl overflow-hidden shadow-xl col-span-1 md:col-span-2 border-4 border-[#a3e635]">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=800" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 to-transparent flex flex-col justify-end p-8">
+                    <span class="absolute top-6 right-6 bg-[#a3e635] text-[#064e3b] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Local Hub</span>
+                    <h3 class="text-white text-3xl font-bold uppercase">Ontario</h3>
+                    <p class="text-white/70 text-sm mt-2">The Urban Core. Skyscrapers, Islands, and World-Class Culture.</p>
+                </div>
+            </div>
+            <div class="group relative h-80 rounded-3xl overflow-hidden shadow-xl">
+                <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=400" alt="British Columbia Coastline" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white text-2xl font-bold uppercase">British Columbia</h3>
+                    <p class="text-white/70 text-sm mt-2">Coastal wilderness and urban sophistication.</p>
+                </div>
+            </div>
+            <div class="group relative h-80 rounded-3xl overflow-hidden shadow-xl">
+                <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=400" alt="Alberta Mountains" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white text-2xl font-bold uppercase">Alberta</h3>
+                    <p class="text-white/70 text-sm mt-2">The Heart of the Rockies.</p>
+                </div>
+            </div>
+            <div class="group relative h-80 rounded-3xl overflow-hidden shadow-xl">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=400" alt="Quebec Historic Architecture" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white text-2xl font-bold uppercase">Quebec</h3>
+                    <p class="text-white/70 text-sm mt-2">French heritage and stunning natural beauty.</p>
+                </div>
+            </div>
+            <div class="group relative h-80 rounded-3xl overflow-hidden shadow-xl col-span-1 md:col-span-2">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800" alt="Yukon Arctic Wilderness" class="w-full h-full object-cover transition-transform group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white text-3xl font-bold uppercase">Yukon</h3>
+                    <p class="text-white/70 text-sm mt-2">Arctic adventures and northern lights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. EXCLUSIVELY CANADIAN TOURS SLIDER -->
+    <section class="bg-slate-50 py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-[#064e3b] text-center mb-12">Only in Canada Experiences</h2>
+            <div class="relative overflow-hidden">
+                <div class="flex space-x-6 animate-marquee">
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=300" alt="Polar Bear in Churchill" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Polar Bear Viewing in Churchill</h3>
+                        <p class="text-gray-600 mb-4">Witness the majestic polar bears in their natural habitat.</p>
+                        <p class="text-[#b91c1c] font-bold">From $899 CAD</p>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=300" alt="Dog Sledding in Whitehorse" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Dog Sledding in Whitehorse</h3>
+                        <p class="text-gray-600 mb-4">Experience traditional Yukon transportation with husky teams.</p>
+                        <p class="text-[#b91c1c] font-bold">From $249 CAD</p>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Maple Syrup Festival Tour</h3>
+                        <p class="text-gray-600 mb-4">Celebrate Canada's national symbol with tastings and workshops.</p>
+                        <p class="text-[#b91c1c] font-bold">From $79 CAD</p>
+                    </div>
+                    <div class="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg p-6">
+                        <img src="https://images.unsplash.com/photo-1490682143124-b73ed7311835?auto=format&fit=crop&w=300" class="w-full h-48 object-cover rounded-xl mb-4">
+                        <h3 class="text-xl font-bold text-[#064e3b] mb-2">Poutine Making Masterclass</h3>
+                        <p class="text-gray-600 mb-4">Learn to make Canada's iconic dish from local chefs.</p>
+                        <p class="text-[#b91c1c] font-bold">From $65 CAD</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. BESTSELLER CAROUSEL -->
+    <section class="py-16 bestsellers-section">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-[#064e3b] text-center mb-12">Most Popular Adventures</h2>
+            <div class="relative">
+                <div class="flex space-x-6 overflow-x-auto scrollbar-hide pb-4 bestsellers-container">
+                    <!-- Dynamic content will be loaded here -->
+                    <div class="flex items-center justify-center w-full py-12">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#064e3b]"></div>
+                        <span class="ml-3 text-gray-600">Loading tours...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#064e3b] text-white py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <!-- Column 1: Brand Story -->
+                <div class="lg:col-span-1">
+                    <div class="text-2xl font-black text-white tracking-tighter uppercase mb-4">Tours North</div>
+                    <p class="text-white/80 mb-4 text-sm">Unlocking Canada's wild heart. Authentic adventures, local stories, unforgettable memories.</p>
+                    <div class="flex space-x-2">
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">TICO</div>
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">SafeTravels</div>
+                        <div class="bg-white/20 px-3 py-1 rounded text-xs font-bold">🇨🇦 Canadian Owned</div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Destinations -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Destinations</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="destinations/toronto.html" class="hover:text-[#a3e635] transition-colors">Toronto</a></li>
+                        <li><a href="destinations/vancouver.html" class="hover:text-[#a3e635] transition-colors">Vancouver</a></li>
+                        <li><a href="destinations/banff.html" class="hover:text-[#a3e635] transition-colors">Banff</a></li>
+                        <li><a href="destinations/yukon-arctic.html" class="hover:text-[#a3e635] transition-colors">Yukon</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Quebec City</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3: Tour Types -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Tour Types</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Adventure</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Cultural</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Luxury</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Exclusively Canadian</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4: Resources -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="sitemap.html" class="hover:text-[#a3e635] transition-colors">Sitemap</a></li>
+                        <li><a href="journal/index.html" class="hover:text-[#a3e635] transition-colors">Travel Journal</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">PR Newsroom</a></li>
+                        <li><a href="#" class="hover:text-[#a3e635] transition-colors">Booking Status</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 5: Newsletter -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4 font-syne">Join the Inner Circle</h4>
+                    <p class="text-white/80 text-sm mb-4">Get exclusive deals and insider tips delivered to your inbox.</p>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Enter your email" class="w-full px-4 py-2 rounded text-black text-sm">
+                        <button class="w-full bg-[#b91c1c] text-white px-4 py-2 rounded font-bold hover:bg-red-700 transition-colors">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-white/20 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-white/60 text-sm">&copy; 2026 Tours North. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="privacy-policy.html" class="text-white/60 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-white/60 hover:text-white text-sm transition-colors">Terms of Service</a>
+                </div>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="#" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.75.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.747-1.378 0 0-.599 2.282-.744 2.84-.282 1.084-1.064 2.456-1.549 3.235C9.584 23.815 10.77 24.001 12.017 24.001c6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"/></svg>
+                    </a>
+                    <a href="#" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="#" class="text-white/60 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
-
+    <script src="assets/js/personalization.js"></script>
+    <!-- Sales Engine Scripts -->
+    <script src="assets/js/search.js"></script>
+    <script src="assets/js/fomo.js"></script>
 </body>
 </html>
