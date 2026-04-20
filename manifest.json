@@ -1,21 +1,68 @@
 {
+  "id": "https://toursnorth.ca/",
   "name": "Tours North",
   "short_name": "Tours North",
-  "description": "Category-leading North American travel and booking platform.",
-  "start_url": "/index.html",
+  "description": "Canada's category-leading travel platform — discover, book, and experience the best of Canadian tourism through the CEXS™ 9-Layer taxonomy.",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "portrait-primary",
   "background_color": "#064e3b",
   "theme_color": "#064e3b",
+  "lang": "en-CA",
+  "dir": "ltr",
+  "categories": ["travel", "lifestyle", "tourism"],
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "assets/icons/icon-192x192.png",
+      "src": "/assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "assets/icons/icon-512x512.png",
+      "src": "/assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/screenshots/home-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tours North Home — Discover Canadian Experiences"
+    },
+    {
+      "src": "/assets/screenshots/home-desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Tours North Desktop — The 9-Layer Discovery Hub"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Tours",
+      "short_name": "Search",
+      "url": "/?focusSearch=true",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Toronto Hub",
+      "short_name": "Toronto",
+      "url": "/destinations/toronto",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "related_applications": []
 }

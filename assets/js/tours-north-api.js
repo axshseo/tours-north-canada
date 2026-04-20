@@ -1,248 +1,319 @@
+/**
+ * Tours North API v2.0 — CEXS™ 9-Layer Data Adapter
+ * ─────────────────────────────────────────────────────────────────────────────
+ * All queries run against vw_master_inventory (after supabase_fix.sql is applied).
+ * Falls back to local /assets/data/tours.json on any failure.
+ *
+ * DEPENDENCY: window.ToursNorth must be initialized (supabase-config.js).
+ * Use: await window.ToursNorth.ready before calling any function here.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
 import { supabase } from './supabase-config.js';
 
-/**
- * FETCH 9-LAYER CITY INVENTORY
- * This function powers your City Hubs (Toronto, Banff, etc.)
- */
-export async function getCityInventory(cityName) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select(`
-            *,
-            categories(name),
-            sub_categories(name),
-            types(name),
-            province_id
-        `)
-        .eq('city_id', cityName)
-        .eq('published', true);
-
-    if (error) {
-        console.error(`[Infrastructure] Hub Handshake Failed for ${cityName}:`, error);
-        return [];
+/** Internal: Safe query wrapper with JSON fallback */
+async function safeQuery(queryFn, fallbackFilter = null) {
+    try {
+        const result = await queryFn(supabase);
+        if (result.error) throw result.error;
+        return window.ToursNorth.mapToTaxonomy(result.data || []);
+    } catch (err) {
+        console.warn('[API] Supabase query failed, attempting JSON fallback:', err.message);
+        return _jsonFallback(fallbackFilter);
     }
-    
-    if (!data || data.length === 0) {
-        console.warn(`[Infrastructure] Hub Handshake returned 0 results for ${cityName}. Check city_id and published status.`);
-    }
-    
-    return data;
 }
 
-/**
- * FETCH TOP RATED TOURS
- */
-export async function getTopRatedTours(cityName, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select('*, categories(name)')
-        .eq('city_id', cityName)
-        .eq('published', true)
-        .order('id', { ascending: false }) // Mocking "top rated" as newest/highest id for now since rating column is mock
-        .limit(limit);
-
-    if (error) return [];
-    return data;
+/** Internal: Local JSON fallback */
+let _jsonCache = null;
+async function _jsonFallback(filterFn = null) {
+    if (!_jsonCache) {
+        try {
+            const res = await fetch('/assets/data/tours.json');
+            _jsonCache = await res.json();
+        } catch (e) {
+            console.error('[API] JSON fallback also failed:', e.message);
+            return [];
+        }
+    }
+    return filterFn ? _jsonCache.filter(filterFn) : _jsonCache;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM A: CITY INVENTORY (L1-L9 City Hub)
+// ─────────────────────────────────────────────────────────────────────────────
+
 /**
- * FETCH TOURS BY CATEGORY OR SUB-TYPE
+ * Fetches complete 9-layer inventory for a city hub page.
+ * @param {string} cityId - e.g. 'Toronto' (case-insensitive match on city_id)
  */
-export async function getToursByCategory(cityName, categoryName, subType = null, limit = 10) {
-    let query = supabase
-        .from('experiences')
-        .select('*, categories!inner(name)')
-        .eq('city_id', cityName)
-        .eq('published', true);
-
-    if (categoryName) {
-        query = query.eq('categories.name', categoryName);
-    }
-
-    if (subType) {
-        // Assuming sub_types is a column or derived from highlights JSONB/Array
-        query = query.contains('highlights', [subType]);
-    }
-
-    const { data, error } = await query.limit(limit);
-    if (error) {
-        console.error("Filter Error:", error);
-        return [];
-    }
-    return data || [];
+export async function getCityInventory(cityId) {
+    const normalized = cityId.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .ilike('city_id', normalized)
+            .eq('published', true)
+            .order('rating', { ascending: false }),
+        (tour) =>
+            (tour.city || tour.content?.city || '')
+                .toLowerCase()
+                .replace(/\s+/g, '-') === normalized
+    );
 }
 
-/**
- * FETCH NEAREST EXPERIENCES (PostGIS)
- * Uses proximity logic to find tours near a specific coordinate.
- */
-export async function getNearestExperiences(lat, lng, limit = 50) {
-    const { data, error } = await supabase.rpc('get_nearest_experiences', {
-        user_lat: lat,
-        user_lng: lng,
-        max_limit: limit
-    });
-
-    if (error) {
-        console.error("Geographic Search Error", error);
-        return [];
-    }
-    return data;
-}
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM B: REGIONAL HUB (same province, different city)
+// ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * FETCH LATEST TRAVEL HACKS (Mocking from knowledge for now)
- */
-export async function getLatestTravelHacks(cityName, limit = 3) {
-    // In a real scenario, this might be a 'guides' or 'articles' table
-    return [
-        { title: "The UP Express Hack", snippet: "How to get from Pearson to Downtown in 25 mins for $12.", url: "/guides/transit" },
-        { title: "ROM Free Friday Nights", snippet: "Access Canada's largest museum for $0 every third Friday.", url: "/guides/free-entry" },
-        { title: "Winter Wind Tunnels", snippet: "The 3 corners to avoid when the temp drops below -10C.", url: "/guides/winter-survival" }
-    ].slice(0, limit);
-}
-
-/**
- * FETCH TOURS BY COLLECTION (L5/L6)
- */
-export async function getToursByCollection(cityName, collectionName, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select(`
-            *,
-            categories(name),
-            experience_collections!inner(name)
-        `)
-        .eq('city_id', cityName)
-        .eq('published', true)
-        .eq('experience_collections.name', collectionName)
-        .limit(limit);
-
-    if (error) {
-        console.error("Collection Fetch Error:", error);
-        return [];
-    }
-    return data;
-}
-
-/**
- * FETCH TOURS BY TAG (L8)
- */
-export async function getToursByTag(cityName, tagName, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select(`
-            *,
-            categories(name),
-            experience_context_tags!inner(name)
-        `)
-        .eq('city_id', cityName)
-        .eq('published', true)
-        .eq('experience_context_tags.name', tagName)
-        .limit(limit);
-
-    if (error) {
-        console.error("Tag Fetch Error:", error);
-        return [];
-    }
-    return data;
-}
-
-/**
- * FETCH WEATHER SAFE TOURS (Indoor or specific tags)
- */
-export async function getWeatherSafeTours(cityName, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select(`
-            *,
-            categories(name),
-            types!inner(name)
-        `)
-        .eq('city_id', cityName)
-        .eq('published', true)
-        .or('name.eq.Indoor', { foreignTable: 'types' }) // Indoor types are weather safe
-        .limit(limit);
-
-    if (error) {
-        console.error("Weather Safe Fetch Error:", error);
-        return [];
-    }
-    return data;
-}
-
-/**
- * STREAM B: REGIONAL HUB
- * Fetches tours in the same province but different cities.
+ * @param {string} provinceId  - Province code, e.g. 'on'
+ * @param {string} excludedCityId - City to exclude, e.g. 'toronto'
  */
 export async function getRegionalTours(provinceId, excludedCityId, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select('*, categories(name), sub_categories(name)')
-        .eq('province_id', provinceId)
-        .neq('city_id', excludedCityId)
-        .eq('published', true)
-        .limit(limit);
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .eq('province_id', provinceId)
+            .neq('city_id', excludedCityId)
+            .eq('published', true)
+            .limit(limit),
+        null
+    );
+}
 
-    if (error) {
-        console.error("[Infrastructure] Regional Fetch Failed:", error);
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM C: TOUR BY SLUG (Product page hydration — replaces bulk fetch)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Fetches exactly ONE tour by its canonical slug.
+ * Used by tour-renderer.js to avoid fetching all rows on every product page.
+ * @param {string} slug - e.g. 'toronto-cn-tower-edgewalk-001' or filename
+ */
+export async function getTourBySlug(slug) {
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .or(`slug.eq.${slug},id.eq.${slug}`)
+            .eq('published', true)
+            .limit(1),
+        (tour) => tour.slug === slug || tour.id === slug || tour.url?.includes(slug)
+    ).then(results => results[0] || null);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM D: INTENT SHELF (L1 filter)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * @param {string} intent  - L1 value e.g. 'See & Do', 'Taste & Savour'
+ * @param {string} cityId
+ */
+export async function getToursByIntent(intent, cityId, limit = 10) {
+    const normalizedCity = cityId.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .ilike('city_id', normalizedCity)
+            .eq('intent', intent)
+            .eq('published', true)
+            .limit(limit),
+        (tour) =>
+            tour.l1_intent === intent &&
+            (tour.city || '').toLowerCase() === normalizedCity.replace(/-/g, ' ')
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM E: CATEGORY (L2 filter)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * @param {string} cityId
+ * @param {string} categoryName - L2 value e.g. 'Attractions'
+ */
+export async function getToursByCategory(cityId, categoryName, limit = 10) {
+    const normalizedCity = cityId.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .ilike('city_id', normalizedCity)
+            .ilike('category', categoryName)
+            .eq('published', true)
+            .limit(limit),
+        (tour) =>
+            (tour.category || tour.l2_category || '').toLowerCase() === categoryName.toLowerCase() &&
+            (tour.city || '').toLowerCase() === normalizedCity.replace(/-/g, ' ')
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM F: TOP RATED (for bestsellers / featured sections)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function getTopRatedTours(cityId, limit = 10) {
+    const normalizedCity = cityId.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .ilike('city_id', normalizedCity)
+            .eq('published', true)
+            .order('rating', { ascending: false })
+            .limit(limit),
+        (tour) => (tour.city || '').toLowerCase() === normalizedCity.replace(/-/g, ' ')
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM G: PERSONA (L7 filter)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * @param {string} persona - e.g. 'Families with Kids', 'Solo Travelers'
+ */
+export async function getRecommendedFor(persona, cityId = null, limit = 5) {
+    const normalizedCity = cityId?.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => {
+            let q = db
+                .from('vw_master_inventory')
+                .select('*')
+                .contains('personas', [persona])
+                .eq('published', true)
+                .order('rating', { ascending: false })
+                .limit(limit);
+            if (normalizedCity) q = q.ilike('city_id', normalizedCity);
+            return q;
+        },
+        (tour) => (tour.l7_persona || []).includes(persona)
+    );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM H: PROXIMITY (PostGIS / Haversine RPC)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function getNearestExperiences(lat, lng, limit = 50) {
+    try {
+        const { data, error } = await supabase.rpc('get_nearest_experiences', {
+            user_lat:  lat,
+            user_lng:  lng,
+            max_limit: limit
+        });
+        if (error) throw error;
+        return window.ToursNorth.mapToTaxonomy(data);
+    } catch (err) {
+        console.error('[API] Proximity RPC failed:', err.message);
         return [];
     }
-    return data;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STREAM I: FULL-TEXT SEARCH (weighted GIN index — Title=A, Cat=B, Desc=C)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Searches using Supabase FTS with ranking by GIN weight.
+ * Falls back to client-side filter if FTS unavailable.
+ * @param {string} query - User search input
+ */
+export async function searchExperiences(query) {
+    if (!query || query.trim().length < 2) return [];
+    const sanitized = query.trim().replace(/['"]/g, '');
+    try {
+        const { data, error } = await supabase
+            .from('vw_master_inventory')
+            .select('*')
+            .textSearch('search_vector', sanitized, {
+                type:   'websearch',
+                config: 'english'
+            })
+            .eq('published', true)
+            .limit(20);
+        if (error) throw error;
+        return window.ToursNorth.mapToTaxonomy(data);
+    } catch (err) {
+        console.warn('[API] FTS search failed, falling back to local filter:', err.message);
+        const all = await _jsonFallback();
+        const q = sanitized.toLowerCase();
+        return all.filter(t =>
+            (t.name || t.content?.name || '').toLowerCase().includes(q) ||
+            (t.city || t.content?.city || '').toLowerCase().includes(q) ||
+            (t.category || t.l2_category || '').toLowerCase().includes(q)
+        );
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DISCOVERY: Provinces + City Hubs (for navigation / carousels)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function getProvinces(limit = 13) {
+    try {
+        const { data, error } = await supabase.from('provinces').select('*').limit(limit);
+        if (error) throw error;
+        return data;
+    } catch {
+        return [
+            { id: 'on', name: 'Ontario' },
+            { id: 'bc', name: 'British Columbia' },
+            { id: 'ab', name: 'Alberta' },
+            { id: 'qc', name: 'Québec' },
+            { id: 'ns', name: 'Nova Scotia' },
+            { id: 'mb', name: 'Manitoba' },
+            { id: 'sk', name: 'Saskatchewan' },
+            { id: 'nb', name: 'New Brunswick' },
+            { id: 'pe', name: 'Prince Edward Island' },
+            { id: 'nl', name: 'Newfoundland & Labrador' },
+            { id: 'yt', name: 'Yukon' },
+            { id: 'nt', name: 'Northwest Territories' },
+            { id: 'nu', name: 'Nunavut' }
+        ].slice(0, limit);
+    }
+}
+
+export async function getCityHubs(limit = 12) {
+    try {
+        // Query the cities table (created in supabase_fix.sql)
+        const { data, error } = await supabase
+            .from('cities')
+            .select('id, name, hub_url')
+            .limit(limit);
+        if (error) throw error;
+        return data;
+    } catch {
+        // Fallback: derive from JSON
+        const all = await _jsonFallback();
+        const seen = new Set();
+        return all
+            .filter(t => { const c = t.city || t.content?.city; return c && !seen.has(c) && seen.add(c); })
+            .map(t => {
+                const city = t.city || t.content?.city;
+                return { id: city.toLowerCase().replace(/\s+/g, '-'), name: city, hub_url: `/destinations/${city.toLowerCase().replace(/\s+/g, '-')}` };
+            })
+            .slice(0, limit);
+    }
 }
 
 /**
- * STREAM D: INTENT SHELF
- * Fetches tours by super_category_id (The 'Intent' Layer)
+ * Weather-safe tours (Indoor type — L8 context)
  */
-export async function getToursByIntent(superCategoryId, cityName, limit = 10) {
-    const { data, error } = await supabase
-        .from('experiences')
-        .select('*, categories(name), sub_categories(name)')
-        .eq('city_id', cityName)
-        .eq('super_category_id', superCategoryId)
-        .eq('published', true)
-        .limit(limit);
-
-    if (error) {
-        console.error("[Infrastructure] Intent Fetch Failed:", error);
-        return [];
-    }
-    return data;
-}
-/**
- * DISCOVERY: FETCH UNIQUE PROVINCES
- */
-export async function getProvinces(limit = 5) {
-    const { data, error } = await supabase
-        .from('provinces')
-        .select('*')
-        .limit(limit);
-
-    if (error) {
-        console.error("[Infrastructure] Province Discovery Failed:", error);
-        return [];
-    }
-    return data;
-}
-
-/**
- * DISCOVERY: FETCH UNIQUE CITY HUBS
- */
-export async function getCityHubs(limit = 10) {
-    // Assuming you have a cities table or can derive from experiences
-    const { data, error } = await supabase
-        .from('experiences')
-        .select('city_id')
-        .eq('published', true)
-        .limit(limit);
-
-    if (error) {
-        console.error("[Infrastructure] City Discovery Failed:", error);
-        return [];
-    }
-    
-    // De-duplicate if fetching from experiences
-    const uniqueCities = [...new Set(data.map(item => item.city_id))];
-    return uniqueCities.map(id => ({ id, name: id }));
+export async function getWeatherSafeTours(cityId, limit = 10) {
+    const normalizedCity = cityId.toLowerCase().replace(/\s+/g, '-');
+    return safeQuery(
+        (db) => db
+            .from('vw_master_inventory')
+            .select('*')
+            .ilike('city_id', normalizedCity)
+            .ilike('primary_type', 'Indoor')
+            .eq('published', true)
+            .limit(limit),
+        (tour) => tour.l4_functional?.primary_type === 'Indoor'
+    );
 }

@@ -1,47 +1,54 @@
 // Google Analytics 4 (GA4) Tracking Code for Tours North
-// Replace G-XXXXXXXXXX with your actual GA4 Measurement ID
+// ⚠ ACTION REQUIRED: Replace GA4_MEASUREMENT_ID with your real ID from analytics.google.com
+const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: Replace before going live
 
 (function() {
-    // Load GA4
+    if (GA4_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
+        console.warn('[Analytics] GA4 Measurement ID is still a placeholder. Replace GA4_MEASUREMENT_ID in main.js before launching.');
+        return;
+    }
+
     var script = document.createElement('script');
     script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
     document.head.appendChild(script);
 
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', GA4_MEASUREMENT_ID);
 })();
 
 // Tours North Conversion Tracking Engine
+// ─────────────────────────────────────────────────────────────────────────────
+// TD-06 Fix: Replaced invalid jQuery CSS selector 'button:contains(...)' with
+// valid vanilla JS approach using event delegation on document.
 document.addEventListener('DOMContentLoaded', () => {
-    // Track clicks on all "Book Now" buttons and accent-colored elements
-    const bookingButtons = document.querySelectorAll('button:contains("Book"), .bg-accent, [class*="book"], button[class*="accent"]');
+    // Use event delegation — one listener on document instead of n listeners
+    document.addEventListener('click', (e) => {
+        // Match any element that looks like a booking CTA
+        const target = e.target.closest(
+            '[data-book], a[href*="checkout"], button.btn-book, .bg-accent'
+        );
+        if (!target) return;
 
-    bookingButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            // Extract tour name from closest card or button text
-            const card = e.target.closest('.card, .rounded-2xl, .shadow-lg');
-            const tourName = card?.querySelector('h3')?.innerText ||
-                           e.target.innerText ||
-                           e.target.closest('button')?.innerText ||
-                           "Unknown Tour";
+        // Crawl up to find the parent card
+        const card = target.closest('[data-tour-id], article, .tour-card, .rounded-2xl');
+        const tourName = card?.querySelector('h3, [data-field="name"]')?.textContent?.trim() ||
+                         target.textContent?.trim() ||
+                         'Unknown Tour';
+        const tourId   = card?.dataset?.tourId || 'unknown';
 
-            // Send conversion event to GA4
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'conversion', {
-                    'send_to': 'G-XXXXXXXXXX',
-                    'value': 1.0,
-                    'currency': 'CAD',
-                    'custom_parameter_1': tourName
-                });
-            }
+        // Fire GA4 event if initialized
+        if (typeof window.gtag !== 'undefined' && GA4_MEASUREMENT_ID !== 'G-XXXXXXXXXX') {
+            window.gtag('event', 'begin_checkout', {
+                currency: 'CAD',
+                items: [{ item_id: tourId, item_name: tourName }]
+            });
+        }
 
-            // Fallback console logging for debugging
-            console.log(`Conversion Event: User clicked Book Now for ${tourName}`);
-        });
+        console.log(`[Conversion] Book CTA clicked → ${tourName} (${tourId})`);
     });
 });
 
@@ -150,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebarContent += `
             </div>
             <div class="mt-4 pt-3 border-t border-gray-200">
-                <a href="index.html" class="text-xs text-[#b91c1c] hover:underline">View all tours →</a>
+                <a href="/" class="text-xs text-[#b91c1c] hover:underline">View all tours →</a>
             </div>
         `;
 
@@ -200,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     // Configuration
-    const TOURS_JSON_URL = 'assets/data/tours.json';
+    const TOURS_JSON_URL = '/assets/data/tours.json'; // TD-05 fix: absolute path
     const MAX_BESTSELLERS = 4;
 
     // Fetch tours data from JSON file

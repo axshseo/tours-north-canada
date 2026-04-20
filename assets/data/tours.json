@@ -1,7 +1,8 @@
 [
   {
     "id": "toronto-cn-tower-001",
-    "url": "tours/toronto-cn-tower-edgewalk.html",
+    "url": "/tours/toronto-cn-tower-edgewalk.html",
+    "slug": "canada/ontario/toronto/attractions/cn-tower-edgewalk",
     "isLive": true,
     "l1_intent": "See & Do",
     "l2_category": "Attractions",
@@ -11,7 +12,7 @@
       "sub_types": ["Observation decks", "Landmarks"]
     },
     "l5_marketing_vibe": "Iconic",
-    "l6_sub_collection": "Rooftop views",
+    "l6_sub_collection": "Rooftop Views",
     "l7_persona": ["Couples", "Families with Kids", "Luxury Travelers"],
     "l8_contextual": {
       "seasonality": "All-year",
@@ -28,164 +29,248 @@
     "content": {
       "name": "CN Tower EdgeWalk Experience",
       "city": "Toronto",
-      "price": 45.00,
+      "price": 195.00,
       "rating": 4.9,
       "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=800&q=80",
+      "usp": "Walk the outside of the CN Tower at 1168 feet — Canada's ultimate adrenaline stamp.",
+      "description": "Walk around the outside of the CN Tower at dizzying heights. Led by certified guides, you'll discover the thrill of Toronto's most iconic landmark from a perspective very few Canadians ever experience.",
       "highlights": [
-        "Guided tour with expert local",
-        "Small group experience",
+        "Guided walk with certified EdgeWalk specialist",
+        "Small group — max 6 per session",
         "Free cancellation up to 24 hours",
-        "Best price guarantee"
+        "Keepsake video and achievement certificate included"
       ],
-      "description": "Walk around the outside of the CN Tower at dizzying heights. This comprehensive tour takes you through the heart of Toronto, offering unique insights and unforgettable moments. Led by passionate local guides, you'll discover hidden gems and iconic landmarks that define this vibrant destination.",
       "meeting_point": "CN Tower, 290 Bremner Blvd, Toronto, ON M5V 3L9",
       "itinerary": [
-        { "step": 1, "title": "Meeting Point", "desc": "Meet your expert guide at CN Tower in downtown Toronto." },
-        { "step": 2, "title": "Guided Exploration", "desc": "Embark on a thrilling walk around the outside of the CN Tower at 1168 feet above ground." },
-        { "step": 3, "title": "Photo Opportunities", "desc": "Capture unforgettable moments with panoramic views of Toronto." }
+        { "step": 1, "title": "Gear Up", "desc": "Meet your guide and suit up with the full EdgeWalk harness system." },
+        { "step": 2, "title": "The Walk", "desc": "Step out 356m above the ground and walk the circumference of the Tower pod." },
+        { "step": 3, "title": "Photos & Certificate", "desc": "Receive your keepsake video and achievement cert at the base." }
       ],
       "included_items": [
-        "Professional certified guide",
-        "EdgeWalk safety harness & gear",
-        "Tower admission tickets",
-        "Keepsake video and photos",
+        "Certified EdgeWalk guide",
+        "Full safety harness & wind suit",
+        "Tower admission",
+        "Keepsake video & photos",
         "Achievement certificate",
-        "Small group (max 12 travelers)"
+        "Small group (max 6)"
       ]
-    }
+    },
+    "category": "Attractions",
+    "city": "Toronto",
+    "name": "CN Tower EdgeWalk Experience",
+    "price": 195.00,
+    "rating": 4.9,
+    "image": "https://images.unsplash.com/photo-1503192856409-d9a3b2a04a44?auto=format&fit=crop&w=800&q=80",
+    "inventory": 6,
+    "status": "available"
   },
   {
     "id": "niagara-falls-001",
-    "name": "Niagara Falls Boat Tour",
-    "city": "Niagara Falls",
-    "url": "tours/niagara-falls-boat-tour.html",
-    "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?auto=format&fit=crop&w=600&q=80",
+    "url": "/tours/niagara-falls-boat-tour.html",
+    "slug": "canada/ontario/niagara-falls/cruises/boat-tour",
     "isLive": true,
-    "intent": "See & Do",
-    "category": "Cruises",
-    "sub_category": "Waterfalls",
-    "functional": {
-      "type": "Water",
+    "l1_intent": "See & Do",
+    "l2_category": "Cruises",
+    "l3_sub_category": "Waterfalls",
+    "l4_functional": {
+      "primary_type": "Water",
       "sub_types": ["Boat Tours", "Landmarks"]
     },
-    "marketing": {
-      "collection": "Nature-Lovers",
-      "sub_collection": "Waterfalls",
-      "vibe": "Awe-inspiring"
+    "l5_marketing_vibe": "Awe-inspiring",
+    "l6_sub_collection": "Nature Wonders",
+    "l7_persona": ["Families with Kids", "Groups", "Photography Lovers"],
+    "l8_contextual": {
+      "seasonality": "May–Oct",
+      "weather_dependency": "High",
+      "time_commitment": "1h",
+      "accessibility": ["Wheelchair-accessible"],
+      "price_tier": "$"
     },
-    "personalization": {
-      "personas": ["Families with Kids", "Groups", "Photography Lovers"],
-      "context": {
-        "seasonality": "May-Oct",
-        "weather_dependency": "High",
-        "time_commitment": "1h",
-        "accessibility": ["Wheelchair-accessible"]
-      }
+    "l9_bundle_logic": {
+      "is_bundle_parent": false,
+      "eligible_bundles": ["Ontario Wonder Bundle"],
+      "cross_sell_ids": []
     },
-    "revenue": {
-      "price_tier": "$",
-      "base_price": 35,
-      "bundle_eligible": ["City Starter Pack"]
-    }
+    "content": {
+      "name": "Niagara Falls Boat Tour",
+      "city": "Niagara Falls",
+      "price": 35.00,
+      "rating": 4.8,
+      "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?auto=format&fit=crop&w=600&q=80",
+      "usp": "Get drenched by 3,160 tonnes of water per second — Canada's most iconic boat experience.",
+      "description": "Board the iconic Maid of the Mist and sail directly into the mist of Niagara Falls. This once-in-a-lifetime Canadian experience is fully accessible and family-approved.",
+      "highlights": [
+        "Sail to the base of Horseshoe Falls",
+        "Complimentary rain poncho included",
+        "Fully wheelchair accessible",
+        "Captivating multilingual narration"
+      ],
+      "meeting_point": "Niagara Falls State Park Boat Tour Dock, Niagara Falls, ON"
+    },
+    "category": "Cruises",
+    "city": "Niagara Falls",
+    "name": "Niagara Falls Boat Tour",
+    "price": 35.00,
+    "rating": 4.8,
+    "image": "https://images.unsplash.com/photo-1444090542259-0af8fa96557e?auto=format&fit=crop&w=600&q=80",
+    "inventory": 40,
+    "status": "available"
   },
   {
     "id": "whistler-ski-001",
-    "name": "Whistler Blackcomb Ski Lesson",
-    "city": "Whistler",
-    "url": "tours/whistler-ski-lesson.html",
-    "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80",
+    "url": "/tours/whistler-ski-lesson.html",
+    "slug": "canada/british-columbia/whistler/adventure/ski-lesson",
     "isLive": true,
-    "intent": "Get Active",
-    "category": "Adventure",
-    "sub_category": "Winter Sports",
-    "functional": {
-      "type": "Mountain",
+    "l1_intent": "Play & Thrill",
+    "l2_category": "Adventure",
+    "l3_sub_category": "Winter Sports",
+    "l4_functional": {
+      "primary_type": "Snow/Ice",
       "sub_types": ["Skiing", "Lessons"]
     },
-    "marketing": {
-      "collection": "Mountain-Expedition",
-      "sub_collection": "Performance",
-      "vibe": "Energetic"
+    "l5_marketing_vibe": "Energetic",
+    "l6_sub_collection": "Mountain Expedition",
+    "l7_persona": ["Solo Travelers", "Families with Kids", "Beginners"],
+    "l8_contextual": {
+      "seasonality": "Winter (Nov–Apr)",
+      "weather_dependency": "Medium",
+      "time_commitment": "4h",
+      "accessibility": ["Adaptive skiing available"],
+      "price_tier": "$$"
     },
-    "personalization": {
-      "personas": ["Solo Travelers", "Families with Kids", "Beginners"],
-      "context": {
-        "seasonality": "Winter",
-        "weather_dependency": "Medium",
-        "time_commitment": "4h",
-        "accessibility": ["Adaptive Skiing possible"]
-      }
+    "l9_bundle_logic": {
+      "is_bundle_parent": false,
+      "eligible_bundles": ["Alpine Explorer"],
+      "cross_sell_ids": []
     },
-    "revenue": {
-      "price_tier": "$$",
-      "base_price": 89,
-      "bundle_eligible": ["Alpine Explorer"]
-    }
+    "content": {
+      "name": "Whistler Blackcomb Ski Lesson",
+      "city": "Whistler",
+      "price": 89.00,
+      "rating": 4.7,
+      "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80",
+      "usp": "Learn to ski on North America's #1 ranked mountain with a CSIA-certified instructor.",
+      "description": "Whether you're a complete beginner or brushing up after a long season, our CSIA-certified instructors will have you carving confidently down Whistler Blackcomb's legendary runs.",
+      "highlights": [
+        "CSIA-certified instructor",
+        "All levels welcome — beginner to advanced",
+        "4-hour group lesson with max 8 students",
+        "Equipment rental available at checkout"
+      ],
+      "meeting_point": "Whistler Village Gondola Base, Whistler, BC"
+    },
+    "category": "Adventure",
+    "city": "Whistler",
+    "name": "Whistler Blackcomb Ski Lesson",
+    "price": 89.00,
+    "rating": 4.7,
+    "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=600&q=80",
+    "inventory": 8,
+    "status": "available"
   },
   {
     "id": "toronto-food-poutine-001",
-    "name": "Toronto Poutine & Brews",
-    "city": "Toronto",
-    "url": "tours/toronto-food-poutine.html",
-    "image": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80",
+    "url": "/tours/toronto-food-poutine.html",
+    "slug": "canada/ontario/toronto/food-tours/poutine-and-brews",
     "isLive": true,
-    "intent": "Eat & Drink",
-    "category": "Food Tours",
-    "sub_category": "Street Food",
-    "functional": {
-      "type": "Land",
+    "l1_intent": "Taste & Savour",
+    "l2_category": "Food Tours",
+    "l3_sub_category": "Street Food",
+    "l4_functional": {
+      "primary_type": "Land",
       "sub_types": ["Food Walking Tour", "Beer Tasting"]
     },
-    "marketing": {
-      "collection": "City-Eats",
-      "sub_collection": "Local Favorites",
-      "vibe": "Casual"
+    "l5_marketing_vibe": "Casual & Authentic",
+    "l6_sub_collection": "City Eats",
+    "l7_persona": ["Foodies", "Couples", "Night Owls"],
+    "l8_contextual": {
+      "seasonality": "All-year",
+      "weather_dependency": "Low",
+      "time_commitment": "3h",
+      "accessibility": ["Sidewalk-friendly"],
+      "price_tier": "$$"
     },
-    "personalization": {
-      "personas": ["Foodies", "Couples", "Night Owls"],
-      "context": {
-        "seasonality": "All-year",
-        "weather_dependency": "Low",
-        "time_commitment": "3h",
-        "accessibility": ["Sidewalk-friendly"]
-      }
+    "l9_bundle_logic": {
+      "is_bundle_parent": false,
+      "eligible_bundles": ["City Starter Pack"],
+      "cross_sell_ids": ["toronto-cn-tower-001"]
     },
-    "revenue": {
-      "price_tier": "$$",
-      "base_price": 75,
-      "bundle_eligible": ["City Starter Pack"]
-    }
+    "content": {
+      "name": "Toronto Poutine & Brews",
+      "city": "Toronto",
+      "price": 75.00,
+      "rating": 4.8,
+      "image": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80",
+      "usp": "Sample poutine from 5 legendary spots and pair each with a local craft beer — the ultimate Canadian food experience.",
+      "description": "Canada's most legendary comfort food meets its craft beer scene on this 3-hour walking tour through Kensington Market and the Entertainment District.",
+      "highlights": [
+        "5 signature poutine tastings from local institutions",
+        "4 craft beer pairings from Ontario microbreweries",
+        "Expert foodie guide with insider knowledge",
+        "Small group — max 10 travelers"
+      ],
+      "meeting_point": "Kensington Market, Toronto (exact pin sent on booking)"
+    },
+    "category": "Food Tours",
+    "city": "Toronto",
+    "name": "Toronto Poutine & Brews",
+    "price": 75.00,
+    "rating": 4.8,
+    "image": "https://images.unsplash.com/photo-1626074353765-517a681e40be?auto=format&fit=crop&w=600&q=80",
+    "inventory": 10,
+    "status": "available"
   },
   {
     "id": "yukon-aurora-expedition-001",
+    "url": "/tours/yukon-aurora-expedition.html",
+    "slug": "canada/yukon/whitehorse/adventure/aurora-expedition",
     "isLive": true,
     "l1_intent": "Escape & Reset",
     "l2_category": "Guided Tours",
     "l3_sub_category": "Adventure Tours",
     "l4_functional": {
       "primary_type": "Air",
-      "sub_types": ["Heli-tours", "Northern lights chasing", "Photography pro-tips"]
+      "sub_types": ["Northern Lights Chasing", "Photography Pro-tips", "Heli-tours"]
     },
     "l5_marketing_vibe": "Only-in-Canada",
     "l6_sub_collection": "Aurora Borealis",
     "l7_persona": ["Couples", "Adventure Seekers", "Luxury Travelers"],
     "l8_contextual": {
-      "seasonality": "Winter",
+      "seasonality": "Winter (Nov–Mar)",
       "weather_dependency": "High",
       "time_commitment": "Night / 4-6h",
       "accessibility": ["Limited"],
       "price_tier": "$$$"
     },
     "l9_bundle_logic": {
-      "is_bundle_parent": false,
+      "is_bundle_parent": true,
       "eligible_bundles": ["Winter Survival Bundle"],
       "cross_sell_ids": ["whitehorse-dog-sledding-001", "arctic-gear-rental-001"]
     },
     "content": {
       "name": "Yukon Aurora Expedition: Private Glass Igloo Stay",
+      "city": "Whitehorse",
       "price": 299.00,
       "rating": 4.9,
-      "image": "/assets/img/tours/yukon-aurora.webp"
-    }
+      "image": "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=800&q=80",
+      "usp": "Sleep under the northern lights in a private glass igloo in the Yukon wilderness — Canada's rarest overnight.",
+      "description": "This is not a tour. This is a once-in-a-lifetime collision of sky and silence. Spend a night in a private glass igloo deep in the Yukon backcountry, guided by a Kluane First Nations elder and professional aurora photographer.",
+      "highlights": [
+        "Private glass igloo accommodation",
+        "Kluane First Nations cultural night guide",
+        "Professional aurora photography session",
+        "Hot spring access & thermal gear provided",
+        "Helicopter transfer to remote site"
+      ],
+      "meeting_point": "Erik Nielsen Whitehorse International Airport, Whitehorse, YT"
+    },
+    "category": "Guided Tours",
+    "city": "Whitehorse",
+    "name": "Yukon Aurora Expedition: Private Glass Igloo Stay",
+    "price": 299.00,
+    "rating": 4.9,
+    "image": "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=800&q=80",
+    "inventory": 2,
+    "status": "available"
   }
 ]
