@@ -34,6 +34,13 @@
         <phase id="4" status="active" name="Automated Inventory Scaling">
             <description>Roll out L1-L9 schema to all 600+ product files and automate hub generation.</description>
         </phase>
+        <phase id="5" status="active" name="Next.js Migration">
+            <description>Migrate static frontend to Next.js App Router and React components.</description>
+            <milestones>
+                <milestone id="5.1" status="completed">Setup Supabase Client and Queries</milestone>
+                <milestone id="5.2" status="completed">Create ExperienceCard Component</milestone>
+            </milestones>
+        </phase>
     </major_phases>
 
     <current_context>

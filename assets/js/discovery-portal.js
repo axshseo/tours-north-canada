@@ -88,6 +88,7 @@ document.addEventListener('alpine:init', () => {
                 price:     t.content?.price  || t.price     || 0,
                 rating:    t.content?.rating || t.rating    || 5.0,
                 image_url: t.content?.image  || t.image_url || t.image    || '',
+                description: t.content?.description || t.description || '',
                 persona:   (t.l7_persona?.[0]) || 'Traveler',
                 category:  t.l2_category    || t.category  || 'Experience'
             };

@@ -1,24 +1,6 @@
 // Google Analytics 4 (GA4) Tracking Code for Tours North
-// ⚠ ACTION REQUIRED: Replace GA4_MEASUREMENT_ID with your real ID from analytics.google.com
-const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // TODO: Replace before going live
-
-(function() {
-    if (GA4_MEASUREMENT_ID === 'G-XXXXXXXXXX') {
-        console.warn('[Analytics] GA4 Measurement ID is still a placeholder. Replace GA4_MEASUREMENT_ID in main.js before launching.');
-        return;
-    }
-
-    var script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA4_MEASUREMENT_ID);
-})();
+// Handled by Next.js next/script in layout.tsx
+const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';
 
 // Tours North Conversion Tracking Engine
 // ─────────────────────────────────────────────────────────────────────────────
