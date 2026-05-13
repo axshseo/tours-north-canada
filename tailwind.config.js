@@ -27,13 +27,21 @@ module.exports = {
         ring:   'var(--ring)',
 
         /* ── Tours North hard-coded brand tokens ── */
+        /* ── Tours North 'Authority Hub' Brand Tokens ── */
         tn: {
-          green:  '#064e3b',
-          red:    '#b91c1c',
-          'red-dk': '#991b1b',
-          lime:   '#a3e635',
-          navy:   '#0f172a',
-          'green-dk': '#022c22',
+          navy:    '#0B213F', // Primary Dark Navy
+          glacier: '#89B5DA', // Secondary Blue
+          safety:  '#f97316', // Accent
+          red:     '#b91c1c',
+          slate:   '#F1F5F9', // Light backgrounds
+          muted:   '#94A3B8', // Muted text
+        },
+      },
+      container: {
+        center: true,
+        padding: '2rem',
+        screens: {
+          '2xl': '1400px',
         },
       },
       fontFamily: {
