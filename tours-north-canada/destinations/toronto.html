@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="city" content="Toronto">
+    <title>Toronto Hub — Discovery Portal (2026)</title>
+    
+    <!-- Design System Baseline -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b', // Forest
+                        accent: '#b91c1c',  // Maple
+                        highlight: '#a3e635',
+                        snow: '#f8fafc'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        syne: ['Syne', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .snap-start { scroll-snap-align: start; }
+        .card-glow:hover {
+            box-shadow: 0 0 40px rgba(6, 78, 59, 0.1);
+            transform: translateY(-4px);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-white font-inter text-slate-900" 
+      x-data="discoveryPortal">
+
+    <!-- DATA STATUS PILL -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div :class="dataSource === 'Supabase' ? 'bg-primary' : 'bg-amber-500'" 
+             class="px-4 py-2 rounded-full text-white text-[10px] font-black uppercase tracking-widest shadow-2xl flex items-center space-x-2">
+            <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+            <span x-text="dataSource === 'Supabase' ? 'SQL Handshake Active' : 'Using Local Cache'"></span>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="h-[40vh] bg-primary flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="text-center relative z-10">
+            <h1 class="text-7xl font-black font-syne text-white tracking-tight uppercase">Toronto Hub.</h1>
+            <p class="text-highlight font-black tracking-widest uppercase text-xs mt-4 italic">2026 Minimalist-Wilderness Experience</p>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <main class="max-w-7xl mx-auto py-24 px-6 space-y-32">
+
+        <!-- CAROUSEL A: PROVINCES -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">Explore Provinces.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel A: Regional Powerhouses</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Provinces</span>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
+                <template x-if="loading">
+                    <template x-for="i in 5">
+                        <div class="min-w-[240px] h-40 rounded-3xl bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="province in provinces" :key="province.id">
+                        <div class="min-w-[240px] snap-start bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:bg-primary hover:text-white transition duration-500 group cursor-pointer">
+                            <h3 class="text-2xl font-black font-syne uppercase leading-none mb-2" x-text="province.name"></h3>
+                            <p class="text-[10px] uppercase font-bold tracking-widest opacity-40 group-hover:opacity-100">Explore Region →</p>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL B: CITY HUBS -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">City Hubs.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel B: Metropolitan Discovery</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Cities</span>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
+                <template x-if="loading">
+                    <template x-for="i in 4">
+                        <div class="min-w-[280px] h-48 rounded-[2.5rem] bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="city in cityHubs" :key="city.id">
+                        <div class="min-w-[280px] snap-start bg-white rounded-[2.5rem] p-8 border border-slate-100 card-glow flex flex-col justify-center items-center text-center hover:border-accent transition duration-500 cursor-pointer">
+                            <div class="w-12 h-1 bg-accent mb-6 rounded-full"></div>
+                            <h3 class="text-2xl font-black font-syne text-primary uppercase leading-none" x-text="city.name"></h3>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL C: CATEGORIES -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">By Category.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel C: L2 Clustering</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">Categories</span>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-8">
+                <template x-if="loading">
+                    <template x-for="i in 3">
+                        <div class="min-w-[320px] h-32 rounded-3xl bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="cat in categories" :key="cat">
+                        <div class="min-w-[320px] snap-start bg-primary rounded-3xl p-8 flex items-center justify-between group cursor-pointer hover:bg-accent transition duration-500">
+                            <span class="text-white font-black font-syne text-xl uppercase" x-text="cat"></span>
+                            <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-accent transition">
+                                <i class="fas fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+        <!-- CAROUSEL D: THE 9-LAYER GRID -->
+        <section>
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-black font-syne text-primary uppercase leading-none mb-2">Discovery Grid.</h2>
+                    <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Carousel D: 9-Layer Data Flow Proof</p>
+                </div>
+                <span class="text-primary font-black text-xs uppercase bg-slate-100 px-4 py-2 rounded-full">The Inventory</span>
+            </div>
+
+            <div class="flex gap-8 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-12">
+                <template x-if="loading">
+                    <template x-for="i in 4">
+                        <div class="min-w-[340px] h-[520px] rounded-[3rem] bg-slate-50 border border-slate-100 animate-shimmer"></div>
+                    </template>
+                </template>
+
+                <template x-if="!loading">
+                    <template x-for="tour in tours" :key="tour.id">
+                        <div class="min-w-[340px] snap-start bg-white rounded-[3rem] p-8 border border-slate-100 card-glow flex flex-col h-[520px] relative overflow-hidden group">
+                            <!-- Image Layer -->
+                            <div class="h-60 rounded-[2rem] overflow-hidden mb-6 relative">
+                                <img :src="tour.image_url" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                <div class="absolute top-4 right-4 bg-primary/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black text-white shadow-xl" x-text="'★ ' + (tour.rating || '5.0')"></div>
+                            </div>
+                            
+                            <!-- Content Layer -->
+                            <h3 class="text-2xl font-black font-syne text-primary leading-tight mb-4" x-text="tour.title"></h3>
+                            
+                            <!-- Persona Tag (L7 Proof) -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="bg-slate-50 text-slate-400 text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest" x-text="tour.persona || 'Global Traveler'"></span>
+                                <span class="bg-highlight/20 text-primary text-[8px] font-black px-3 py-1.5 rounded-lg uppercase tracking-widest" x-text="tour.category || 'Entry'"></span>
+                            </div>
+
+                            <!-- Footer Layer -->
+                            <div class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+                                <div>
+                                    <p class="text-accent font-black text-2xl leading-none mb-1" x-text="'$' + tour.price"></p>
+                                    <p class="text-[7px] font-mono text-slate-300 uppercase tracking-widest" x-text="'MD5 Security Hash: ' + getHash(tour.id)"></p>
+                                </div>
+                                <button class="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center text-white hover:bg-accent transition shadow-xl">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-50 py-32 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-black font-syne text-primary tracking-tighter mb-4 italic uppercase">Infrastructure Verified.</h2>
+            <p class="text-slate-400 text-[10px] font-black uppercase tracking-[0.5em]">© 2026 Tours North. SQL Handshake Active.</p>
+        </div>
+    </footer>
+
+    <!-- 9-Layer Data Engine -->
+    <script type="module" src="/assets/js/supabase-config.js"></script>
+    <script src="/assets/js/discovery-portal.js"></script>
+</body>
+</html>

@@ -1,36 +1,41 @@
-<<<<<<< HEAD
-node_modules/
-.env
-.env.local
-.DS_Store
-*.log
-=======
 # Dependencies
 node_modules/
-package-lock.json
+/package-lock.json
 yarn.lock
+pnpm-lock.yaml
 
-# Environment variables
+# Next.js Build Output
+.next/
+out/
+build/
+
+# Environment Variables (CRITICAL: Do not leak your keys!)
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# IDE
+# Supabase
+supabase/.temp/
+supabase/functions/.env
+
+# Debug & Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+.DS_Store
+.vercel
+
+# IDE Settings
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
-.DS_Store
-*.log
-
-# Build outputs
-build/
-dist/
-
 # Testing
 coverage/
 .nyc_output/
->>>>>>> 962245f (pre-pull checkpoint)

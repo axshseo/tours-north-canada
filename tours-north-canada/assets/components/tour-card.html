@@ -1,0 +1,126 @@
+<!--
+    Tours North · Reusable Tour Card Component
+    ─────────────────────────────────────────────────────────────────────────────
+    This is the CANONICAL tour card. Do NOT create new card implementations inline.
+    Use this as the template for all tour card contexts: hubs, bestsellers, cruises.
+
+    Alpine.js usage (in a x-for loop):
+    <template x-for="tour in tours" :key="tour.id">
+        <div x-html="window.renderTourCard(tour)"></div>
+    </template>
+
+    OR: Use the JS version from assets/js/card-renderer.js when not using Alpine.
+
+    CSS Dependencies: Tailwind CDN (already loaded globally)
+    Icon Dependencies: Font Awesome 6 (already loaded globally)
+    ─────────────────────────────────────────────────────────────────────────────
+    DATA CONTRACT (tour object fields used):
+      title         = content.name or name
+      price         = content.price or price
+      rating        = content.rating or rating (0-5)
+      image_url     = content.image or image_url or image
+      persona       = l7_persona[0] or persona
+      category      = l2_category or category
+      id            = tour ID (for hash)
+      url           = /tours/{slug} or slug
+      inventory     = number of spots left (optional)
+      status        = 'available' | 'sold out' (optional)
+-->
+
+<!-- Alpine.js Template Version — use inside x-for loops -->
+<template id="tour-card-template">
+    <article class="tour-card group relative bg-white rounded-[2.5rem] border border-slate-100 overflow-hidden
+                    shadow-sm hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1.5
+                    transition-all duration-500 flex flex-col h-full min-w-[300px]"
+             :data-tour-id="tour.id"
+             :data-cexs-l2="tour.l2_category || tour.category"
+             :data-cexs-l7="(tour.l7_persona || []).join(',')">
+
+        <!-- Image Layer -->
+        <div class="relative h-52 overflow-hidden bg-slate-100 flex-shrink-0">
+            <img :src="tour.content?.image || tour.image_url || tour.image || ''"
+                 :alt="tour.content?.name || tour.title || tour.name"
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                 loading="lazy">
+
+            <!-- Rating Badge -->
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5
+                        bg-white/90 backdrop-blur-sm rounded-full shadow-md">
+                <i class="fa-solid fa-star text-amber-400 text-[10px]"></i>
+                <span class="text-[11px] font-black text-slate-800"
+                      x-text="(tour.content?.rating || tour.rating || 5.0).toFixed(1)"></span>
+            </div>
+
+            <!-- Intent Badge (L1) -->
+            <div x-show="tour.l1_intent || tour.intent"
+                 class="absolute top-4 left-4 px-3 py-1.5 bg-primary/90 backdrop-blur-sm
+                        rounded-full text-[9px] font-black uppercase tracking-widest text-white">
+                <span x-text="tour.l1_intent || tour.intent"></span>
+            </div>
+
+            <!-- Urgency Strip -->
+            <div x-show="tour.inventory > 0 && tour.inventory <= 5"
+                 class="absolute bottom-0 left-0 right-0 bg-accent/90 py-1.5 text-center">
+                <span class="text-[9px] font-black uppercase tracking-widest text-white"
+                      x-text="`Only ${tour.inventory} spots left`"></span>
+            </div>
+        </div>
+
+        <!-- Content Layer -->
+        <div class="p-6 flex flex-col flex-1">
+
+            <!-- L7 Persona + L2 Category Tags -->
+            <div class="flex flex-wrap gap-1.5 mb-4">
+                <span x-show="tour.l7_persona?.[0] || tour.persona"
+                      class="px-2.5 py-1 bg-primary/5 text-primary text-[8px]
+                             font-black uppercase tracking-widest rounded-full border border-primary/10"
+                      x-text="tour.l7_persona?.[0] || tour.persona"></span>
+                <span x-show="tour.l2_category || tour.category"
+                      class="px-2.5 py-1 bg-highlight/20 text-primary text-[8px]
+                             font-black uppercase tracking-widest rounded-full"
+                      x-text="tour.l2_category || tour.category"></span>
+            </div>
+
+            <!-- Tour Name -->
+            <h3 class="text-lg font-black font-syne text-primary leading-tight mb-3 line-clamp-2"
+                x-text="tour.content?.name || tour.title || tour.name"></h3>
+
+            <!-- Description (optional) -->
+            <p x-show="tour.content?.usp || tour.content?.description"
+               class="text-slate-400 text-xs leading-relaxed line-clamp-2 mb-4"
+               x-text="tour.content?.usp || (tour.content?.description || '').substring(0, 100)"></p>
+
+            <!-- Spacer -->
+            <div class="flex-1"></div>
+
+            <!-- Footer -->
+            <div class="pt-5 mt-4 border-t border-slate-50 flex items-end justify-between gap-4">
+                <div>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">From</p>
+                    <p class="text-accent font-black text-2xl leading-none"
+                       x-text="'$' + (tour.content?.price || tour.price || 0)"></p>
+                    <p class="text-[8px] font-mono text-slate-300 uppercase tracking-widest mt-1"
+                       x-text="'FNV: ' + getHash(tour.id)"></p>
+                </div>
+
+                <a :href="tour.url || tour.slug || '#'"
+                   :aria-label="'Book ' + (tour.content?.name || tour.name)"
+                   :class="tour.status === 'sold out'
+                       ? 'bg-slate-200 text-slate-400 cursor-not-allowed pointer-events-none'
+                       : 'bg-primary hover:bg-accent text-white cursor-pointer'"
+                   class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-[11px]
+                          font-black uppercase tracking-widest shadow-lg transition-all duration-300
+                          hover:shadow-accent/30 hover:shadow-xl active:scale-95">
+                    <span x-text="tour.status === 'sold out' ? 'Sold Out' : 'Book'"></span>
+                    <i x-show="tour.status !== 'sold out'" class="fa-solid fa-arrow-right text-[9px]"></i>
+                </a>
+            </div>
+        </div>
+    </article>
+</template>
+
+<!--
+    JS USAGE (without Alpine.js):
+    import { renderTourCard } from '/assets/js/card-renderer.js';
+    container.innerHTML = tours.map(renderTourCard).join('');
+-->

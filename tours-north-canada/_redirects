@@ -1,0 +1,27 @@
+# SEO Redirects for Tours North - 301 Permanent Redirects
+# Format: old_path new_path status_code
+
+# City/Destination redirects
+/toronto-tours /destinations/toronto.html 301
+/vancouver-tours /destinations/vancouver.html 301
+/banff-tours /destinations/banff.html 301
+/montreal-tours /destinations/montreal.html 301
+/halifax-tours /destinations/halifax.html 301
+/jasper-tours /destinations/jasper.html 301
+/whistler-tours /destinations/whistler.html 301
+/yukon-tours /destinations/yukon-arctic.html 301
+
+# Legacy tour redirects
+/niagara-falls-tour /tours/niagara-falls-boat-tour.html 301
+/whistler-ski /tours/whistler-ski-lesson.html 301
+/yukon-aurora /tours/yukon-aurora-expedition.html 301
+
+# Content redirects
+/blog /journal/index.html 301
+/travel-guides /guides/best-time-to-visit-canada.html 301
+/visa-guide /guides/canada-travel-visa-guide.html 301
+
+# General redirects
+/about /about-us.html 301
+/contact-us /contact.html 301
+/privacy /privacy-policy.html 301

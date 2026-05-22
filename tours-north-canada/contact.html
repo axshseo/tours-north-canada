@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Tours North</title>
+    <meta name="description" content="Get in touch with Tours North for your Canadian travel inquiries. Contact us for bookings, questions, or personalized travel advice.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-snow text-base">
+    <!-- Navigation -->
+    <nav class="bg-primary text-snow shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="index.html" class="text-xl font-bold">Tours North</a>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</a>
+                            <a href="#" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</a>
+                            <a href="about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                            <a href="contact.html" class="bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-3xl font-bold text-primary mb-6">Contact Us</h1>
+        <p class="text-lg mb-8">Have questions about your Canadian adventure? We're here to help! Reach out to Tours North for personalized travel advice, booking assistance, or any inquiries.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="text-2xl font-semibold text-primary mb-4">Get In Touch</h2>
+                <form class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-base">Name</label>
+                        <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-base">Email</label>
+                        <input type="email" id="email" name="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-base">Message</label>
+                        <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent"></textarea>
+                    </div>
+                    <button type="submit" class="bg-accent hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Send Message</button>
+                </form>
+            </div>
+            <div>
+                <h2 class="text-2xl font-semibold text-primary mb-4">Contact Information</h2>
+                <p class="text-lg mb-2"><strong>Email:</strong> info@toursnorth.ca</p>
+                <p class="text-lg mb-2"><strong>Phone:</strong> +1 (416) 555-0123</p>
+                <p class="text-lg mb-2"><strong>Address:</strong> 123 Maple Street, Toronto, ON M5V 1A1, Canada</p>
+                <p class="text-lg">We aim to respond to all inquiries within 24 hours.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-primary text-snow py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

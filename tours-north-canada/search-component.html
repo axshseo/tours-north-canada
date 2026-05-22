@@ -1,0 +1,171 @@
+<!-- VIATOR-STYLE PREDICTIVE SEARCH -->
+<div class="bg-white p-6 rounded-2xl shadow-2xl border-4 border-white/20" x-data="{
+    searchQuery: '',
+    searchOpen: false,
+    guestsOpen: false,
+    adults: 2,
+    children: 0,
+    searchResults: { locations: [], tourTypes: [], directMatches: [], hasResults: false },
+    trendingDestinations: ['Toronto', 'Banff', 'Vancouver', 'Niagara Falls', 'Whistler', 'Montreal'],
+    
+    handleSearch() {
+        if (typeof performPredictiveSearch === 'function') {
+            this.searchResults = performPredictiveSearch(this.searchQuery);
+        }
+    },
+    
+    selectResult(url) {
+        window.location.href = url;
+    },
+    
+    searchFor() {
+        console.log('Searching for:', this.searchQuery);
+    }
+}">
+    <!-- Search Input Container -->
+    <div class="relative mb-4">
+        <div class="relative">
+            <input 
+                type="text" 
+                x-model="searchQuery"
+                @input="handleSearch()"
+                @focus="searchOpen = true"
+                @click="searchOpen = true"
+                placeholder="Where are you going?"
+                class="w-full px-6 py-5 pr-12 rounded-2xl text-slate-800 text-lg outline-none focus:ring-2 focus:ring-[#064e3b] border border-gray-200 shadow-lg"
+            >
+            <svg class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </div>
+        
+        <!-- Predictive Search Dropdown -->
+        <div 
+            x-show="searchOpen" 
+            @click.away="searchOpen = false"
+            x-cloak
+            class="absolute top-full mt-2 left-0 right-0 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 max-h-96 overflow-y-auto z-50"
+        >
+            <!-- Trending Destinations (Empty State) -->
+            <div x-show="!searchQuery" class="p-6">
+                <h3 class="text-sm font-bold text-[#064e3b] mb-3 uppercase tracking-wide">Trending Destinations</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <template x-for="destination in trendingDestinations" :key="destination">
+                        <a :href="'destinations/' + destination.toLowerCase().replace(' ', '-') + '.html'" 
+                           class="px-4 py-3 rounded-lg hover:bg-[#064e3b]/10 transition-colors flex items-center gap-2 group">
+                            <svg class="w-4 h-4 text-[#b91c1c] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-gray-700" x-text="destination"></span>
+                        </a>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div x-show="searchQuery && searchResults.hasResults" class="p-4">
+                <!-- Locations -->
+                <div x-show="searchResults.locations.length > 0" class="mb-4">
+                    <h4 class="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wide">Locations</h4>
+                    <template x-for="location in searchResults.locations" :key="location.city">
+                        <a :href="'destinations/' + location.city.toLowerCase() + '.html'" 
+                           class="flex items-center gap-3 px-4 py-3 hover:bg-[#064e3b]/10 rounded-lg transition-colors group">
+                            <svg class="w-5 h-5 text-[#b91c1c] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-[#064e3b] font-medium" x-text="location.name"></span>
+                        </a>
+                    </template>
+                </div>
+
+                <!-- Tour Types -->
+                <div x-show="searchResults.tourTypes.length > 0" class="mb-4">
+                    <h4 class="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wide">Tour Types</h4>
+                    <template x-for="tourType in searchResults.tourTypes" :key="tourType.category">
+                        <a href="#" 
+                           class="flex items-center gap-3 px-4 py-3 hover:bg-[#064e3b]/10 rounded-lg transition-colors group">
+                            <svg class="w-5 h-5 text-[#b91c1c] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z"></path>
+                            </svg>
+                            <span class="text-[#064e3b] font-medium" x-text="tourType.name"></span>
+                        </a>
+                    </template>
+                </div>
+
+                <!-- Direct Tour Matches -->
+                <div x-show="searchResults.directMatches.length > 0" class="mb-4">
+                    <h4 class="text-xs font-bold text-gray-500 mb-2 px-2 uppercase tracking-wide">Tours</h4>
+                    <template x-for="tour in searchResults.directMatches" :key="tour.id">
+                        <a :href="tour.url" 
+                           class="flex items-center justify-between px-4 py-3 hover:bg-[#064e3b]/10 rounded-lg transition-colors group">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-5 h-5 text-[#b91c1c] group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z"></path>
+                                </svg>
+                                <div>
+                                    <div class="text-[#064e3b] font-medium" x-text="tour.name"></div>
+                                    <div class="text-xs text-gray-500" x-text="tour.city"></div>
+                                </div>
+                            </div>
+                            <div class="text-[#b91c1c] font-bold" x-text="'$' + tour.price"></div>
+                        </a>
+                    </template>
+                </div>
+
+                <!-- Search For Query -->
+                <div class="border-t pt-2">
+                    <button @click="searchFor()" 
+                            class="flex items-center gap-3 px-4 py-3 w-full hover:bg-[#064e3b]/10 rounded-lg transition-colors group">
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#b91c1c] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <span class="text-gray-700 font-medium">Search for "<span x-text="searchQuery"></span>"</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- No Results -->
+            <div x-show="searchQuery && !searchResults.hasResults" class="p-6 text-center text-gray-500">
+                <p class="text-sm">No results found for "<span x-text="searchQuery"></span>"</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Date and Guests Row -->
+    <div class="flex flex-col md:flex-row items-stretch gap-4">
+        <input type="text" id="dateRangePicker" placeholder="Select Dates" class="md:flex-1 px-6 py-4 rounded-xl text-slate-800 outline-none focus:ring-2 focus:ring-[#064e3b] border border-gray-200">
+        
+        <!-- Guests Dropdown -->
+        <div class="relative md:w-44">
+            <button @click="guestsOpen = !guestsOpen" type="button" class="w-full px-6 py-4 rounded-xl text-slate-800 outline-none focus:ring-2 focus:ring-[#064e3b] border border-gray-200 flex items-center justify-between bg-white">
+                <span x-text="(adults + children) + ' Guests'"></span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </button>
+            <div x-show="guestsOpen" @click.away="guestsOpen = false" x-cloak class="absolute top-full mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-50">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-semibold">Adults</span>
+                        <div class="flex items-center gap-3">
+                            <button @click="adults = Math.max(1, adults - 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#064e3b] hover:text-white transition-colors">-</button>
+                            <span class="w-8 text-center font-bold" x-text="adults"></span>
+                            <button @click="adults = Math.min(10, adults + 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#064e3b] hover:text-white transition-colors">+</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-semibold">Children</span>
+                        <div class="flex items-center gap-3">
+                            <button @click="children = Math.max(0, children - 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#064e3b] hover:text-white transition-colors">-</button>
+                            <span class="w-8 text-center font-bold" x-text="children"></span>
+                            <button @click="children = Math.min(10, children + 1)" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#064e3b] hover:text-white transition-colors">+</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="md:w-auto bg-[#b91c1c] text-white px-10 py-4 rounded-xl font-bold hover:bg-[#064e3b] transition-colors shadow-lg">Find My Adventure</button>
+    </div>
+</div>
+<p class="text-white/80 mt-4 text-sm font-medium">Trending: Banff, Niagara Falls, Whistler, Toronto</p>

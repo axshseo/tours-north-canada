@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "tours-north-canada",
   "version": "1.0.0",
   "private": true,
@@ -43,7 +42,7 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.0"
-=======
+
   "name": "tours-north-api",
   "version": "1.0.0",
   "description": "Tours North Backend API - Supabase Integration",
@@ -64,6 +63,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
->>>>>>> 962245f (pre-pull checkpoint)
+ 962245f (pre-pull checkpoint)
   }
 }

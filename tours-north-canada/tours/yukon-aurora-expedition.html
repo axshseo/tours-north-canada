@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yukon Aurora Expedition - Tours North</title>
+    <meta name="description" content="Embark on a premium Yukon Aurora Expedition with Tours North. Experience the Northern Lights with expert guides, high viewing probability, and unforgettable Arctic adventures.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#3b82f6', // Electric Blue
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-base text-snow">
+    <!-- Navigation -->
+    <nav class="bg-primary text-snow shadow-lg" x-data="{ destinationsOpen: false, toursOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <h1 class="text-xl font-bold">Tours North</h1>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="../index.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                            <div class="relative">
+                                <button @click="destinationsOpen = !destinationsOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Destinations</button>
+                                <div x-show="destinationsOpen" @click.away="destinationsOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="../destinations/banff.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff</a>
+                                    <a href="../destinations/toronto.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Toronto</a>
+                                    <a href="../destinations/vancouver.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Vancouver</a>
+                                    <a href="../destinations/quebec-city.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Quebec City</a>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <button @click="toursOpen = !toursOpen" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Tours</button>
+                                <div x-show="toursOpen" @click.away="toursOpen = false" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg transition duration-300">
+                                    <a href="niagara-falls-boat-tour.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Niagara Falls Boat Tour</a>
+                                    <a href="banff-gondola-tickets.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Banff Gondola Tickets</a>
+                                    <a href="whistler-ski-packages.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Whistler Ski Packages</a>
+                                    <a href="northern-lights-yukon.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Northern Lights Yukon</a>
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <button class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Guides</button>
+                                <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300">
+                                    <a href="../guides/best-time-to-visit-canada.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Best Time to Visit Canada</a>
+                                    <a href="../guides/canada-visa-guide.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Canada Visa Guide</a>
+                                    <a href="../guides/top-10-winter-activities.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Top 10 Winter Activities</a>
+                                </div>
+                            </div>
+                            <a href="../about-us.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                            <a href="../contact.html" class="hover:bg-accent px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1446776877081-d282a0f896e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <div class="text-center text-white">
+                <h1 class="text-6xl font-bold mb-4">Yukon Aurora Expedition</h1>
+                <p class="text-xl mb-8">Chase the Northern Lights in the heart of the Arctic wilderness</p>
+                <div class="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                    <div class="text-center mb-4">
+                        <span class="text-2xl font-bold text-accent">85%</span>
+                        <p class="text-sm">Viewing Probability</p>
+                    </div>
+                    <button class="w-full bg-accent hover:bg-blue-700 text-white font-bold py-3 px-6 rounded">Book Now - $250 CAD</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <h2 class="text-3xl font-bold text-accent mb-8">Premium Aurora Experience</h2>
+                <p class="text-base mb-6">Join our expert guides on a high-end expedition to witness the spectacular Northern Lights. With our advanced forecasting technology, we guarantee an 85% chance of seeing the Aurora Borealis.</p>
+
+                <!-- Aurora Forecast Chart -->
+                <div class="bg-gray-800 shadow-md rounded-lg p-6 mb-8">
+                    <h3 class="text-2xl font-semibold text-accent mb-4">Aurora Forecast</h3>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm">Low</span>
+                        <span class="text-sm">High</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                        <div class="bg-accent h-4 rounded-full" style="width: 85%;"></div>
+                    </div>
+                    <p class="text-sm text-gray-300">Current conditions: Excellent visibility expected tonight</p>
+                </div>
+
+                <!-- What to Pack Checklist -->
+                <div class="bg-gray-800 shadow-md rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold text-accent mb-4">What to Pack</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Warm winter coat and layers</span>
+                        </li>
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Thermal underwear</span>
+                        </li>
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Insulated boots</span>
+                        </li>
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Gloves and hat</span>
+                        </li>
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Camera with tripod</span>
+                        </li>
+                        <li class="flex items-center">
+                            <input type="checkbox" class="mr-2" checked>
+                            <span class="text-sm">Headlamp</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Sticky Booking Widget -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-8 bg-gray-800 shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-accent mb-4">Book Your Expedition</h3>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Select Date</label>
+                        <input type="date" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Number of Guests</label>
+                        <select class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold">Total:</span>
+                            <span class="text-lg font-bold text-accent">$250 CAD</span>
+                        </div>
+                    </div>
+                    <button class="w-full bg-accent hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">Reserve Now</button>
+                    <p class="text-xs text-gray-400 mt-2">Free cancellation up to 48 hours before</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-snow py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 Tours North. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

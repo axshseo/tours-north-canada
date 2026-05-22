@@ -1,0 +1,27 @@
+# CodeRabbit Configuration for Tours North
+# Enforces 9-Layer Taxonomy and 2026 Design System
+
+reviews:
+  profile: "Concierge Quality Assurance"
+  request_reviews_from_ai: true
+
+  # Custom Instructions for CodeRabbit AI
+  instructions: |
+    As a reviewer for Tours North, you must enforce the following:
+    1. **Taxonomy Check**: Ensure all JSON changes in `tours.json` follow the L1-L9 hierarchical schema.
+    2. **Design Language**: Verify that all CSS/Tailwind changes use our brand tokens:
+       - Primary Green: `#064e3b`
+       - Accent Red: `#b91c1c`
+       - Typography: Inter/Syne
+    3. **Hydration Security**: Flag any hardcoded data in HTML that should instead use `data-field` attributes for `tour-renderer.js`.
+    4. **Accessibility**: Ensure all buttons have discernible text and images have alt tags.
+
+chat:
+  enabled: true
+
+# Automated Checks
+static_analysis:
+  enabled: true
+  linters:
+    - eslint
+    - lighthouse

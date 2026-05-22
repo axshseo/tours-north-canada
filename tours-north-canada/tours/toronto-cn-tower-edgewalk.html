@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-field="name">CN Tower EdgeWalk - Tours North</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#064e3b',
+                        accent: '#b91c1c',
+                        base: '#0f172a',
+                        snow: '#ffffff'
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+    </style>
+</head>
+<body class="bg-snow text-base font-inter" x-data="{ selectedDate: '', showMobileBooking: false }">
+    <!-- Global Header -->
+    <div id="global-header"></div>
+
+    <!-- Breadcrumbs -->
+    <nav class="bg-gray-50 py-3" aria-label="Breadcrumb">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <ol class="flex items-center space-x-2 text-sm text-gray-500">
+                <li><a href="../index.html" class="hover:text-primary">Home</a></li>
+                <li><span class="mx-2">></span></li>
+                <li><a href="../destinations/toronto.html" class="hover:text-primary" data-field="city">Toronto</a></li>
+                <li><span class="mx-2">></span></li>
+                <li class="text-gray-900 font-medium" data-field="name">CN Tower EdgeWalk</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Hero Gallery -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="lg:col-span-2">
+                <img data-field="image" src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg">
+            </div>
+            <div class="space-y-4">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 1" class="w-full h-44 object-cover rounded-lg">
+                <img src="https://images.unsplash.com/photo-1517935706615-2717063c2225?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Secondary Image 2" class="w-full h-44 object-cover rounded-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Weather Alert (Layer 8) -->
+        <div id="contextual-weather-alert"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Content -->
+            <div class="lg:col-span-2">
+                <h1 class="text-4xl font-black text-slate-900 font-syne tracking-tighter mb-4 uppercase" data-field="name">CN Tower EdgeWalk</h1>
+                <div class="flex items-center mb-6">
+                    <span class="text-yellow-400 text-2xl">★★★★★</span>
+                    <span class="ml-2 text-lg text-gray-600"><span data-field="rating">4.9</span> (1,250 reviews)</span>
+                </div>
+
+                <!-- Personalization Tags (Layer 7) -->
+                <div data-field="l7_persona" class="flex flex-wrap gap-2 mb-8"></div>
+
+                <!-- Quick Highlights -->
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-6">Quick Highlights</h2>
+                    <div data-field="content.highlights" class="highlights-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Dynamic Highlights -->
+                    </div>
+                </section>
+
+                <!-- The Experience -->
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-6">The Experience</h2>
+                    <div class="prose prose-slate max-w-none">
+                        <p data-field="content.description" class="text-lg text-slate-600 leading-relaxed mb-6"></p>
+                    </div>
+                </section>
+
+                <!-- Full Itinerary -->
+                <section class="mb-12 pt-12 border-t border-slate-100">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">Full Itinerary</h2>
+                    <div id="itinerary-list" data-field="content.itinerary" class="space-y-0">
+                        <!-- Dynamic Itinerary Items -->
+                    </div>
+                </section>
+
+                <!-- Important Information -->
+                <section class="mb-12">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">Important Information</h2>
+                    <div class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div>
+                                <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">Meeting Point</h3>
+                                <p class="text-slate-600 font-medium" data-field="content.meeting_point">CN Tower, Toronto</p>
+                            </div>
+                            <div>
+                                <h3 class="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-4">Good to Know</h3>
+                                <ul class="space-y-2 text-slate-600 font-medium">
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-accent">•</span> Weather-dependent safety checks
+                                    </li>
+                                    <li class="flex items-center gap-2">
+                                        <span class="text-accent">•</span> Comfortable footwear required
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- What's Included -->
+                <section class="mb-12 pt-12 border-t border-slate-100">
+                    <h2 class="text-2xl font-black text-slate-900 font-syne mb-8 uppercase">What's Included</h2>
+                    <ul data-field="content.included_items" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Dynamic Included items -->
+                    </ul>
+                </section>
+
+                <!-- Trust Bar -->
+                <section class="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-slate-200/20">
+                    <h2 class="text-xl font-black text-slate-900 font-syne mb-6 uppercase">Trusted by Travelers</h2>
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div class="flex items-center">
+                            <span class="text-yellow-400 text-2xl mr-2">★★★★★</span>
+                            <span class="text-lg font-black text-slate-900">4.8 out of 5</span>
+                        </div>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">🛡️</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Safe Booking</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">✓</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Verified Reviews</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-8 h-8 bg-white rounded-xl shadow-sm flex items-center justify-center text-accent">🔒</span>
+                                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Secure Payment</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar remains persistent -->
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 bg-white shadow-lg rounded-lg p-8 border border-slate-100 shadow-slate-200/50">
+                    <h3 class="text-xl font-bold text-slate-900 font-syne mb-4">Book Adventure</h3>
+                    <div class="mb-6">
+                        <div class="text-4xl font-black text-accent mb-1">$<span data-field="price">45</span></div>
+                        <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">per person &bull; CAD</div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-black uppercase tracking-widest text-slate-400 mb-2">Select Date</label>
+                        <input x-model="selectedDate" type="date" class="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent font-bold">
+                    </div>
+                    <button class="w-full bg-accent hover:bg-slate-900 text-white font-black py-4 rounded-xl transition duration-300 shadow-xl shadow-accent/20">Check Availability</button>
+                    <p class="text-[10px] text-center font-bold text-slate-400 mt-4 uppercase tracking-widest">Free cancellation up to 24 hours before</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Booking Bar -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-100 p-4 md:hidden z-10">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="text-xl font-black text-accent">$<span data-field="price">45</span></div>
+                <div class="text-[10px] font-black uppercase tracking-widest text-slate-400">per person</div>
+            </div>
+            <button @click="showMobileBooking = true" class="bg-accent hover:bg-slate-900 text-white font-black py-3 px-6 rounded-xl shadow-xl shadow-accent/20 transition">Book Now</button>
+        </div>
+    </div>
+
+    <!-- Mobile Booking Modal -->
+    <div x-show="showMobileBooking" class="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden" @click="showMobileBooking = false">
+        <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-lg p-6" @click.stop>
+            <h3 class="text-xl font-semibold text-primary mb-4">Book Your Experience</h3>
+            <div class="mb-4">
+                <div class="text-3xl font-bold text-accent mb-2">$45 CAD</div>
+                <div class="text-sm text-gray-600">per person</div>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Select Date</label>
+                <input x-model="selectedDate" type="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Number of Travelers</label>
+                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5+</option>
+                </select>
+            </div>
+            <button class="w-full bg-accent hover:bg-red-700 text-white font-bold py-3 px-4 rounded mb-4">Book Now</button>
+            <button @click="showMobileBooking = false" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Smart Recommendations & Bundling -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-100 mt-12">
+        <div id="smart-bundle-upsell"></div>
+    </section>
+
+    <!-- Smart Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/db-engine.js"></script>
+    <script src="../assets/js/global-header.js"></script>
+    <script src="../assets/js/tour-renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800;900&display=swap');
+
+/* ─── Brand Token Layer ──────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    /* Brand palette */
+    --tn-green:     #064e3b;   /* Forest Green  */
+    --tn-red:       #b91c1c;   /* Maple Red      */
+    --tn-lime:      #a3e635;   /* Neon Moss      */
+    --tn-navy:      #0f172a;   /* Utility Dark   */
+    --tn-green-dk:  #022c22;   /* Footer dark    */
+
+    /* shadcn-style semantic vars (kept for compatibility with existing components) */
+    --background:         #f8fafc;
+    --foreground:         #0f172a;
+    --card:               #ffffff;
+    --card-foreground:    #0f172a;
+    --popover:            #ffffff;
+    --popover-foreground: #0f172a;
+    --primary:            #064e3b;
+    --primary-foreground: #ffffff;
+    --secondary:          #f1f5f9;
+    --secondary-foreground: #0f172a;
+    --muted:              #f1f5f9;
+    --muted-foreground:   #64748b;
+    --accent:             #b91c1c;
+    --accent-foreground:  #ffffff;
+    --border:             #e2e8f0;
+    --input:              #e2e8f0;
+    --ring:               #064e3b;
+    --radius:             0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Syne', sans-serif;
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────────────── */
+@layer utilities {
+  /* Scrollbar hide */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Mask gradients */
+  .mask-image-t-gradient {
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────────── */
+@keyframes ken-burns {
+  0%   { transform: scale(1.0) translate(0, 0); }
+  50%  { transform: scale(1.08) translate(-1%, -1%); }
+  100% { transform: scale(1.0) translate(0, 0); }
+}
+
+.ken-burns {
+  animation: ken-burns 20s ease-in-out infinite;
+}
+
+@keyframes polar-story {
+  0%        { opacity: 0; transform: translateX(-60px); }
+  5%        { opacity: 1; }
+  10%, 40%  { opacity: 1; transform: translateX(0px) rotate(-5deg); }
+  25%       { transform: translateX(-20px) translateY(-8px) rotate(5deg); }
+  45%       { opacity: 0; transform: translateX(60px); }
+  50%, 100% { opacity: 0; transform: translateX(-60px); }
+}
+
+.polar-bear {
+  animation: polar-story 12s ease-in-out infinite;
+}
+
+@keyframes dolphin-story {
+  0%, 50% { opacity: 0; transform: translateX(60px) translateY(20px); }
+  55%     { opacity: 1; }
+  60%, 90% { opacity: 1; }
+  65%     { transform: translateX(20px) translateY(-10px) rotate(-20deg); }
+  75%     { transform: translateX(0) translateY(0); }
+  95%     { opacity: 0; transform: translateX(-60px) translateY(10px); }
+  100%    { opacity: 0; }
+}
+
+.dolphin {
+  animation: dolphin-story 12s ease-in-out infinite;
+}
